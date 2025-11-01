@@ -18,6 +18,16 @@ export const metadata: Metadata = {
   title: "Haines City Cleaning | Residential, Commercial & Post‑Construction",
   description:
     "Professional cleaning in Haines City: residential, commercial, and post‑construction. Fast quotes, flexible scheduling, and vetted cleaners.",
+  icons: {
+    icon: [
+      { url: "/favicon.svg", type: "image/svg+xml" },
+      { url: "/icons/favicon-16x16.png", sizes: "16x16", type: "image/png" },
+      { url: "/icons/favicon-32x32.png", sizes: "32x32", type: "image/png" },
+      { url: "/icons/favicon-48x48.png", sizes: "48x48", type: "image/png" }
+    ],
+    apple: [{ url: "/icons/apple-touch-icon.png", sizes: "180x180", type: "image/png" }]
+  },
+  manifest: "/manifest.json",
 };
 
 export default function RootLayout({
