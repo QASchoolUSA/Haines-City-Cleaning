@@ -55,7 +55,7 @@ export default function Commercial() {
               <h1 className="text-3xl font-bold tracking-tight text-slate-900">Commercial Cleaning</h1>
               <p className="text-slate-700">Office suites, retail, and shared areas—consistent cleaning on your schedule.</p>
               <div className="pt-4">
-                <a href="/#booking" className="inline-flex rounded-full bg-purple-600 px-6 py-3 text-sm font-semibold text-white shadow-sm hover:bg-purple-700">Get a fast quote</a>
+        <a href="/#booking" className="inline-flex rounded-full bg-[#FF7A00] px-6 py-3 text-sm font-semibold text-white shadow-sm hover:bg-[#FFB730]">Get a fast quote</a>
               </div>
             </header>
 
@@ -63,19 +63,19 @@ export default function Commercial() {
               <h2 className="text-xl font-semibold text-slate-900">Services & Schedules</h2>
               <p className="mt-2 max-w-2xl text-slate-700">Reliable daily, weekly, or as‑needed service with attention to high‑traffic zones and touchpoints. We align with your hours and security needs.</p>
               <ul className="mt-6 grid grid-cols-1 gap-3 text-sm text-slate-700 sm:grid-cols-2">
-                <li className="flex items-start gap-2"><span className="mt-1 h-2 w-2 rounded-full bg-purple-600"></span> Custom schedules: daily, weekly, bi‑weekly</li>
-                <li className="flex items-start gap-2"><span className="mt-1 h-2 w-2 rounded-full bg-purple-600"></span> Restrooms, floors, breakrooms, glass & touchpoints</li>
-                <li className="flex items-start gap-2"><span className="mt-1 h-2 w-2 rounded-full bg-purple-600"></span> Lobbies, conference rooms, shared areas</li>
-                <li className="flex items-start gap-2"><span className="mt-1 h-2 w-2 rounded-full bg-purple-600"></span> Move‑in/out and post‑build turnover available</li>
+        <li className="flex items-start gap-2"><span className="mt-1 h-2 w-2 rounded-full bg-[#FF7A00]"></span> Custom schedules: daily, weekly, bi‑weekly</li>
+        <li className="flex items-start gap-2"><span className="mt-1 h-2 w-2 rounded-full bg-[#FF7A00]"></span> Restrooms, floors, breakrooms, glass & touchpoints</li>
+        <li className="flex items-start gap-2"><span className="mt-1 h-2 w-2 rounded-full bg-[#FF7A00]"></span> Lobbies, conference rooms, shared areas</li>
+        <li className="flex items-start gap-2"><span className="mt-1 h-2 w-2 rounded-full bg-[#FF7A00]"></span> Move‑in/out and post‑build turnover available</li>
               </ul>
             </div>
 
             <div className="pt-8">
               <h2 className="text-xl font-semibold text-slate-900">Our Process</h2>
               <ol className="mt-6 grid grid-cols-1 gap-6 sm:grid-cols-3">
-                <li className="rounded-xl border border-slate-100 p-6"><div className="flex h-8 w-8 items-center justify-center rounded-full bg-purple-600 text-white">1</div><p className="mt-3 text-sm text-slate-700">Walkthrough and scope confirmation.</p></li>
-                <li className="rounded-xl border border-slate-100 p-6"><div className="flex h-8 w-8 items-center justify-center rounded-full bg-purple-600 text-white">2</div><p className="mt-3 text-sm text-slate-700">Schedule alignment and access coordination.</p></li>
-                <li className="rounded-xl border border-slate-100 p-6"><div className="flex h-8 w-8 items-center justify-center rounded-full bg-purple-600 text-white">3</div><p className="mt-3 text-sm text-slate-700">Ongoing cleaning with quality checks.</p></li>
+        <li className="rounded-xl border border-slate-100 p-6"><div className="flex h-8 w-8 items-center justify-center rounded-full bg-[#FF7A00] text-white">1</div><p className="mt-3 text-sm text-slate-700">Walkthrough and scope confirmation.</p></li>
+        <li className="rounded-xl border border-slate-100 p-6"><div className="flex h-8 w-8 items-center justify-center rounded-full bg-[#FF7A00] text-white">2</div><p className="mt-3 text-sm text-slate-700">Schedule alignment and access coordination.</p></li>
+        <li className="rounded-xl border border-slate-100 p-6"><div className="flex h-8 w-8 items-center justify-center rounded-full bg-[#FF7A00] text-white">3</div><p className="mt-3 text-sm text-slate-700">Ongoing cleaning with quality checks.</p></li>
               </ol>
             </div>
 
@@ -90,11 +90,11 @@ export default function Commercial() {
       </section>
 
       {/* CTA band to match Home styling */}
-      <section className="mt-16 bg-purple-600">
+      <section className="mt-16 bg-[#FF7A00]">
         <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
           <div className="flex flex-wrap items-center justify-between gap-6">
             <h3 className="text-xl font-semibold text-white">Ready for a spotless space?</h3>
-            <a href="/#booking" className="rounded-full bg-white px-5 py-2.5 text-sm font-semibold text-purple-700 shadow-sm hover:bg-purple-50">Get a quote</a>
+          <a href="/#booking" className="rounded-full bg-white px-5 py-2.5 text-sm font-semibold text-[#FF7A00] shadow-sm hover:bg-[#FFB730]/10">Get a quote</a>
           </div>
         </div>
       </section>

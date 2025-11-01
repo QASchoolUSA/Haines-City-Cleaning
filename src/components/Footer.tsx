@@ -1,17 +1,22 @@
+import Link from "next/link";
+import Image from "next/image";
+
 export default function Footer() {
   return (
     <footer id="contact" className="border-t border-slate-200 bg-white">
       <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
         <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
           <div>
-            <h3 className="text-base font-semibold text-slate-900">Haines City Cleaning</h3>
+            <Link href="/" className="flex items-center">
+              <Image src="/haines-city-cleaning-logo.svg" alt="Haines City Cleaning" width={180} height={40} />
+            </Link>
             <p className="mt-2 text-sm text-slate-600">Exceptional residential, commercial, and post-construction cleaning across Haines City and surrounding areas.</p>
           </div>
           <div>
             <h3 className="text-base font-semibold text-slate-900">Contact</h3>
             <ul className="mt-2 space-y-1 text-sm text-slate-600">
-              <li>Email: <a href="mailto:hello@hainescitycleaning.com" className="text-purple-700 hover:underline">hello@hainescitycleaning.com</a></li>
-              <li>Phone: <a href="tel:+18635551234" className="text-purple-700 hover:underline">(863) 555‑1234</a></li>
+              <li>Email: <a href="mailto:hello@hainescitycleaning.com" className="text-[#FF7A00] hover:underline">hello@hainescitycleaning.com</a></li>
+              <li>Phone: <a href="tel:+18635551234" className="text-[#FF7A00] hover:underline">(863) 555‑1234</a></li>
               <li>Hours: Mon–Sat 8:00–18:00</li>
             </ul>
           </div>

@@ -3,7 +3,8 @@
 :root {
   --background: #ffffff;
   --foreground: #0f172a; /* slate-900 */
-  --brand: #7c3aed; /* purple-600 */
+  --brand: #FF7A00; /* primary orange */
+  --brand-light: #FFB730; /* secondary orange */
 }
 
 @theme inline {

@@ -79,8 +79,8 @@ export default function BookingWidget() {
           <div className="mt-4 flex items-center gap-2">
             {steps.map((label, i) => (
               <div key={label} className="flex items-center gap-2">
-                <div className={`grid h-6 w-6 place-items-center rounded-full text-xs font-semibold ${i <= step ? "bg-purple-600 text-white" : "bg-slate-200 text-slate-600"}`}>{i + 1}</div>
-                {i < steps.length - 1 && <div className={`h-px w-8 ${i < step ? "bg-purple-600" : "bg-slate-200"}`} />}
+                <div className={`grid h-6 w-6 place-items-center rounded-full text-xs font-semibold ${i <= step ? "bg-[#FF7A00] text-white" : "bg-slate-200 text-slate-600"}`}>{i + 1}</div>
+                {i < steps.length - 1 && <div className={`h-px w-8 ${i < step ? "bg-[#FF7A00]" : "bg-slate-200"}`} />}
               </div>
             ))}
           </div>
@@ -177,7 +177,7 @@ export default function BookingWidget() {
                 <p><span className="font-semibold">Email:</span> {email || "—"}</p>
                 <p><span className="font-semibold">Phone:</span> {phone || "—"}</p>
                 <p><span className="font-semibold">Address:</span> {address || "—"}</p>
-                <div className="mt-4 rounded-lg bg-purple-50 p-3">
+                <div className="mt-4 rounded-lg bg-[#FFB730]/10 p-3">
                   <p className="text-slate-800">Estimated total: <span className="font-semibold">${quote.price}</span> <span className="text-xs">(range ${quote.range.low}–${quote.range.high})</span></p>
                 </div>
               </div>
@@ -187,11 +187,11 @@ export default function BookingWidget() {
           <div className="mt-6 flex items-center justify-between">
             <button className="rounded-full border border-slate-300 px-4 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-50" onClick={prev} disabled={step === 0}>Back</button>
             {step < steps.length - 1 ? (
-              <button className="rounded-full bg-purple-600 px-5 py-2 text-sm font-semibold text-white shadow-sm hover:bg-purple-700" onClick={next}>Next</button>
+              <button className="rounded-full bg-[#FF7A00] px-5 py-2 text-sm font-semibold text-white shadow-sm hover:bg-[#FFB730]" onClick={next}>Next</button>
             ) : (
               <div className="flex gap-2">
-                <button className="rounded-full bg-purple-600 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-purple-700" onClick={() => alert(`Estimated total: $${quote.price}`)}>Book Cleaning</button>
-                <a href={mailto} className="rounded-full border border-purple-600 px-4 py-2 text-sm font-semibold text-purple-700 hover:bg-purple-50">Email me this quote</a>
+                <button className="rounded-full bg-[#FF7A00] px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-[#FFB730]" onClick={() => alert(`Estimated total: $${quote.price}`)}>Book Cleaning</button>
+                <a href={mailto} className="rounded-full border border-[#FF7A00] px-4 py-2 text-sm font-semibold text-[#FF7A00] hover:bg-[#FFB730]/10">Email me this quote</a>
               </div>
             )}
           </div>

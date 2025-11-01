@@ -57,7 +57,7 @@ export default function Residential() {
               <h1 className="text-3xl font-bold tracking-tight text-slate-900">Residential Cleaning</h1>
               <p className="text-slate-700">Professional house cleaning in Haines City—recurring, deep, and move‑in/out options tailored to your home.</p>
               <div className="pt-4">
-                <a href="/#booking" className="inline-flex rounded-full bg-purple-600 px-6 py-3 text-sm font-semibold text-white shadow-sm hover:bg-purple-700">Get a fast quote</a>
+        <a href="/#booking" className="inline-flex rounded-full bg-[#FF7A00] px-6 py-3 text-sm font-semibold text-white shadow-sm hover:bg-[#FFB730]">Get a fast quote</a>
               </div>
             </header>
 
@@ -65,31 +65,31 @@ export default function Residential() {
               <h2 className="text-xl font-semibold text-slate-900">What’s Included</h2>
               <p className="mt-2 max-w-2xl text-slate-700">From weekly upkeep to seasonal deep cleans, kitchens, bathrooms, living areas, and bedrooms—every detail handled by vetted pros.</p>
               <ul className="mt-6 grid grid-cols-1 gap-3 text-sm text-slate-700 sm:grid-cols-2">
-                <li className="flex items-start gap-2"><span className="mt-1 h-2 w-2 rounded-full bg-purple-600"></span> Standard & deep cleaning options</li>
-                <li className="flex items-start gap-2"><span className="mt-1 h-2 w-2 rounded-full bg-purple-600"></span> Move‑in/out specialized cleaning</li>
-                <li className="flex items-start gap-2"><span className="mt-1 h-2 w-2 rounded-full bg-purple-600"></span> Kitchen & appliance fronts, counters, sinks</li>
-                <li className="flex items-start gap-2"><span className="mt-1 h-2 w-2 rounded-full bg-purple-600"></span> Bathrooms: showers, tubs, mirrors, fixtures</li>
-                <li className="flex items-start gap-2"><span className="mt-1 h-2 w-2 rounded-full bg-purple-600"></span> Living areas & bedrooms: dusting, surfaces, floors</li>
-                <li className="flex items-start gap-2"><span className="mt-1 h-2 w-2 rounded-full bg-purple-600"></span> Add‑ons: inside fridge/oven, interior windows, baseboards</li>
+        <li className="flex items-start gap-2"><span className="mt-1 h-2 w-2 rounded-full bg-[#FF7A00]"></span> Standard & deep cleaning options</li>
+        <li className="flex items-start gap-2"><span className="mt-1 h-2 w-2 rounded-full bg-[#FF7A00]"></span> Move‑in/out specialized cleaning</li>
+        <li className="flex items-start gap-2"><span className="mt-1 h-2 w-2 rounded-full bg-[#FF7A00]"></span> Kitchen & appliance fronts, counters, sinks</li>
+        <li className="flex items-start gap-2"><span className="mt-1 h-2 w-2 rounded-full bg-[#FF7A00]"></span> Bathrooms: showers, tubs, mirrors, fixtures</li>
+        <li className="flex items-start gap-2"><span className="mt-1 h-2 w-2 rounded-full bg-[#FF7A00]"></span> Living areas & bedrooms: dusting, surfaces, floors</li>
+        <li className="flex items-start gap-2"><span className="mt-1 h-2 w-2 rounded-full bg-[#FF7A00]"></span> Add‑ons: inside fridge/oven, interior windows, baseboards</li>
               </ul>
             </div>
 
             <div className="pt-8">
               <h2 className="text-xl font-semibold text-slate-900">How It Works</h2>
               <ol className="mt-6 grid grid-cols-1 gap-6 sm:grid-cols-3">
-                <li className="rounded-xl border border-slate-100 p-6"><div className="flex h-8 w-8 items-center justify-center rounded-full bg-purple-600 text-white">1</div><p className="mt-3 text-sm text-slate-700">Tell us about your home and preferred schedule.</p></li>
-                <li className="rounded-xl border border-slate-100 p-6"><div className="flex h-8 w-8 items-center justify-center rounded-full bg-purple-600 text-white">2</div><p className="mt-3 text-sm text-slate-700">We match you with a trusted Haines City cleaner.</p></li>
-                <li className="rounded-xl border border-slate-100 p-6"><div className="flex h-8 w-8 items-center justify-center rounded-full bg-purple-600 text-white">3</div><p className="mt-3 text-sm text-slate-700">Relax—your space is cleaned to a professional standard.</p></li>
+        <li className="rounded-xl border border-slate-100 p-6"><div className="flex h-8 w-8 items-center justify-center rounded-full bg-[#FF7A00] text-white">1</div><p className="mt-3 text-sm text-slate-700">Tell us about your home and preferred schedule.</p></li>
+        <li className="rounded-xl border border-slate-100 p-6"><div className="flex h-8 w-8 items-center justify-center rounded-full bg-[#FF7A00] text-white">2</div><p className="mt-3 text-sm text-slate-700">We match you with a trusted Haines City cleaner.</p></li>
+        <li className="rounded-xl border border-slate-100 p-6"><div className="flex h-8 w-8 items-center justify-center rounded-full bg-[#FF7A00] text-white">3</div><p className="mt-3 text-sm text-slate-700">Relax—your space is cleaned to a professional standard.</p></li>
               </ol>
             </div>
 
             <div className="pt-8">
               <h2 className="text-xl font-semibold text-slate-900">Why Choose Haines City Cleaning</h2>
               <ul className="mt-6 grid grid-cols-1 gap-3 text-sm text-slate-700 sm:grid-cols-2">
-                <li className="flex items-start gap-2"><span className="mt-1 h-2 w-2 rounded-full bg-purple-600"></span> Local team serving Haines City and nearby areas</li>
-                <li className="flex items-start gap-2"><span className="mt-1 h-2 w-2 rounded-full bg-purple-600"></span> Flexible recurring and one‑time bookings</li>
-                <li className="flex items-start gap-2"><span className="mt-1 h-2 w-2 rounded-full bg-purple-600"></span> Clear pricing and fast online quotes</li>
-                <li className="flex items-start gap-2"><span className="mt-1 h-2 w-2 rounded-full bg-purple-600"></span> Insured, vetted cleaners you can trust</li>
+        <li className="flex items-start gap-2"><span className="mt-1 h-2 w-2 rounded-full bg-[#FF7A00]"></span> Local team serving Haines City and nearby areas</li>
+        <li className="flex items-start gap-2"><span className="mt-1 h-2 w-2 rounded-full bg-[#FF7A00]"></span> Flexible recurring and one‑time bookings</li>
+        <li className="flex items-start gap-2"><span className="mt-1 h-2 w-2 rounded-full bg-[#FF7A00]"></span> Clear pricing and fast online quotes</li>
+        <li className="flex items-start gap-2"><span className="mt-1 h-2 w-2 rounded-full bg-[#FF7A00]"></span> Insured, vetted cleaners you can trust</li>
               </ul>
             </div>
 
@@ -104,11 +104,11 @@ export default function Residential() {
       </section>
 
       {/* CTA band to match Home styling */}
-      <section className="mt-16 bg-purple-600">
+      <section className="mt-16 bg-[#FF7A00]">
         <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
           <div className="flex flex-wrap items-center justify-between gap-6">
             <h3 className="text-xl font-semibold text-white">Ready for a spotless space?</h3>
-            <a href="/#booking" className="rounded-full bg-white px-5 py-2.5 text-sm font-semibold text-purple-700 shadow-sm hover:bg-purple-50">Get a quote</a>
+          <a href="/#booking" className="rounded-full bg-white px-5 py-2.5 text-sm font-semibold text-[#FF7A00] shadow-sm hover:bg-[#FFB730]/10">Get a quote</a>
           </div>
         </div>
       </section>

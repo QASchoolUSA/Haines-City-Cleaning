@@ -30,18 +30,17 @@ export default function Header() {
     <header className="sticky top-0 z-40 w-full bg-gradient-to-b from-zinc-50 to-white shadow-sm ring-1 ring-slate-200/50">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between">
-          <Link href="/" className="flex items-center gap-2">
-            <Image src="/logo.svg" alt="Haines City Cleaning" width={36} height={36} />
-            <span className="text-lg font-semibold tracking-tight text-black text-shadow-sm">Haines City Cleaning</span>
+          <Link href="/" className="flex items-center">
+            <Image src="/haines-city-cleaning-logo.svg" alt="Haines City Cleaning" width={180} height={40} />
           </Link>
           <nav className="hidden gap-8 md:flex">
-            <Link href="#services" className="text-sm font-medium text-slate-700 hover:text-purple-700">Services</Link>
-            <Link href="#benefits" className="text-sm font-medium text-slate-700 hover:text-purple-700">Why Us</Link>
-            <Link href="#testimonials" className="text-sm font-medium text-slate-700 hover:text-purple-700">Reviews</Link>
-            <Link href="#contact" className="text-sm font-medium text-slate-700 hover:text-purple-700">Contact</Link>
+            <Link href="#services" className="text-sm font-medium text-slate-700 hover:text-[#FF7A00]">Services</Link>
+            <Link href="#benefits" className="text-sm font-medium text-slate-700 hover:text-[#FF7A00]">Why Us</Link>
+            <Link href="#testimonials" className="text-sm font-medium text-slate-700 hover:text-[#FF7A00]">Reviews</Link>
+            <Link href="#contact" className="text-sm font-medium text-slate-700 hover:text-[#FF7A00]">Contact</Link>
           </nav>
           <div className="hidden md:flex">
-            <Link href="#booking" className="rounded-full bg-purple-600 px-5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-purple-700">Get a Quote</Link>
+            <Link href="#booking" className="rounded-full bg-[#FF7A00] px-5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-[#FFB730]">Get a Quote</Link>
           </div>
           <button
             aria-label="Toggle menu"
@@ -62,11 +61,11 @@ export default function Header() {
           <div className="md:hidden pb-4" ref={menuRef} id="mobile-menu">
             <div className="mx-auto mt-2 w-full max-w-xs rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
               <nav className="flex flex-col items-center gap-3 text-center">
-                <Link href="#services" className="text-sm font-medium text-slate-700 hover:text-purple-700" onClick={() => setOpen(false)}>Services</Link>
-                <Link href="#benefits" className="text-sm font-medium text-slate-700 hover:text-purple-700" onClick={() => setOpen(false)}>Why Us</Link>
-                <Link href="#testimonials" className="text-sm font-medium text-slate-700 hover:text-purple-700" onClick={() => setOpen(false)}>Reviews</Link>
-                <Link href="#contact" className="text-sm font-medium text-slate-700 hover:text-purple-700" onClick={() => setOpen(false)}>Contact</Link>
-                <Link href="#booking" className="rounded-full bg-purple-600 px-5 py-2 text-sm font-semibold text-white shadow-sm hover:bg-purple-700" onClick={() => setOpen(false)}>Get a Quote</Link>
+                <Link href="#services" className="text-sm font-medium text-slate-700 hover:text-[#FF7A00]" onClick={() => setOpen(false)}>Services</Link>
+                <Link href="#benefits" className="text-sm font-medium text-slate-700 hover:text-[#FF7A00]" onClick={() => setOpen(false)}>Why Us</Link>
+                <Link href="#testimonials" className="text-sm font-medium text-slate-700 hover:text-[#FF7A00]" onClick={() => setOpen(false)}>Reviews</Link>
+                <Link href="#contact" className="text-sm font-medium text-slate-700 hover:text-[#FF7A00]" onClick={() => setOpen(false)}>Contact</Link>
+                <Link href="#booking" className="rounded-full bg-[#FF7A00] px-5 py-2 text-sm font-semibold text-white shadow-sm hover:bg-[#FFB730]" onClick={() => setOpen(false)}>Get a Quote</Link>
               </nav>
             </div>
           </div>
