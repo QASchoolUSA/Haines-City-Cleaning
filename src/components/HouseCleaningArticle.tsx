@@ -1,7 +1,7 @@
 
 export default function HouseCleaningArticle() {
   return (
-    <section className="bg-slate-50 py-20">
+    <section className="bg-[#FFB730]/20 py-20">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="prose prose-lg mx-auto text-slate-600">
           <h2 className="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">The Ultimate Guide to a Sparkling Clean Home</h2>

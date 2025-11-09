@@ -1,7 +1,10 @@
 export const metadata = {
-  title: "Post‑Construction Cleaning in Haines City | Haines City Cleaning",
+  title: "Post‑Construction Cleaning in Haines City",
   description:
     "Post construction cleaning in Haines City: builder cleanup, renovation dust removal, final detailing for residential and commercial projects.",
+  alternates: {
+    canonical: "/post-construction-cleaning",
+  },
   keywords: [
     "post construction cleaning haines city",
     "construction cleanup haines city",

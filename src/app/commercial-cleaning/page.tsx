@@ -1,7 +1,10 @@
 export const metadata = {
-  title: "Commercial Cleaning in Haines City | Haines City Cleaning",
+  title: "Commercial Cleaning in Haines City",
   description:
     "Commercial cleaning in Haines City: office cleaning, janitorial services, retail and shared areas with flexible schedules.",
+  alternates: {
+    canonical: "/commercial-cleaning",
+  },
   keywords: [
     "commercial cleaning haines city",
     "office cleaning haines city",

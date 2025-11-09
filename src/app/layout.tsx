@@ -15,9 +15,16 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "House Cleaning Services Haines City, FL | Haines City Cleaning",
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000"),
+  title: {
+    default: "House Cleaning Services Haines City, FL | Haines City Cleaning",
+    template: "%s | Haines City Cleaning",
+  },
   description:
     "House Cleaning Services Haines City, FL | Professional cleaning in Haines City: residential, commercial, and post‑construction. Fast quotes, flexible scheduling, and vetted cleaners.",
+  alternates: {
+    canonical: "/",
+  },
   icons: {
     icon: [
       { url: "/favicon.svg", type: "image/svg+xml" },

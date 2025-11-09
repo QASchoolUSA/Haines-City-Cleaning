@@ -1,7 +1,10 @@
 export const metadata = {
-  title: "Residential Cleaning in Haines City | Haines City Cleaning",
+  title: "Residential Cleaning in Haines City",
   description:
     "Residential cleaning in Haines City: house cleaning, deep cleaning, move-in/out, apartment cleaning. Professional maid service by Haines City Cleaning.",
+  alternates: {
+    canonical: "/residential-cleaning",
+  },
   keywords: [
     "residential cleaning haines city",
     "house cleaning haines city",
