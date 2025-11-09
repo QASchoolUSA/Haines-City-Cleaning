@@ -12,19 +12,19 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 1,
     },
     {
-      url: `${baseUrl}/services/residential`,
+      url: `${baseUrl}/residential-cleaning`,
       lastModified,
       changeFrequency: "monthly",
       priority: 0.8,
     },
     {
-      url: `${baseUrl}/services/commercial`,
+      url: `${baseUrl}/commercial-cleaning`,
       lastModified,
       changeFrequency: "monthly",
       priority: 0.8,
     },
     {
-      url: `${baseUrl}/services/post-construction`,
+      url: `${baseUrl}/post-construction-cleaning`,
       lastModified,
       changeFrequency: "monthly",
       priority: 0.8,
