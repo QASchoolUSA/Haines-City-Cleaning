@@ -1,3 +1,5 @@
+import ResidentialCleaningContent from "@/components/ResidentialCleaningContent";
+
 export const metadata = {
   title: "Residential Cleaning in Haines City",
   description:
@@ -100,7 +102,10 @@ export default function Residential() {
               <h2 className="text-xl font-semibold text-slate-900">Residential Cleaning in Haines City</h2>
               <p className="mt-3 text-slate-700">Looking for reliable <strong>residential cleaning in Haines City</strong>? Our local team provides professional <strong>house cleaning</strong> tailored to your home—weekly, bi‑weekly, monthly, or one‑time deep cleans. We cover kitchens, bathrooms, living spaces, and bedrooms with careful attention to detail.</p>
               <p className="mt-3 text-slate-700">Choose Haines City Cleaning for trusted <strong>Haines City cleaning</strong> services, including <strong>move‑in/move‑out cleaning</strong> and <strong>apartment cleaning</strong>. Get a fast quote online and enjoy a spotless space from a team that respects your time and home.</p>
-              <p className="mt-3 text-slate-700">Popular searches: <em>residential cleaning Haines City</em>, <em>house cleaning Haines City</em>, <em>maid service Haines City</em>, <em>home cleaning Haines City</em>, <em>Haines City cleaning company</em>.</p>
+              <p className="mt-3 text-slate-700">Popular searches: <em>residential cleaning Haines City</em>, <em>house cleaning Haines City</em>, _maid service Haines City_, _home cleaning Haines City_, _Haines City cleaning company_.</p>
+            </div>
+            <div className="pt-8">
+              <ResidentialCleaningContent />
             </div>
           </div>
         </article>

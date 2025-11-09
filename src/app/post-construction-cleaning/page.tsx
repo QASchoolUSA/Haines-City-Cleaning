@@ -1,3 +1,5 @@
+import PostConstructionCleaningContent from "@/components/PostConstructionCleaningContent";
+
 export const metadata = {
   title: "Post‑Construction Cleaning in Haines City",
   description:
@@ -86,6 +88,9 @@ export default function PostConstruction() {
               <p className="mt-3 text-slate-700">Our team specializes in <strong>post construction cleaning in Haines City</strong>, handling fine dust, residue, and heavy debris so your new build or renovation is move‑in ready. We deliver careful <strong>builder cleaning</strong> with professional tools and a meticulous approach.</p>
               <p className="mt-3 text-slate-700">Choose <strong>Haines City Cleaning</strong> for reliable <strong>construction cleanup</strong> and final detailing. We support residential and commercial projects with flexible scheduling and clear communication.</p>
               <p className="mt-3 text-slate-700">Popular searches: <em>post construction cleaning Haines City</em>, <em>construction cleanup Haines City</em>, <em>builder cleaning</em>, <em>final cleaning</em>, <em>Haines City cleaning</em>.</p>
+            </div>
+            <div className="pt-8">
+              <PostConstructionCleaningContent />
             </div>
           </div>
         </article>

@@ -1,3 +1,5 @@
+import CommercialCleaningContent from "@/components/CommercialCleaningContent";
+
 export const metadata = {
   title: "Commercial Cleaning in Haines City",
   description:
@@ -87,6 +89,9 @@ export default function Commercial() {
               <p className="mt-3 text-slate-700">We provide dependable <strong>commercial cleaning in Haines City</strong> for offices, retail, and shared spaces. Our janitorial team manages floors, restrooms, breakrooms, glass, and touchpoints to keep your workplace clean and safe.</p>
               <p className="mt-3 text-slate-700">Whether you need daily service or flexible schedules, choose <strong>Haines City Cleaning</strong> for professional <strong>office cleaning</strong> and <strong>janitorial services</strong>. We coordinate with your hours and security requirements for a smooth operation.</p>
               <p className="mt-3 text-slate-700">Popular searches: <em>commercial cleaning Haines City</em>, <em>office cleaning Haines City</em>, <em>janitorial services Haines City</em>, <em>Haines City cleaning</em>, <em>business cleaning</em>.</p>
+            </div>
+            <div className="pt-8">
+              <CommercialCleaningContent />
             </div>
           </div>
         </article>
