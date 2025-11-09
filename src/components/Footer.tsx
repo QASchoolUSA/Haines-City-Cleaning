@@ -21,6 +21,14 @@ export default function Footer() {
             </ul>
           </div>
           <div>
+            <h3 className="text-base font-semibold text-slate-900">Services</h3>
+            <ul className="mt-2 space-y-1 text-sm text-slate-600">
+              <li><Link href="/services/residential" className="text-[#FF7A00] hover:underline">Residential Cleaning</Link></li>
+              <li><Link href="/services/commercial" className="text-[#FF7A00] hover:underline">Commercial Cleaning</Link></li>
+              <li><Link href="/services/post-construction" className="text-[#FF7A00] hover:underline">Post-Construction Cleaning</Link></li>
+            </ul>
+          </div>
+          <div>
             <h3 className="text-base font-semibold text-slate-900">Service Areas</h3>
             <p className="mt-2 text-sm text-slate-600">Haines City, Davenport, Winter Haven, Lakeland, Kissimmee, and nearby communities.</p>
           </div>

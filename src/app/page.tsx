@@ -1,6 +1,7 @@
 import Hero from "@/components/Hero";
 import Services from "@/components/Services";
 import Benefits from "@/components/Benefits";
+import HouseCleaningArticle from "@/components/HouseCleaningArticle";
 import BookingWidget from "@/components/BookingWidget";
 import Testimonials from "@/components/Testimonials";
 
@@ -10,6 +11,7 @@ export default function Home() {
       <Hero />
       <Services />
       <Benefits />
+      <HouseCleaningArticle />
       <BookingWidget />
       <Testimonials />
   <section className="bg-[#FF7A00]">
