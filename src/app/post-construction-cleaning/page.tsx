@@ -17,38 +17,6 @@ export const metadata = {
   ],
 };
 
-function ShapeTop() {
-  return (
-    <div aria-hidden className="pointer-events-none absolute inset-x-0 -top-10">
-      <svg viewBox="0 0 1440 120" preserveAspectRatio="none" className="h-24 w-full">
-        <defs>
-          <linearGradient id="post-top" x1="0" x2="0" y1="0" y2="1">
-            <stop offset="0%" stopColor="#f8fafc" />
-            <stop offset="100%" stopColor="#ffffff" />
-          </linearGradient>
-        </defs>
-        <path d="M0,120 C300,20 1140,20 1440,120 L1440,0 L0,0 Z" fill="url(#post-top)" />
-      </svg>
-    </div>
-  );
-}
-
-function ShapeBottom() {
-  return (
-    <div aria-hidden className="pointer-events-none absolute inset-x-0 -bottom-10">
-      <svg viewBox="0 0 1440 120" preserveAspectRatio="none" className="h-24 w-full">
-        <defs>
-          <linearGradient id="post-bottom" x1="0" x2="0" y1="0" y2="1">
-            <stop offset="0%" stopColor="#ffffff" />
-            <stop offset="100%" stopColor="#f8fafc" />
-          </linearGradient>
-        </defs>
-        <path d="M0,0 C300,100 1140,100 1440,0 L1440,120 L0,120 Z" fill="url(#post-bottom)" />
-      </svg>
-    </div>
-  );
-}
-
 export default function PostConstruction() {
   return (
     <main className="relative mx-auto max-w-7xl px-4 pt-12 pb-20 sm:px-6 lg:px-8">
@@ -63,7 +31,7 @@ export default function PostConstruction() {
               </div>
             </header>
 
-            <div className="pt-8">
+            <div className="pt-8 bg-[#FFB730]/10 rounded-2xl p-8">
               <h2 className="text-xl font-semibold text-slate-900">Scope & Detailing</h2>
               <p className="mt-2 max-w-2xl text-slate-700">We remove fine dust, debris, and residue, leaving pristine floors, fixtures, and surfaces. Flexible scopes for residential and commercial builds.</p>
               <ul className="mt-6 grid grid-cols-1 gap-3 text-sm text-slate-700 sm:grid-cols-2">

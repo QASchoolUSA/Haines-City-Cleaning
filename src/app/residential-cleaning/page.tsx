@@ -20,38 +20,6 @@ export const metadata = {
   ],
 };
 
-function ShapeTop() {
-  return (
-    <div aria-hidden className="pointer-events-none absolute inset-x-0 -top-10">
-      <svg viewBox="0 0 1440 120" preserveAspectRatio="none" className="h-24 w-full">
-        <defs>
-          <linearGradient id="resi-top" x1="0" x2="0" y1="0" y2="1">
-            <stop offset="0%" stopColor="#f8fafc" />
-            <stop offset="100%" stopColor="#ffffff" />
-          </linearGradient>
-        </defs>
-        <path d="M0,120 C300,20 1140,20 1440,120 L1440,0 L0,0 Z" fill="url(#resi-top)" />
-      </svg>
-    </div>
-  );
-}
-
-function ShapeBottom() {
-  return (
-    <div aria-hidden className="pointer-events-none absolute inset-x-0 -bottom-10">
-      <svg viewBox="0 0 1440 120" preserveAspectRatio="none" className="h-24 w-full">
-        <defs>
-          <linearGradient id="resi-bottom" x1="0" x2="0" y1="0" y2="1">
-            <stop offset="0%" stopColor="#ffffff" />
-            <stop offset="100%" stopColor="#f8fafc" />
-          </linearGradient>
-        </defs>
-        <path d="M0,0 C300,100 1140,100 1440,0 L1440,120 L0,120 Z" fill="url(#resi-bottom)" />
-      </svg>
-    </div>
-  );
-}
-
 export default function Residential() {
   return (
     <main className="relative mx-auto max-w-7xl px-4 pt-12 pb-20 sm:px-6 lg:px-8">
@@ -66,7 +34,7 @@ export default function Residential() {
               </div>
             </header>
 
-            <div className="pt-8">
+            <div className="pt-8 bg-[#FFB730]/10 rounded-2xl p-8">
               <h2 className="text-xl font-semibold text-slate-900">What’s Included</h2>
               <p className="mt-2 max-w-2xl text-slate-700">From weekly upkeep to seasonal deep cleans, kitchens, bathrooms, living areas, and bedrooms—every detail handled by vetted pros.</p>
               <ul className="mt-6 grid grid-cols-1 gap-3 text-sm text-slate-700 sm:grid-cols-2">
@@ -88,7 +56,7 @@ export default function Residential() {
               </ol>
             </div>
 
-            <div className="pt-8">
+            <div className="pt-8 bg-[#FFB730]/10 rounded-2xl p-8">
               <h2 className="text-xl font-semibold text-slate-900">Why Choose Haines City Cleaning</h2>
               <ul className="mt-6 grid grid-cols-1 gap-3 text-sm text-slate-700 sm:grid-cols-2">
         <li className="flex items-start gap-2"><span className="mt-1 h-2 w-2 rounded-full bg-[#FF7A00]"></span> Local team serving Haines City and nearby areas</li>
