@@ -1,13 +1,13 @@
 
 export default function PostConstructionCleaningContent() {
   return (
-    <div className="prose prose-lg mx-auto text-slate-600">
+    <div className="prose prose-lg mx-auto text-slate-600 prose-headings:text-[#FF7A00] prose-a:text-[#FF7A00] prose-strong:text-slate-900 prose-ul:list-disc prose-ul:pl-6">
       <p>
         Construction and renovation projects can leave behind a lot of dust and debris. 
         Haines City Cleaning offers professional post-construction cleaning services in Haines City, FL, to get your new space ready for occupancy.
       </p>
 
-      <h3 className="text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl">Our Post-Construction Cleaning Services</h3>
+      <h3 className="text-2xl font-bold tracking-tight sm:text-3xl">Our Post-Construction Cleaning Services</h3>
       <p>
         Our post-construction cleaning services are designed to handle the unique challenges of cleaning up after a construction project. Our services include:
       </p>
@@ -17,7 +17,7 @@ export default function PostConstructionCleaningContent() {
         <li><strong>Floor Care:</strong> We'll clean and care for all types of flooring, including carpet, hardwood, and tile.</li>
       </ul>
 
-      <h3 className="text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl">Why Choose Us for Your Post-Construction Cleaning Needs?</h3>
+      <h3 className="text-2xl font-bold tracking-tight sm:text-3xl">Why Choose Us for Your Post-Construction Cleaning Needs?</h3>
       <p>
         We have the experience and expertise to handle any post-construction cleaning project, big or small. Here are just a few reasons to choose us:
       </p>
@@ -27,7 +27,7 @@ export default function PostConstructionCleaningContent() {
         <li><strong>Flexible Scheduling:</strong> We can work with your schedule to ensure that your new space is ready when you need it.</li>
       </ul>
 
-      <h3 className="text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl">Frequently Asked Questions About Post-Construction Cleaning</h3>
+      <h3 className="text-2xl font-bold tracking-tight sm:text-3xl">Frequently Asked Questions About Post-Construction Cleaning</h3>
       <h4>When should I schedule a post-construction cleaning?</h4>
       <p>
         It's best to schedule your post-construction cleaning after all construction work is complete, but before you move in any furniture or belongings.

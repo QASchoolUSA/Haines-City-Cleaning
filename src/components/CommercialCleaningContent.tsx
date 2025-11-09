@@ -1,13 +1,13 @@
 
 export default function CommercialCleaningContent() {
   return (
-    <div className="prose prose-lg mx-auto text-slate-600">
+    <div className="prose prose-lg mx-auto text-slate-600 prose-headings:text-[#FF7A00] prose-a:text-[#FF7A00] prose-strong:text-slate-900 prose-ul:list-disc prose-ul:pl-6">
       <p>
         A clean and professional workspace is essential for productivity and making a good impression on clients. 
         Haines City Cleaning offers comprehensive commercial cleaning services in Haines City, FL, to ensure your business always looks its best.
       </p>
 
-      <h3 className="text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl">Our Commercial Cleaning Services</h3>
+      <h3 className="text-2xl font-bold tracking-tight sm:text-3xl">Our Commercial Cleaning Services</h3>
       <p>
         We provide a wide range of commercial cleaning services tailored to the unique needs of your business. Our services include:
       </p>
@@ -18,7 +18,7 @@ export default function CommercialCleaningContent() {
         <li><strong>Shared Area Cleaning:</strong> We also offer cleaning services for shared areas in commercial buildings, such as lobbies, hallways, and elevators.</li>
       </ul>
 
-      <h3 className="text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl">Industries We Serve</h3>
+      <h3 className="text-2xl font-bold tracking-tight sm:text-3xl">Industries We Serve</h3>
       <p>
         We provide commercial cleaning services to a wide range of industries, including:
       </p>
@@ -31,7 +31,7 @@ export default function CommercialCleaningContent() {
         <li>And more!</li>
       </ul>
 
-      <h3 className="text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl">Frequently Asked Questions About Commercial Cleaning</h3>
+      <h3 className="text-2xl font-bold tracking-tight sm:text-3xl">Frequently Asked Questions About Commercial Cleaning</h3>
       <h4>What is the difference between commercial cleaning and janitorial services?</h4>
       <p>
         Commercial cleaning typically refers to a one-time or periodic cleaning service, while janitorial services are ongoing, regular cleaning services. We offer both commercial cleaning and janitorial services to meet the needs of your business.

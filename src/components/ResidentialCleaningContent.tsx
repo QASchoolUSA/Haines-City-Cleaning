@@ -1,14 +1,14 @@
 
 export default function ResidentialCleaningContent() {
   return (
-    <div className="prose prose-lg mx-auto text-slate-600">
+    <div className="prose prose-lg mx-auto text-slate-600 prose-headings:text-[#FF7A00] prose-a:text-[#FF7A00] prose-strong:text-slate-900 prose-ul:list-disc prose-ul:pl-6">
       <p>
         Your home is your sanctuary, a place where you can relax and unwind after a long day. But keeping it clean and tidy can be a never-ending chore. 
         That's where Haines City Cleaning comes in. We offer professional residential cleaning services in Haines City, FL, and the surrounding areas, 
         so you can enjoy a spotless home without lifting a finger.
       </p>
 
-      <h3 className="text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl">Our Comprehensive Residential Cleaning Services</h3>
+      <h3 className="text-2xl font-bold tracking-tight sm:text-3xl">Our Comprehensive Residential Cleaning Services</h3>
       <p>
         We offer a wide range of residential cleaning services to meet your specific needs. Whether you need a one-time deep clean or regular maintenance, 
         we have a solution for you. Our services include:
@@ -20,7 +20,7 @@ export default function ResidentialCleaningContent() {
         <li><strong>Apartment Cleaning:</strong> We also offer apartment cleaning services for tenants and landlords. Whether you need a one-time clean or regular service, we can help you keep your apartment looking its best.</li>
       </ul>
 
-      <h3 className="text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl">Why Choose Haines City Cleaning for Your Residential Cleaning Needs?</h3>
+      <h3 className="text-2xl font-bold tracking-tight sm:text-3xl">Why Choose Haines City Cleaning for Your Residential Cleaning Needs?</h3>
       <p>
         There are many reasons to choose Haines City Cleaning for your residential cleaning needs. Here are just a few:
       </p>
@@ -31,7 +31,7 @@ export default function ResidentialCleaningContent() {
         <li><strong>Satisfaction Guaranteed:</strong> We are committed to your satisfaction. If you are not happy with our service for any reason, we will come back and make it right.</li>
       </ul>
 
-      <h3 className="text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl">Frequently Asked Questions About Residential Cleaning</h3>
+      <h3 className="text-2xl font-bold tracking-tight sm:text-3xl">Frequently Asked Questions About Residential Cleaning</h3>
       <p>
         Here are some of the most common questions we receive about our residential cleaning services:
       </p>
