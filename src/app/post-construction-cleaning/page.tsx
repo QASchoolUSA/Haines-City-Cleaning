@@ -1,4 +1,5 @@
 import PostConstructionCleaningContent from "@/components/PostConstructionCleaningContent";
+import Icon, { type IconName } from "@/components/Icon";
 
 export const metadata = {
   title: "Post‑Construction Cleaning in Haines City",
@@ -17,6 +18,13 @@ export const metadata = {
   ],
 };
 
+const scopeDetailing: { icon: IconName; text: string }[] = [
+  { icon: "sparkles", text: "Dust removal and fine detailing" },
+  { icon: "check", text: "Interior windows, fixtures, and surfaces" },
+  { icon: "check", text: "Floor care and touchpoint cleaning" },
+  { icon: "home", text: "Flexible scope for residential and commercial builds" },
+];
+
 export default function PostConstruction() {
   return (
     <main className="relative mx-auto max-w-7xl px-4 pt-12 pb-20 sm:px-6 lg:px-8">
@@ -34,12 +42,14 @@ export default function PostConstruction() {
             <div className="pt-8 bg-[#FFB730]/10 rounded-2xl p-8">
               <h2 className="text-xl font-semibold text-slate-900">Scope & Detailing</h2>
               <p className="mt-2 max-w-2xl text-slate-700">We remove fine dust, debris, and residue, leaving pristine floors, fixtures, and surfaces. Flexible scopes for residential and commercial builds.</p>
-              <ul className="mt-6 grid grid-cols-1 gap-3 text-sm text-slate-700 sm:grid-cols-2">
-        <li className="flex items-start gap-2"><span className="mt-1 h-2 w-2 rounded-full bg-[#FF7A00]"></span> Dust removal and fine detailing</li>
-        <li className="flex items-start gap-2"><span className="mt-1 h-2 w-2 rounded-full bg-[#FF7A00]"></span> Interior windows, fixtures, and surfaces</li>
-        <li className="flex items-start gap-2"><span className="mt-1 h-2 w-2 rounded-full bg-[#FF7A00]"></span> Floor care and touchpoint cleaning</li>
-        <li className="flex items-start gap-2"><span className="mt-1 h-2 w-2 rounded-full bg-[#FF7A00]"></span> Flexible scope for residential and commercial builds</li>
-              </ul>
+              <div className="mt-6 grid grid-cols-1 gap-4 text-sm text-slate-700 sm:grid-cols-2">
+                {scopeDetailing.map((item) => (
+                  <div key={item.text} className="flex items-start gap-3">
+                    <Icon name={item.icon} className="h-5 w-5 flex-shrink-0 text-[#FF7A00]" />
+                    <span>{item.text}</span>
+                  </div>
+                ))}
+              </div>
             </div>
 
             <div className="pt-8">

@@ -1,4 +1,6 @@
 
+import Accordion from "./Accordion";
+
 export default function ResidentialCleaningContent() {
   return (
     <div className="prose prose-lg mx-auto text-slate-600 prose-headings:text-[#FF7A00] prose-a:text-[#FF7A00] prose-strong:text-slate-900 prose-ul:list-disc prose-ul:pl-6">
@@ -32,21 +34,21 @@ export default function ResidentialCleaningContent() {
       </ul>
 
       <h3 className="text-2xl font-bold tracking-tight sm:text-3xl">Frequently Asked Questions About Residential Cleaning</h3>
-      <p>
-        Here are some of the most common questions we receive about our residential cleaning services:
-      </p>
-      <h4>What is included in a standard cleaning?</h4>
-      <p>
-        Our standard cleaning service includes cleaning your kitchen, bathrooms, bedrooms, and living areas. This includes dusting, vacuuming, mopping, and wiping down surfaces.
-      </p>
-      <h4>How often should I have my home professionally cleaned?</h4>
-      <p>
-        The frequency of professional cleaning depends on your needs and lifestyle. Some of our clients prefer a weekly cleaning, while others opt for a bi-weekly or monthly service. We can work with you to create a cleaning schedule that is right for you.
-      </p>
-      <h4>Do I need to be home during the cleaning?</h4>
-      <p>
-        No, you do not need to be home during the cleaning. Many of our clients provide us with a key or a code to access their home. However, if you prefer to be home during the cleaning, we are happy to work with you.
-      </p>
+      <Accordion title="What is included in a standard cleaning?">
+        <p>
+          Our standard cleaning service includes cleaning your kitchen, bathrooms, bedrooms, and living areas. This includes dusting, vacuuming, mopping, and wiping down surfaces.
+        </p>
+      </Accordion>
+      <Accordion title="How often should I have my home professionally cleaned?">
+        <p>
+          The frequency of professional cleaning depends on your needs and lifestyle. Some of our clients prefer a weekly cleaning, while others opt for a bi-weekly or monthly service. We can work with you to create a cleaning schedule that is right for you.
+        </p>
+      </Accordion>
+      <Accordion title="Do I need to be home during the cleaning?">
+        <p>
+          No, you do not need to be home during the cleaning. Many of our clients provide us with a key or a code to access their home. However, if you prefer to be home during the cleaning, we are happy to work with you.
+        </p>
+      </Accordion>
     </div>
   );
 }

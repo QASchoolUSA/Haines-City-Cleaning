@@ -1,3 +1,4 @@
+import Accordion from "./Accordion";
 
 export default function PostConstructionCleaningContent() {
   return (
@@ -28,14 +29,16 @@ export default function PostConstructionCleaningContent() {
       </ul>
 
       <h3 className="text-2xl font-bold tracking-tight sm:text-3xl">Frequently Asked Questions About Post-Construction Cleaning</h3>
-      <h4>When should I schedule a post-construction cleaning?</h4>
-      <p>
-        It's best to schedule your post-construction cleaning after all construction work is complete, but before you move in any furniture or belongings.
-      </p>
-      <h4>How long does a post-construction cleaning take?</h4>
-      <p>
-        The duration of a post-construction cleaning depends on the size of the space and the extent of the cleaning required. We can provide you with a time estimate when you request a quote.
-      </p>
+      <Accordion title="When should I schedule a post-construction cleaning?">
+        <p>
+          It's best to schedule your post-construction cleaning after all construction work is complete, but before you move in any furniture or belongings.
+        </p>
+      </Accordion>
+      <Accordion title="How long does a post-construction cleaning take?">
+        <p>
+          The duration of a post-construction cleaning depends on the size of the space and the extent of the cleaning required. We can provide you with a time estimate when you request a quote.
+        </p>
+      </Accordion>
     </div>
   );
 }

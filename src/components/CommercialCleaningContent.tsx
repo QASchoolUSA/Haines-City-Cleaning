@@ -1,3 +1,4 @@
+import Accordion from "./Accordion";
 
 export default function CommercialCleaningContent() {
   return (
@@ -32,14 +33,16 @@ export default function CommercialCleaningContent() {
       </ul>
 
       <h3 className="text-2xl font-bold tracking-tight sm:text-3xl">Frequently Asked Questions About Commercial Cleaning</h3>
-      <h4>What is the difference between commercial cleaning and janitorial services?</h4>
-      <p>
-        Commercial cleaning typically refers to a one-time or periodic cleaning service, while janitorial services are ongoing, regular cleaning services. We offer both commercial cleaning and janitorial services to meet the needs of your business.
-      </p>
-      <h4>How much does commercial cleaning cost?</h4>
-      <p>
-        The cost of commercial cleaning depends on the size of your space, the frequency of cleaning, and the specific services you need. We offer free, no-obligation quotes for our commercial cleaning services.
-      </p>
+      <Accordion title="What is the difference between commercial cleaning and janitorial services?">
+        <p>
+          Commercial cleaning typically refers to a one-time or periodic cleaning service, while janitorial services are ongoing, regular cleaning services. We offer both commercial cleaning and janitorial services to meet the needs of your business.
+        </p>
+      </Accordion>
+      <Accordion title="How much does commercial cleaning cost?">
+        <p>
+          The cost of commercial cleaning depends on the size of your space, the frequency of cleaning, and the specific services you need. We offer free, no-obligation quotes for our commercial cleaning services.
+        </p>
+      </Accordion>
     </div>
   );
 }

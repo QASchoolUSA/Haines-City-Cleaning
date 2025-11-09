@@ -1,4 +1,5 @@
 import ResidentialCleaningContent from "@/components/ResidentialCleaningContent";
+import Icon, { type IconName } from "@/components/Icon";
 
 export const metadata = {
   title: "Residential Cleaning in Haines City",
@@ -20,6 +21,22 @@ export const metadata = {
   ],
 };
 
+const whatsIncluded: { icon: IconName; text: string }[] = [
+  { icon: "sparkles", text: "Standard & deep cleaning options" },
+  { icon: "home", text: "Move-in/out specialized cleaning" },
+  { icon: "check", text: "Kitchen & appliance fronts, counters, sinks" },
+  { icon: "check", text: "Bathrooms: showers, tubs, mirrors, fixtures" },
+  { icon: "check", text: "Living areas & bedrooms: dusting, surfaces, floors" },
+  { icon: "check", text: "Add-ons: inside fridge/oven, interior windows, baseboards" },
+];
+
+const whyChoose: { icon: IconName; text: string }[] = [
+  { icon: "star", text: "Local team serving Haines City and nearby areas" },
+  { icon: "clock", text: "Flexible recurring and one-time bookings" },
+  { icon: "shield", text: "Clear pricing and fast online quotes" },
+  { icon: "star", text: "Insured, vetted cleaners you can trust" },
+];
+
 export default function Residential() {
   return (
     <main className="relative mx-auto max-w-7xl px-4 pt-12 pb-20 sm:px-6 lg:px-8">
@@ -37,14 +54,14 @@ export default function Residential() {
             <div className="pt-8 bg-[#FFB730]/10 rounded-2xl p-8">
               <h2 className="text-xl font-semibold text-slate-900">What’s Included</h2>
               <p className="mt-2 max-w-2xl text-slate-700">From weekly upkeep to seasonal deep cleans, kitchens, bathrooms, living areas, and bedrooms—every detail handled by vetted pros.</p>
-              <ul className="mt-6 grid grid-cols-1 gap-3 text-sm text-slate-700 sm:grid-cols-2">
-        <li className="flex items-start gap-2"><span className="mt-1 h-2 w-2 rounded-full bg-[#FF7A00]"></span> Standard & deep cleaning options</li>
-        <li className="flex items-start gap-2"><span className="mt-1 h-2 w-2 rounded-full bg-[#FF7A00]"></span> Move‑in/out specialized cleaning</li>
-        <li className="flex items-start gap-2"><span className="mt-1 h-2 w-2 rounded-full bg-[#FF7A00]"></span> Kitchen & appliance fronts, counters, sinks</li>
-        <li className="flex items-start gap-2"><span className="mt-1 h-2 w-2 rounded-full bg-[#FF7A00]"></span> Bathrooms: showers, tubs, mirrors, fixtures</li>
-        <li className="flex items-start gap-2"><span className="mt-1 h-2 w-2 rounded-full bg-[#FF7A00]"></span> Living areas & bedrooms: dusting, surfaces, floors</li>
-        <li className="flex items-start gap-2"><span className="mt-1 h-2 w-2 rounded-full bg-[#FF7A00]"></span> Add‑ons: inside fridge/oven, interior windows, baseboards</li>
-              </ul>
+              <div className="mt-6 grid grid-cols-1 gap-4 text-sm text-slate-700 sm:grid-cols-2">
+                {whatsIncluded.map((item) => (
+                  <div key={item.text} className="flex items-start gap-3">
+                    <Icon name={item.icon} className="h-5 w-5 flex-shrink-0 text-[#FF7A00]" />
+                    <span>{item.text}</span>
+                  </div>
+                ))}
+              </div>
             </div>
 
             <div className="pt-8">
@@ -58,12 +75,14 @@ export default function Residential() {
 
             <div className="pt-8 bg-[#FFB730]/10 rounded-2xl p-8">
               <h2 className="text-xl font-semibold text-slate-900">Why Choose Haines City Cleaning</h2>
-              <ul className="mt-6 grid grid-cols-1 gap-3 text-sm text-slate-700 sm:grid-cols-2">
-        <li className="flex items-start gap-2"><span className="mt-1 h-2 w-2 rounded-full bg-[#FF7A00]"></span> Local team serving Haines City and nearby areas</li>
-        <li className="flex items-start gap-2"><span className="mt-1 h-2 w-2 rounded-full bg-[#FF7A00]"></span> Flexible recurring and one‑time bookings</li>
-        <li className="flex items-start gap-2"><span className="mt-1 h-2 w-2 rounded-full bg-[#FF7A00]"></span> Clear pricing and fast online quotes</li>
-        <li className="flex items-start gap-2"><span className="mt-1 h-2 w-2 rounded-full bg-[#FF7A00]"></span> Insured, vetted cleaners you can trust</li>
-              </ul>
+              <div className="mt-6 grid grid-cols-1 gap-4 text-sm text-slate-700 sm:grid-cols-2">
+                {whyChoose.map((item) => (
+                  <div key={item.text} className="flex items-start gap-3">
+                    <Icon name={item.icon} className="h-5 w-5 flex-shrink-0 text-[#FF7A00]" />
+                    <span>{item.text}</span>
+                  </div>
+                ))}
+              </div>
             </div>
 
             <div className="pt-8">
