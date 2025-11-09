@@ -6,7 +6,7 @@ export default function Hero() {
       <div className="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8">
         <div className="max-w-3xl">
           <h1 className="text-4xl font-bold tracking-tight text-slate-900 sm:text-5xl">
-            Sparkling clean spaces for homes, businesses, and new builds.
+            Professional Cleaning Services in Haines City, FL.
           </h1>
           <p className="mt-6 text-lg leading-8 text-slate-700">
             Haines City Cleaning delivers reliable, high‑quality residential, commercial, and post‑construction cleaning. Flexible scheduling, vetted pros, and a fast quote.
