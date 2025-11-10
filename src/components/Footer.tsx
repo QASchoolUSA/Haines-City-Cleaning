@@ -16,7 +16,7 @@ export default function Footer() {
             <h3 className="text-base font-semibold text-slate-900">Contact</h3>
             <ul className="mt-2 space-y-1 text-sm text-slate-600">
               <li>Email: <a href="mailto:hello@hainescitycleaning.com" className="text-[#FF7A00] hover:underline">hello@hainescitycleaning.com</a></li>
-              <li>Phone: <a href="tel:+18635551234" className="text-[#FF7A00] hover:underline">(863) 555‑1234</a></li>
+              <li>Phone: <a href="tel:+18633587388" className="text-[#FF7A00] hover:underline">(863) 358-7388</a></li>
               <li>Hours: Mon–Sat 8:00–18:00</li>
             </ul>
           </div>
