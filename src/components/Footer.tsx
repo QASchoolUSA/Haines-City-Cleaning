@@ -24,6 +24,8 @@ export default function Footer() {
             <h3 className="text-base font-semibold text-slate-900">Services</h3>
             <ul className="mt-2 space-y-1 text-sm text-slate-600">
               <li><Link href="/residential-cleaning" className="text-[#FF7A00] hover:underline">Residential Cleaning</Link></li>
+              <li><Link href="/house-cleaning" className="text-[#FF7A00] hover:underline">House Cleaning</Link></li>
+              <li><Link href="/move-out-cleaning" className="text-[#FF7A00] hover:underline">Move Out/In Cleaning</Link></li>
               <li><Link href="/commercial-cleaning" className="text-[#FF7A00] hover:underline">Commercial Cleaning</Link></li>
               <li><Link href="/post-construction-cleaning" className="text-[#FF7A00] hover:underline">Post-Construction Cleaning</Link></li>
             </ul>

@@ -4,9 +4,23 @@ const services = [
   {
     key: "residential",
     title: "Residential Cleaning",
-    desc: "Standard, deep, and move‑in/out cleaning tailored to your home.",
+    desc: "Recurring home maintenance for a consistently clean space.",
     href: "/residential-cleaning",
     icon: "🏠",
+  },
+  {
+    key: "house",
+    title: "House Cleaning",
+    desc: "Detailed maid service for one-time deep or standard cleanings.",
+    href: "/house-cleaning",
+    icon: "🧹",
+  },
+  {
+    key: "move-out",
+    title: "Move Out Cleaning",
+    desc: "Vacancy cleaning to help you secure your security deposit.",
+    href: "/move-out-cleaning",
+    icon: "📦",
   },
   {
     key: "commercial",
