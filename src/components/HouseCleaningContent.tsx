@@ -1,6 +1,6 @@
 
 import Accordion from "./Accordion";
-import Icon, { type IconName } from "./Icon";
+import Icon from "./Icon";
 
 export default function HouseCleaningContent() {
     return (
@@ -16,19 +16,19 @@ export default function HouseCleaningContent() {
                 From dusting ceiling fans to scrubbing baseboards, we take pride in our attention to detail.
             </p>
             <ul>
-                <li className="flex items-start gap-3"><Icon name="check" className="h-5 w-5 flex-shrink-0 text-[#FF7A00]" /><span><strong>Recurring Housekeeping:</strong> Keep your home consistently consistently clean with our weekly, bi-weekly, or monthly cleaning schedules. We handle the routine chores so you don't have to.</span></li>
+                <li className="flex items-start gap-3"><Icon name="check" className="h-5 w-5 flex-shrink-0 text-[#FF7A00]" /><span><strong>Recurring Housekeeping:</strong> Keep your home consistently consistently clean with our weekly, bi-weekly, or monthly cleaning schedules. We handle the routine chores so you don&#39;t have to.</span></li>
                 <li className="flex items-start gap-3"><Icon name="sparkles" className="h-5 w-5 flex-shrink-0 text-[#FF7A00]" /><span><strong>Deep House Cleaning:</strong> Perfect for spring cleaning or getting ready for a special event. Our deep cleaning service targets hidden dirt, grime build-up, and neglected areas for a truly fresh start.</span></li>
                 <li className="flex items-start gap-3"><Icon name="home" className="h-5 w-5 flex-shrink-0 text-[#FF7A00]" /><span><strong>Specialized Cleaning:</strong> We can customize our services to include interior window cleaning, refrigerator cleaning, and oven cleaning, ensuring every appliance and surface is spotless.</span></li>
             </ul>
 
             <h3 className="mt-12 text-2xl font-bold tracking-tight sm:text-3xl">The Best House Cleaning in Haines City</h3>
             <p>
-                When searching for "cleaning services near me," you want a company that is reliable, trustworthy, and effective. Here is why Haines City Cleaning is the preferred choice for local homeowners:
+                When searching for &quot;cleaning services near me,&quot; you want a company that is reliable, trustworthy, and effective. Here is why Haines City Cleaning is the preferred choice for local homeowners:
             </p>
             <ul>
                 <li className="flex items-start gap-3"><Icon name="shield" className="h-5 w-5 flex-shrink-0 text-[#FF7A00]" /><span><strong>Licensed & Insured:</strong> We are a fully professional cleaning company, giving you peace of mind that your property is protected.</span></li>
                 <li className="flex items-start gap-3"><Icon name="star" className="h-5 w-5 flex-shrink-0 text-[#FF7A00]" /><span><strong>Trained Staff:</strong> Every member of our team undergoes rigorous training to ensure they meet our high standards of quality and efficiency.</span></li>
-                <li className="flex items-start gap-3"><Icon name="clock" className="h-5 w-5 flex-shrink-0 text-[#FF7A00]" /><span><strong>Reliable & Punctual:</strong> We respect your time. You can count on us to arrive as scheduled and complete the job efficiently.</span></li>
+                <li className="flex items-start gap-3"><Icon name="clock" className="h-5 w-5 flex-shrink-0 text-[#FF7A00]" /><span><strong>Reliable &amp; Punctual:</strong> We respect your time. You can count on us to arrive as scheduled and complete the job efficiently.</span></li>
             </ul>
 
             <h3 className="mt-12 text-2xl font-bold tracking-tight sm:text-3xl">Common Questions About Our House Cleaning</h3>

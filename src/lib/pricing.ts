@@ -27,7 +27,8 @@ const basePost: Record<string, number> = {
   over2k: 649,
 };
 
-const addOnPrices = {
+type AddOnKey = keyof QuoteInput["addOns"];
+const addOnPrices: Record<AddOnKey, number> = {
   fridge: 25,
   oven: 25,
   windows: 40,
@@ -48,7 +49,7 @@ export function computeQuote(input: QuoteInput) {
 
   const addOnsTotal = Object.entries(input.addOns).reduce((sum, [key, enabled]) => {
     if (!enabled) return sum;
-    return sum + (addOnPrices as any)[key];
+    return sum + addOnPrices[key as AddOnKey];
   }, 0);
 
   const price = Math.round((base * multiplier + addOnsTotal) / 5) * 5; // round to nearest $5

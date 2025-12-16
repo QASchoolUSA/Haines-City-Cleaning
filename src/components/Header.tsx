@@ -44,7 +44,8 @@ export default function Header() {
                 <div className="rounded-xl bg-white p-2 shadow-lg ring-1 ring-slate-200/50 flex flex-col gap-1">
                   <Link href="/residential-cleaning" className="block rounded-lg px-4 py-2 text-sm text-slate-700 hover:bg-[#FFB730]/10 hover:text-[#FF7A00]">Residential Cleaning</Link>
                   <Link href="/house-cleaning" className="block rounded-lg px-4 py-2 text-sm text-slate-700 hover:bg-[#FFB730]/10 hover:text-[#FF7A00]">House Cleaning</Link>
-                  <Link href="/move-out-cleaning" className="block rounded-lg px-4 py-2 text-sm text-slate-700 hover:bg-[#FFB730]/10 hover:text-[#FF7A00]">Move Out/In Cleaning</Link>
+                  <Link href="/move-out-cleaning" className="block rounded-lg px-4 py-2 text-sm text-slate-700 hover:bg-[#FFB730]/10 hover:text-[#FF7A00]">Move Out Cleaning</Link>
+                  <Link href="/move-in-cleaning" className="block rounded-lg px-4 py-2 text-sm text-slate-700 hover:bg-[#FFB730]/10 hover:text-[#FF7A00]">Move In Cleaning</Link>
                   <Link href="/commercial-cleaning" className="block rounded-lg px-4 py-2 text-sm text-slate-700 hover:bg-[#FFB730]/10 hover:text-[#FF7A00]">Commercial Cleaning</Link>
                   <Link href="/post-construction-cleaning" className="block rounded-lg px-4 py-2 text-sm text-slate-700 hover:bg-[#FFB730]/10 hover:text-[#FF7A00]">Post-Construction</Link>
                 </div>
@@ -81,7 +82,8 @@ export default function Header() {
                   <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2 block">Services</span>
                   <Link href="/residential-cleaning" className="block py-1 text-sm font-medium text-slate-700 hover:text-[#FF7A00]" onClick={() => setOpen(false)}>Residential</Link>
                   <Link href="/house-cleaning" className="block py-1 text-sm font-medium text-slate-700 hover:text-[#FF7A00]" onClick={() => setOpen(false)}>House Cleaning</Link>
-                  <Link href="/move-out-cleaning" className="block py-1 text-sm font-medium text-slate-700 hover:text-[#FF7A00]" onClick={() => setOpen(false)}>Move Out/In</Link>
+                  <Link href="/move-out-cleaning" className="block py-1 text-sm font-medium text-slate-700 hover:text-[#FF7A00]" onClick={() => setOpen(false)}>Move Out</Link>
+                  <Link href="/move-in-cleaning" className="block py-1 text-sm font-medium text-slate-700 hover:text-[#FF7A00]" onClick={() => setOpen(false)}>Move In</Link>
                   <Link href="/commercial-cleaning" className="block py-1 text-sm font-medium text-slate-700 hover:text-[#FF7A00]" onClick={() => setOpen(false)}>Commercial</Link>
                   <Link href="/post-construction-cleaning" className="block py-1 text-sm font-medium text-slate-700 hover:text-[#FF7A00]" onClick={() => setOpen(false)}>Post-Construction</Link>
                 </div>

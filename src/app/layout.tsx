@@ -53,12 +53,18 @@ export const metadata: Metadata = {
     description: "Expert residential and commercial cleaning in Haines City, FL. Book your trusted local cleaners today.",
     images: [
       {
-        url: "/og-image.jpg", // Ensure this image exists eventually, or use a placeholder path
-        width: 1200,
-        height: 630,
-        alt: "Haines City Cleaning Services",
+        url: "/icons/android-chrome-512x512.png",
+        width: 512,
+        height: 512,
+        alt: "Haines City Cleaning",
       },
     ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Haines City Cleaning | Professional Cleaning Services",
+    description: "Expert residential and commercial cleaning in Haines City, FL.",
+    images: ["/icons/android-chrome-512x512.png"],
   },
 };
 

@@ -1,12 +1,14 @@
 export default function JsonLd() {
-    const jsonLd = {
+    const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://hainescitycleaning.com";
+    const jsonLdBusiness = {
         "@context": "https://schema.org",
         "@type": "LocalBusiness",
         "name": "Haines City Cleaning",
-        "image": "https://hainescitycleaning.com/haines-city-cleaning-logo.png", // Assuming a logo location or placeholder. We might need to check if one exists or use a default.
-        "@id": "https://hainescitycleaning.com",
-        "url": "https://hainescitycleaning.com",
-        "telephone": "+18635550123", // Needs a real number if available, using placeholder or generic
+        "image": `${siteUrl}/haines-city-cleaning-logo.svg`,
+        "logo": `${siteUrl}/haines-city-cleaning-logo.svg`,
+        "@id": siteUrl,
+        "url": siteUrl,
+        "telephone": "+18633587388",
         "address": {
             "@type": "PostalAddress",
             "streetAddress": "",
@@ -49,11 +51,24 @@ export default function JsonLd() {
         },
         "priceRange": "$$"
     };
+    const jsonLdWebsite = {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "Haines City Cleaning",
+        "alternateName": "hainescitycleaning.com",
+        "url": siteUrl
+    };
 
     return (
-        <script
-            type="application/ld+json"
-            dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-        />
+        <>
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdBusiness) }}
+            />
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdWebsite) }}
+            />
+        </>
     );
 }

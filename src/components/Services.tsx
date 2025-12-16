@@ -23,6 +23,13 @@ const services = [
     icon: "📦",
   },
   {
+    key: "move-in",
+    title: "Move In Cleaning",
+    desc: "New home deep cleaning for a fresh, sanitized start.",
+    href: "/move-in-cleaning",
+    icon: "🔑",
+  },
+  {
     key: "commercial",
     title: "Commercial Cleaning",
     desc: "Offices, retail, and shared spaces—consistent and professional.",
@@ -45,7 +52,7 @@ export default function Services() {
         <div className="flex items-end justify-between">
           <div>
             <h2 className="text-3xl font-bold tracking-tight text-slate-900">Our Services</h2>
-            <p className="mt-2 text-slate-700">Three specialized offerings to fit every need.</p>
+            <p className="mt-2 text-slate-700">Specialized offerings to fit every need.</p>
           </div>
           <Link href="#booking" className="hidden rounded-full bg-[#FF7A00] px-5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-[#FFB730] sm:inline-block">Get a quote</Link>
         </div>

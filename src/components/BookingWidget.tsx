@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { computeQuote, type ServiceType } from "@/lib/pricing";
 
 type SizeOption = { key: string; label: string };
@@ -40,25 +40,25 @@ export default function BookingWidget() {
 
   const [step, setStep] = useState(0);
 
-  const quote = useMemo(() => computeQuote({ serviceType, sizeKey, level, addOns }), [serviceType, sizeKey, level, addOns]);
-
-  useEffect(() => {
-    if (serviceType === "post-construction") setLevel("post");
-    if (serviceType !== "post-construction" && level === "post") setLevel("standard");
-  }, [serviceType]);
+  const effectiveLevel: LevelType = useMemo(() => {
+    if (serviceType === "post-construction") return "post";
+    if (level === "post") return "standard";
+    return level;
+  }, [serviceType, level]);
+  const quote = useMemo(() => computeQuote({ serviceType, sizeKey, level: effectiveLevel, addOns }), [serviceType, sizeKey, effectiveLevel, addOns]);
 
   const sizeOptions = SIZE_OPTIONS[serviceType];
 
   const mailto = useMemo(() => {
     const subject = encodeURIComponent(`Cleaning Request: ${serviceType} • ${sizeKey} • ${date || "TBD"}`);
     const body = encodeURIComponent(
-      `Service: ${serviceType}\nSize: ${sizeKey}\nLevel: ${level}\nAdd-ons: ${Object.entries(addOns)
-        .filter(([_, v]) => v)
+      `Service: ${serviceType}\nSize: ${sizeKey}\nLevel: ${effectiveLevel}\nAdd-ons: ${Object.entries(addOns)
+        .filter(([, v]) => v)
         .map(([k]) => k)
         .join(", ") || "None"}\n\nPreferred Date/Time: ${date || "TBD"} ${time || ""}\nName: ${name}\nEmail: ${email}\nPhone: ${phone}\nAddress: ${address}\n\nQuoted Price: $${quote.price} (range $${quote.range.low}–$${quote.range.high})\n\nNotes: (add any notes here)`
     );
     return `mailto:hello@hainescitycleaning.com?subject=${subject}&body=${body}`;
-  }, [serviceType, sizeKey, level, addOns, date, time, name, email, phone, address, quote]);
+  }, [serviceType, sizeKey, effectiveLevel, addOns, date, time, name, email, phone, address, quote]);
 
   const steps = ["Service", "Options", "Schedule", "Contact", "Review"];
 
@@ -110,7 +110,7 @@ export default function BookingWidget() {
           <div className="grid gap-3">
             <label className="flex flex-col gap-1">
               <span className="text-sm font-medium text-slate-700">Level</span>
-              <select className="rounded-md border border-slate-300 px-3 py-2 text-sm" value={level} onChange={(e) => setLevel(e.target.value as LevelType)} disabled={serviceType === "post-construction"}>
+              <select className="rounded-md border border-slate-300 px-3 py-2 text-sm" value={effectiveLevel} onChange={(e) => setLevel(e.target.value as LevelType)} disabled={serviceType === "post-construction"}>
                 <option value="standard">Standard</option>
                 <option value="deep">Deep</option>
                 <option value="move">Move‑in/out</option>
@@ -168,8 +168,8 @@ export default function BookingWidget() {
           <div className="space-y-2 text-sm text-slate-700">
             <p><span className="font-semibold">Service:</span> {serviceType}</p>
             <p><span className="font-semibold">Size:</span> {sizeKey}</p>
-            <p><span className="font-semibold">Level:</span> {level}</p>
-            <p><span className="font-semibold">Add‑ons:</span> {Object.entries(addOns).filter(([_, v]) => v).map(([k]) => k).join(", ") || "None"}</p>
+            <p><span className="font-semibold">Level:</span> {effectiveLevel}</p>
+            <p><span className="font-semibold">Add‑ons:</span> {Object.entries(addOns).filter(([, v]) => v).map(([k]) => k).join(", ") || "None"}</p>
             <p><span className="font-semibold">Preferred:</span> {date || "TBD"} {time || ""}</p>
             <p><span className="font-semibold">Name:</span> {name || "—"}</p>
             <p><span className="font-semibold">Email:</span> {email || "—"}</p>

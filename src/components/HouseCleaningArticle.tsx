@@ -7,16 +7,16 @@ export default function HouseCleaningArticle() {
           <h2 className="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">The Ultimate Guide to a Sparkling Clean Home</h2>
           <p>
             Keeping your home clean and tidy can be a daunting task, especially with a busy schedule. 
-            That's where professional house cleaning services come in. If you're looking for reliable <strong>house cleaning in Haines City</strong>, 
-            you've come to the right place. Our team at <strong>Haines City Cleaning</strong> is dedicated to providing top-notch services 
+            That&#39;s where professional house cleaning services come in. If you&#39;re looking for reliable <strong>house cleaning in Haines City</strong>, 
+            you&#39;ve come to the right place. Our team at <strong>Haines City Cleaning</strong> is dedicated to providing top-notch services 
             that leave your home sparkling clean.
           </p>
           <h3 className="text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl">Why Choose Professional House Cleaning?</h3>
           <p>
             Hiring a professional cleaning service can save you time and energy. Instead of spending your weekends scrubbing floors, 
             you can enjoy your free time with family and friends. A professional service ensures a thorough clean, reaching places 
-            you might miss. When searching for "<strong>house cleaning near me</strong>", you want a service that is trustworthy and efficient. 
-            That's what we offer.
+            you might miss. When searching for &quot;<strong>house cleaning near me</strong>&quot;, you want a service that is trustworthy and efficient. 
+            That&#39;s what we offer.
           </p>
           <h3 className="text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl">What to Expect from Our Haines City House Cleaning Services</h3>
           <p>
@@ -28,11 +28,11 @@ export default function HouseCleaningArticle() {
           <p>
             When you book with <strong>Haines City Cleaning</strong>, you can expect a seamless experience. Our easy-to-use online booking 
             system allows you to schedule a cleaning in just a few clicks. We offer flexible scheduling to fit your busy lifestyle. 
-            Whether you need a one-time clean or a recurring service, we've got you covered.
+            Whether you need a one-time clean or a recurring service, we&#39;ve got you covered.
           </p>
           <h3 className="text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl">The Benefits of a Clean Home</h3>
           <p>
-            A clean home is not just about aesthetics; it's also about your health and well-being. A clean environment can reduce stress, 
+            A clean home is not just about aesthetics; it&#39;s also about your health and well-being. A clean environment can reduce stress, 
             improve indoor air quality, and minimize the spread of germs. Let us help you maintain a healthy and happy home with our 
             professional <strong>house cleaning Haines City</strong> services.
           </p>

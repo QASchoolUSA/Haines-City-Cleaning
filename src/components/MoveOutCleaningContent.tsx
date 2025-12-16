@@ -1,12 +1,12 @@
 
 import Accordion from "./Accordion";
-import Icon, { type IconName } from "./Icon";
+import Icon from "./Icon";
 
 export default function MoveOutCleaningContent() {
     return (
         <div className="prose prose-lg mx-auto text-slate-600 prose-headings:text-[#FF7A00] prose-a:text-[#FF7A00] prose-strong:text-slate-900 prose-ul:list-none prose-ul:pl-0">
             <p>
-                Moving is one of life's most stressful events. Between packing boxes, coordinating movers, and setting up your new place, cleaning your old home is often the last thing on your mind.
+                Moving is one of life&#39;s most stressful events. Between packing boxes, coordinating movers, and setting up your new place, cleaning your old home is often the last thing on your mind.
                 However, leaving a clean property is essential for getting your security deposit back or ensuring a smooth sale. <strong>Haines City Cleaning</strong> offers professional <strong>move-out cleaning services in Haines City, FL</strong>, tailored to meet the strict standards of landlords and property managers.
             </p>
 
@@ -23,10 +23,10 @@ export default function MoveOutCleaningContent() {
 
             <h3 className="mt-12 text-2xl font-bold tracking-tight sm:text-3xl">Why Choose Us for Your Vacancy Cleaning?</h3>
             <p>
-                Don't leave your security deposit to chance. Amateur cleaning often results in missed spots and deductions from your refund. By hiring <strong>Haines City Cleaning</strong>, you are investing in a professional result.
+                Don&#39;t leave your security deposit to chance. Amateur cleaning often results in missed spots and deductions from your refund. By hiring <strong>Haines City Cleaning</strong>, you are investing in a professional result.
             </p>
             <ul>
-                <li className="flex items-start gap-3"><Icon name="star" className="h-5 w-5 flex-shrink-0 text-[#FF7A00]" /><span><strong>Deposit Back Guarantee:</strong> We know what inspectors look for. If an area we cleaned doesn't pass inspection, let us know within 24 hours and we will re-clean it for free.</span></li>
+                <li className="flex items-start gap-3"><Icon name="star" className="h-5 w-5 flex-shrink-0 text-[#FF7A00]" /><span><strong>Deposit Back Guarantee:</strong> We know what inspectors look for. If an area we cleaned doesn&#39;t pass inspection, let us know within 24 hours and we will re-clean it for free.</span></li>
                 <li className="flex items-start gap-3"><Icon name="clock" className="h-5 w-5 flex-shrink-0 text-[#FF7A00]" /><span><strong>Last Minute Availability:</strong> Moving often involves unexpected schedule changes. We do our best to accommodate last-minute <strong>move out cleaning</strong> requests in Haines City and Davenport.</span></li>
             </ul>
 

@@ -1,5 +1,7 @@
 import CommercialCleaningContent from "@/components/CommercialCleaningContent";
 import Icon, { type IconName } from "@/components/Icon";
+import Accordion from "@/components/Accordion";
+import Link from "next/link";
 
 export const metadata = {
   title: "Commercial Cleaning in Haines City",
@@ -27,6 +29,29 @@ const servicesSchedules: { icon: IconName; text: string }[] = [
 ];
 
 export default function Commercial() {
+  const faqs = [
+    { q: "Do you offer after-hours cleaning?", a: "Yes. We align with your operating hours and security requirements." },
+    { q: "Are supplies and equipment provided?", a: "Yes. We bring professional-grade supplies and equipment." },
+    { q: "Can you handle large office suites?", a: "Yes. We service small offices, large suites, and shared areas." },
+    { q: "Do you provide one-time or recurring service?", a: "Both. Daily, weekly, bi-weekly, and as‑needed options." },
+  ];
+  const faqJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": faqs.map((f) => ({
+      "@type": "Question",
+      "name": f.q,
+      "acceptedAnswer": { "@type": "Answer", "text": f.a },
+    })),
+  };
+  const breadcrumbJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://hainescitycleaning.com/" },
+      { "@type": "ListItem", "position": 2, "name": "Commercial Cleaning", "item": "https://hainescitycleaning.com/commercial-cleaning" }
+    ]
+  };
   return (
     <main className="relative mx-auto max-w-7xl px-4 pt-12 pb-20 sm:px-6 lg:px-8">
       <section>
@@ -36,7 +61,7 @@ export default function Commercial() {
               <h1 className="text-3xl font-bold tracking-tight text-slate-900">Commercial Cleaning</h1>
               <p className="text-slate-700">Office suites, retail, and shared areas—consistent cleaning on your schedule.</p>
               <div className="pt-4">
-        <a href="/#booking" className="inline-flex rounded-full bg-[#FF7A00] px-6 py-3 text-sm font-semibold text-white shadow-sm hover:bg-[#FFB730]">Get a fast quote</a>
+                <Link href="/#booking" className="inline-flex rounded-full bg-[#FF7A00] px-6 py-3 text-sm font-semibold text-white shadow-sm hover:bg-[#FFB730]">Get a fast quote</Link>
               </div>
             </header>
 
@@ -71,6 +96,16 @@ export default function Commercial() {
             <div className="pt-8">
               <CommercialCleaningContent />
             </div>
+            <div className="pt-8">
+              <h2 className="text-xl font-semibold text-slate-900">FAQs</h2>
+              <div className="mt-4">
+                {faqs.map((f) => (
+                  <Accordion key={f.q} title={f.q}>
+                    {f.a}
+                  </Accordion>
+                ))}
+              </div>
+            </div>
           </div>
         </article>
       </section>
@@ -80,10 +115,12 @@ export default function Commercial() {
         <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
           <div className="flex flex-wrap items-center justify-between gap-6">
             <h3 className="text-xl font-semibold text-white">Ready for a spotless space?</h3>
-          <a href="/#booking" className="rounded-full bg-white px-5 py-2.5 text-sm font-semibold text-[#FF7A00] shadow-sm hover:bg-[#FFB730]/10">Get a quote</a>
+            <Link href="/#booking" className="rounded-full bg-white px-5 py-2.5 text-sm font-semibold text-[#FF7A00] shadow-sm hover:bg-[#FFB730]/10">Get a quote</Link>
           </div>
         </div>
       </section>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }} />
     </main>
   );
 }

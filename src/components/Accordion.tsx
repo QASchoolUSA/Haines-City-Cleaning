@@ -1,9 +1,16 @@
 "use client";
-import { useState, useRef, type ReactNode } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 
 export default function Accordion({ title, children }: { title: string; children: ReactNode }) {
   const [isOpen, setIsOpen] = useState(false);
   const contentRef = useRef<HTMLDivElement>(null);
+  const [contentHeight, setContentHeight] = useState(0);
+
+  useEffect(() => {
+    const el = contentRef.current;
+    if (!el) return;
+    setContentHeight(el.scrollHeight);
+  }, [isOpen]);
 
   return (
     <div className="border-b border-slate-200">
@@ -18,7 +25,7 @@ export default function Accordion({ title, children }: { title: string; children
       </button>
       <div
         ref={contentRef}
-        style={{ maxHeight: isOpen ? contentRef.current?.scrollHeight : 0 }}
+        style={{ maxHeight: isOpen ? contentHeight : 0 }}
         className="overflow-hidden transition-all duration-300"
       >
         <div className="pb-4 text-slate-700">{children}</div>

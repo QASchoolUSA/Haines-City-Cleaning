@@ -1,5 +1,5 @@
 import Accordion from "./Accordion";
-import Icon, { type IconName } from "./Icon";
+import Icon from "./Icon";
 
 export default function CommercialCleaningContent() {
   return (

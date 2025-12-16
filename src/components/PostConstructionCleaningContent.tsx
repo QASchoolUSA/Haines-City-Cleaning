@@ -1,5 +1,5 @@
 import Accordion from "./Accordion";
-import Icon, { type IconName } from "./Icon";
+import Icon from "./Icon";
 
 export default function PostConstructionCleaningContent() {
   return (
@@ -14,9 +14,9 @@ export default function PostConstructionCleaningContent() {
         Our post-construction cleaning services are designed to handle the unique challenges of cleaning up after a construction project. Our services include:
       </p>
       <ul>
-        <li className="flex items-start gap-3"><Icon name="sparkles" className="h-5 w-5 flex-shrink-0 text-[#FF7A00]" /><span><strong>Debris Removal:</strong> We'll remove all construction debris, including dust, dirt, and leftover materials.</span></li>
-        <li className="flex items-start gap-3"><Icon name="sparkles" className="h-5 w-5 flex-shrink-0 text-[#FF7A00]" /><span><strong>Detailed Cleaning:</strong> We'll perform a detailed cleaning of the entire space, including washing walls, cleaning windows, and polishing fixtures.</span></li>
-        <li className="flex items-start gap-3"><Icon name="check" className="h-5 w-5 flex-shrink-0 text-[#FF7A00]" /><span><strong>Floor Care:</strong> We'll clean and care for all types of flooring, including carpet, hardwood, and tile.</span></li>
+        <li className="flex items-start gap-3"><Icon name="sparkles" className="h-5 w-5 flex-shrink-0 text-[#FF7A00]" /><span><strong>Debris Removal:</strong> We will remove all construction debris, including dust, dirt, and leftover materials.</span></li>
+        <li className="flex items-start gap-3"><Icon name="sparkles" className="h-5 w-5 flex-shrink-0 text-[#FF7A00]" /><span><strong>Detailed Cleaning:</strong> We will perform a detailed cleaning of the entire space, including washing walls, cleaning windows, and polishing fixtures.</span></li>
+        <li className="flex items-start gap-3"><Icon name="check" className="h-5 w-5 flex-shrink-0 text-[#FF7A00]" /><span><strong>Floor Care:</strong> We will clean and care for all types of flooring, including carpet, hardwood, and tile.</span></li>
       </ul>
 
       <h3 className="mt-12 text-2xl font-bold tracking-tight sm:text-3xl">Why Choose Us for Your Post-Construction Cleaning Needs?</h3>
@@ -32,7 +32,7 @@ export default function PostConstructionCleaningContent() {
       <h3 className="mt-12 text-2xl font-bold tracking-tight sm:text-3xl">Frequently Asked Questions About Post-Construction Cleaning</h3>
       <Accordion title="When should I schedule a post-construction cleaning?">
         <p>
-          It's best to schedule your post-construction cleaning after all construction work is complete, but before you move in any furniture or belongings.
+          It&#39;s best to schedule your post-construction cleaning after all construction work is complete, but before you move in any furniture or belongings.
         </p>
       </Accordion>
       <Accordion title="How long does a post-construction cleaning take?">
