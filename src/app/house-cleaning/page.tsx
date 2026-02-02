@@ -2,6 +2,7 @@ import HouseCleaningContent from "@/components/HouseCleaningContent";
 import Icon, { type IconName } from "@/components/Icon";
 import Accordion from "@/components/Accordion";
 import Link from "next/link";
+import ServiceJsonLd from "@/components/ServiceJsonLd";
 
 export const metadata = {
     title: "House Cleaning Services Haines City, FL | Best Maid Service",
@@ -63,6 +64,12 @@ export default function HouseCleaning() {
     };
     return (
         <main className="relative mx-auto max-w-7xl px-4 pt-12 pb-20 sm:px-6 lg:px-8">
+            <ServiceJsonLd
+                name="House Cleaning Services"
+                description="Trusted house cleaning and maid service in Haines City. Weekly, bi-weekly, and deep cleaning."
+                url="https://hainescitycleaning.com/house-cleaning"
+                type="Service"
+            />
             <section>
                 <article className="rounded-2xl bg-white p-8">
                     <div className="space-y-12 divide-y divide-slate-100">

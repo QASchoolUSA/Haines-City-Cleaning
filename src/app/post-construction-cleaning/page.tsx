@@ -2,6 +2,7 @@ import PostConstructionCleaningContent from "@/components/PostConstructionCleani
 import Icon, { type IconName } from "@/components/Icon";
 import Accordion from "@/components/Accordion";
 import Link from "next/link";
+import ServiceJsonLd from "@/components/ServiceJsonLd";
 
 export const metadata = {
   title: "Post‑Construction Cleaning in Haines City",
@@ -53,6 +54,12 @@ export default function PostConstruction() {
   };
   return (
     <main className="relative mx-auto max-w-7xl px-4 pt-12 pb-20 sm:px-6 lg:px-8">
+      <ServiceJsonLd
+        name="Post-Construction Cleaning Services"
+        description="Detailed post-construction cleaning in Haines City. Dust removal and final detailing for homes and businesses."
+        url="https://hainescitycleaning.com/post-construction-cleaning"
+        type="Service"
+      />
       <section>
         <article className="rounded-2xl bg-white p-8">
           <div className="space-y-12 divide-y divide-slate-100">
@@ -80,9 +87,9 @@ export default function PostConstruction() {
             <div className="pt-8">
               <h2 className="text-xl font-semibold text-slate-900">How We Deliver</h2>
               <ol className="mt-6 grid grid-cols-1 gap-6 sm:grid-cols-3">
-        <li className="rounded-xl border border-slate-100 p-6"><div className="flex h-8 w-8 items-center justify-center rounded-full bg-[#FF7A00] text-white">1</div><p className="mt-3 text-sm text-slate-700">Construction walkthrough and scope planning.</p></li>
-        <li className="rounded-xl border border-slate-100 p-6"><div className="flex h-8 w-8 items-center justify-center rounded-full bg-[#FF7A00] text-white">2</div><p className="mt-3 text-sm text-slate-700">Dust removal, debris disposal, detailed surface cleaning.</p></li>
-        <li className="rounded-xl border border-slate-100 p-6"><div className="flex h-8 w-8 items-center justify-center rounded-full bg-[#FF7A00] text-white">3</div><p className="mt-3 text-sm text-slate-700">Final checks and handover-ready presentation.</p></li>
+                <li className="rounded-xl border border-slate-100 p-6"><div className="flex h-8 w-8 items-center justify-center rounded-full bg-[#FF7A00] text-white">1</div><p className="mt-3 text-sm text-slate-700">Construction walkthrough and scope planning.</p></li>
+                <li className="rounded-xl border border-slate-100 p-6"><div className="flex h-8 w-8 items-center justify-center rounded-full bg-[#FF7A00] text-white">2</div><p className="mt-3 text-sm text-slate-700">Dust removal, debris disposal, detailed surface cleaning.</p></li>
+                <li className="rounded-xl border border-slate-100 p-6"><div className="flex h-8 w-8 items-center justify-center rounded-full bg-[#FF7A00] text-white">3</div><p className="mt-3 text-sm text-slate-700">Final checks and handover-ready presentation.</p></li>
               </ol>
             </div>
 

@@ -2,6 +2,7 @@ import Icon, { type IconName } from "@/components/Icon";
 import MoveOutCleaningContent from "@/components/MoveOutCleaningContent";
 import Accordion from "@/components/Accordion";
 import Link from "next/link";
+import ServiceJsonLd from "@/components/ServiceJsonLd";
 
 export const metadata = {
     title: "Move Out Cleaning Haines City, FL | Move In & Vacancy Cleaning",
@@ -55,6 +56,12 @@ export default function MoveOutCleaning() {
     };
     return (
         <main className="relative mx-auto max-w-7xl px-4 pt-12 pb-20 sm:px-6 lg:px-8">
+            <ServiceJsonLd
+                name="Move-Out Cleaning Services"
+                description="Haines City move-out cleaning experts. Get your deposit back with our vacancy cleaning checklist."
+                url="https://hainescitycleaning.com/move-out-cleaning"
+                type="Service"
+            />
             <section>
                 <article className="rounded-2xl bg-white p-8">
                     <div className="space-y-12 divide-y divide-slate-100">

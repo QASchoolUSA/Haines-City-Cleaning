@@ -3,6 +3,7 @@ import Services from "@/components/Services";
 import Benefits from "@/components/Benefits";
 import HouseCleaningArticle from "@/components/HouseCleaningArticle";
 import Testimonials from "@/components/Testimonials";
+import Link from "next/link";
 
 export default function Home() {
   return (
@@ -15,7 +16,7 @@ export default function Home() {
       <section className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
         <div className="rounded-2xl bg-white p-8">
           <h2 className="text-2xl font-bold tracking-tight text-slate-900">Professional Cleaning Services in Haines City, FL</h2>
-          <p className="mt-3 text-slate-700">Haines City Cleaning provides <strong>professional cleaning services in Haines City</strong> for homes and businesses. Explore our <a href="/house-cleaning" className="text-[#FF7A00] hover:underline">house cleaning</a>, <a href="/residential-cleaning" className="text-[#FF7A00] hover:underline">residential cleaning</a>, <a href="/commercial-cleaning" className="text-[#FF7A00] hover:underline">commercial cleaning</a>, <a href="/move-out-cleaning" className="text-[#FF7A00] hover:underline">move‑out cleaning</a>, <a href="/move-in-cleaning" className="text-[#FF7A00] hover:underline">move‑in cleaning</a>, and <a href="/post-construction-cleaning" className="text-[#FF7A00] hover:underline">post‑construction cleaning</a>.</p>
+          <p className="mt-3 text-slate-700">Haines City Cleaning provides <strong>professional cleaning services in Haines City</strong> for homes and businesses. Explore our <Link href="/house-cleaning" className="text-[#FF7A00] hover:underline">house cleaning</Link>, <Link href="/residential-cleaning" className="text-[#FF7A00] hover:underline">residential cleaning</Link>, <Link href="/commercial-cleaning" className="text-[#FF7A00] hover:underline">commercial cleaning</Link>, <Link href="/move-out-cleaning" className="text-[#FF7A00] hover:underline">move‑out cleaning</Link>, <Link href="/move-in-cleaning" className="text-[#FF7A00] hover:underline">move‑in cleaning</Link>, and <Link href="/post-construction-cleaning" className="text-[#FF7A00] hover:underline">post‑construction cleaning</Link>.</p>
           <p className="mt-3 text-slate-700">Serving Haines City, Davenport, and nearby Polk County communities with reliable scheduling and vetted local cleaners.</p>
         </div>
       </section>

@@ -2,6 +2,7 @@ import ResidentialCleaningContent from "@/components/ResidentialCleaningContent"
 import Icon, { type IconName } from "@/components/Icon";
 import Accordion from "@/components/Accordion";
 import Link from "next/link";
+import ServiceJsonLd from "@/components/ServiceJsonLd";
 
 export const metadata = {
   title: "Residential Cleaning in Haines City",
@@ -65,6 +66,12 @@ export default function Residential() {
   };
   return (
     <main className="relative mx-auto max-w-7xl px-4 pt-12 pb-20 sm:px-6 lg:px-8">
+      <ServiceJsonLd
+        name="Residential Cleaning Services"
+        description="Professional residential cleaning in Haines City. Recurring, deep, and move-in/out options."
+        url="https://hainescitycleaning.com/residential-cleaning"
+        type="Service"
+      />
       <section>
         <article className="rounded-2xl bg-white p-8">
           <div className="space-y-12 divide-y divide-slate-100">
@@ -92,9 +99,9 @@ export default function Residential() {
             <div className="pt-8">
               <h2 className="text-xl font-semibold text-slate-900">How It Works</h2>
               <ol className="mt-6 grid grid-cols-1 gap-6 sm:grid-cols-3">
-        <li className="rounded-xl border border-slate-100 p-6"><div className="flex h-8 w-8 items-center justify-center rounded-full bg-[#FF7A00] text-white">1</div><p className="mt-3 text-sm text-slate-700">Tell us about your home and preferred schedule.</p></li>
-        <li className="rounded-xl border border-slate-100 p-6"><div className="flex h-8 w-8 items-center justify-center rounded-full bg-[#FF7A00] text-white">2</div><p className="mt-3 text-sm text-slate-700">We match you with a trusted Haines City cleaner.</p></li>
-        <li className="rounded-xl border border-slate-100 p-6"><div className="flex h-8 w-8 items-center justify-center rounded-full bg-[#FF7A00] text-white">3</div><p className="mt-3 text-sm text-slate-700">Relax—your space is cleaned to a professional standard.</p></li>
+                <li className="rounded-xl border border-slate-100 p-6"><div className="flex h-8 w-8 items-center justify-center rounded-full bg-[#FF7A00] text-white">1</div><p className="mt-3 text-sm text-slate-700">Tell us about your home and preferred schedule.</p></li>
+                <li className="rounded-xl border border-slate-100 p-6"><div className="flex h-8 w-8 items-center justify-center rounded-full bg-[#FF7A00] text-white">2</div><p className="mt-3 text-sm text-slate-700">We match you with a trusted Haines City cleaner.</p></li>
+                <li className="rounded-xl border border-slate-100 p-6"><div className="flex h-8 w-8 items-center justify-center rounded-full bg-[#FF7A00] text-white">3</div><p className="mt-3 text-sm text-slate-700">Relax—your space is cleaned to a professional standard.</p></li>
               </ol>
             </div>
 

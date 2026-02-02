@@ -1,5 +1,6 @@
 import Icon, { type IconName } from "@/components/Icon";
 import Link from "next/link";
+import ServiceJsonLd from "@/components/ServiceJsonLd";
 
 export const metadata = {
   title: "Move In Cleaning Haines City, FL | New Home Deep Cleaning",
@@ -58,6 +59,12 @@ export default function MoveInCleaning() {
 
   return (
     <main className="relative mx-auto max-w-7xl px-4 pt-12 pb-20 sm:px-6 lg:px-8">
+      <ServiceJsonLd
+        name="Move-In Cleaning Services"
+        description="Professional move-in cleaning in Haines City. Deep cleaning for new homes, apartments, and rentals."
+        url="https://hainescitycleaning.com/move-in-cleaning"
+        type="Service"
+      />
       <section>
         <article className="rounded-2xl bg-white p-8">
           <div className="space-y-12 divide-y divide-slate-100">
