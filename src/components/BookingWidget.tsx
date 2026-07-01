@@ -74,6 +74,8 @@ export default function BookingWidget() {
   const [address, setAddress] = useState("");
   const [step, setStep] = useState(0);
   const [booked, setBooked] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
   const [contactErrors, setContactErrors] = useState<ContactErrors>({});
 
   const effectiveLevel: LevelType = useMemo(() => {
@@ -125,15 +127,50 @@ export default function BookingWidget() {
     setStep((s) => Math.max(s - 1, 0));
   }
 
-  function handleBook() {
+  async function handleBook() {
     const errors = validateContact(name, email, phone, address);
     if (Object.keys(errors).length > 0) {
       setContactErrors(errors);
       setStep(3);
       return;
     }
-    window.location.href = mailto;
-    setBooked(true);
+
+    setSubmitting(true);
+    setSubmitError(null);
+
+    try {
+      const res = await fetch("/api/book", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          customer_name: name,
+          email,
+          phone,
+          address,
+          service_type: `${serviceLabel} — ${levelLabel} (${sizeLabel})`,
+          preferred_date: date || undefined,
+          preferred_time: time || undefined,
+          notes: [
+            `Size: ${sizeLabel}`,
+            `Level: ${levelLabel}`,
+            `Add-ons: ${selectedAddOns.join(", ") || "None"}`,
+            `Estimated price: $${quote.price} (range $${quote.range.low}–$${quote.range.high})`,
+            "Payment: Due after cleaning is complete",
+          ].join("\n"),
+        }),
+      });
+
+      if (!res.ok) {
+        const data = await res.json().catch(() => ({}));
+        throw new Error(data.error ?? "Booking failed");
+      }
+
+      setBooked(true);
+    } catch (err) {
+      setSubmitError(err instanceof Error ? err.message : "Booking failed. Please try again or call us.");
+    } finally {
+      setSubmitting(false);
+    }
   }
 
   if (booked) {
@@ -156,10 +193,10 @@ export default function BookingWidget() {
             </p>
           </div>
           <p className="text-sm text-slate-600">
-            If your email app didn&apos;t open, call us at{" "}
+            Questions? Call us at{" "}
             <a href="tel:+18633587388" className="font-semibold text-[#FF7A00] hover:underline">(863) 358-7388</a>.
           </p>
-          <button type="button" className="btn-ghost w-full" onClick={() => { setBooked(false); setStep(0); }}>
+          <button type="button" className="btn-ghost w-full" onClick={() => { setBooked(false); setStep(0); setSubmitError(null); }}>
             Book another cleaning
           </button>
         </div>
@@ -404,6 +441,9 @@ export default function BookingWidget() {
         <button type="button" className="btn-ghost" onClick={prev} disabled={step === 0}>
           Back
         </button>
+        {submitError && (
+          <p className="mb-3 rounded-lg bg-red-50 px-3 py-2 text-xs text-red-700">{submitError}</p>
+        )}
         {step < STEPS.length - 1 ? (
           <button type="button" className="btn-primary px-5 py-2.5" onClick={next}>
             Continue
@@ -413,6 +453,7 @@ export default function BookingWidget() {
             <button
               type="button"
               className="btn-ghost px-4 py-2.5 text-xs sm:text-sm"
+              disabled={submitting}
               onClick={() => {
                 const errors = validateContact(name, email, phone, address);
                 if (Object.keys(errors).length > 0) {
@@ -425,8 +466,13 @@ export default function BookingWidget() {
             >
               Email quote
             </button>
-            <button type="button" className="btn-primary px-4 py-2.5 text-xs sm:text-sm" onClick={handleBook}>
-              Book cleaning
+            <button
+              type="button"
+              className="btn-primary px-4 py-2.5 text-xs sm:text-sm disabled:opacity-60"
+              onClick={handleBook}
+              disabled={submitting}
+            >
+              {submitting ? "Sending…" : "Book cleaning"}
             </button>
           </div>
         )}
