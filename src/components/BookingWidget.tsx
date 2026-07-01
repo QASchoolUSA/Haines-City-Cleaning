@@ -42,6 +42,25 @@ type LevelType = "standard" | "deep" | "move" | "post";
 
 const STEPS = ["Service", "Options", "Schedule", "Contact", "Review"] as const;
 
+type ContactErrors = Partial<Record<"name" | "email" | "phone" | "address", string>>;
+
+function validateContact(name: string, email: string, phone: string, address: string): ContactErrors {
+  const errors: ContactErrors = {};
+  if (!name.trim()) errors.name = "Please enter your full name.";
+  if (!email.trim()) {
+    errors.email = "Email is required so we can send your quote and confirmation.";
+  } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim())) {
+    errors.email = "Please enter a valid email address.";
+  }
+  if (!phone.trim()) {
+    errors.phone = "Phone is required so we can confirm your appointment.";
+  } else if (phone.replace(/\D/g, "").length < 10) {
+    errors.phone = "Please enter a valid 10-digit phone number.";
+  }
+  if (!address.trim()) errors.address = "Service address is required so our team knows where to go.";
+  return errors;
+}
+
 export default function BookingWidget() {
   const [serviceType, setServiceType] = useState<ServiceType>("residential");
   const [sizeKey, setSizeKey] = useState<string>("2bed");
@@ -55,6 +74,7 @@ export default function BookingWidget() {
   const [address, setAddress] = useState("");
   const [step, setStep] = useState(0);
   const [booked, setBooked] = useState(false);
+  const [contactErrors, setContactErrors] = useState<ContactErrors>({});
 
   const effectiveLevel: LevelType = useMemo(() => {
     if (serviceType === "post-construction") return "post";
@@ -91,6 +111,14 @@ export default function BookingWidget() {
   }, [serviceType, sizeKey, effectiveLevel, selectedAddOns, date, time, name, email, phone, address, quote]);
 
   function next() {
+    if (step === 3) {
+      const errors = validateContact(name, email, phone, address);
+      if (Object.keys(errors).length > 0) {
+        setContactErrors(errors);
+        return;
+      }
+      setContactErrors({});
+    }
     setStep((s) => Math.min(s + 1, STEPS.length - 1));
   }
   function prev() {
@@ -98,6 +126,12 @@ export default function BookingWidget() {
   }
 
   function handleBook() {
+    const errors = validateContact(name, email, phone, address);
+    if (Object.keys(errors).length > 0) {
+      setContactErrors(errors);
+      setStep(3);
+      return;
+    }
     window.location.href = mailto;
     setBooked(true);
   }
@@ -277,21 +311,58 @@ export default function BookingWidget() {
 
         {step === 3 && (
           <div className="grid gap-4 sm:grid-cols-2">
+            <p className="sm:col-span-2 text-xs text-slate-500">Fields marked with <span className="text-[#FF7A00]">*</span> are required to send your quote or book a cleaning.</p>
             <label className="block sm:col-span-2">
-              <span className="mb-2 block text-sm font-medium text-slate-700">Full name</span>
-              <input type="text" className="input-field" value={name} onChange={(e) => setName(e.target.value)} placeholder="Jane Smith" />
+              <span className="mb-2 block text-sm font-medium text-slate-700">Full name <span className="text-[#FF7A00]">*</span></span>
+              <input
+                type="text"
+                className={`input-field ${contactErrors.name ? "ring-2 ring-red-400" : ""}`}
+                value={name}
+                onChange={(e) => { setName(e.target.value); setContactErrors((prev) => ({ ...prev, name: undefined })); }}
+                placeholder="Jane Smith"
+                required
+                autoComplete="name"
+              />
+              {contactErrors.name && <p className="mt-1 text-xs text-red-600">{contactErrors.name}</p>}
             </label>
             <label className="block">
-              <span className="mb-2 block text-sm font-medium text-slate-700">Email</span>
-              <input type="email" className="input-field" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="you@email.com" />
+              <span className="mb-2 block text-sm font-medium text-slate-700">Email <span className="text-[#FF7A00]">*</span></span>
+              <input
+                type="email"
+                className={`input-field ${contactErrors.email ? "ring-2 ring-red-400" : ""}`}
+                value={email}
+                onChange={(e) => { setEmail(e.target.value); setContactErrors((prev) => ({ ...prev, email: undefined })); }}
+                placeholder="you@email.com"
+                required
+                autoComplete="email"
+              />
+              {contactErrors.email && <p className="mt-1 text-xs text-red-600">{contactErrors.email}</p>}
             </label>
             <label className="block">
-              <span className="mb-2 block text-sm font-medium text-slate-700">Phone</span>
-              <input type="tel" className="input-field" value={phone} onChange={(e) => setPhone(e.target.value)} placeholder="(863) 555-0123" />
+              <span className="mb-2 block text-sm font-medium text-slate-700">Phone <span className="text-[#FF7A00]">*</span></span>
+              <input
+                type="tel"
+                className={`input-field ${contactErrors.phone ? "ring-2 ring-red-400" : ""}`}
+                value={phone}
+                onChange={(e) => { setPhone(e.target.value); setContactErrors((prev) => ({ ...prev, phone: undefined })); }}
+                placeholder="(863) 555-0123"
+                required
+                autoComplete="tel"
+              />
+              {contactErrors.phone && <p className="mt-1 text-xs text-red-600">{contactErrors.phone}</p>}
             </label>
             <label className="block sm:col-span-2">
-              <span className="mb-2 block text-sm font-medium text-slate-700">Service address</span>
-              <input type="text" className="input-field" value={address} onChange={(e) => setAddress(e.target.value)} placeholder="123 Main St, Haines City, FL" />
+              <span className="mb-2 block text-sm font-medium text-slate-700">Service address <span className="text-[#FF7A00]">*</span></span>
+              <input
+                type="text"
+                className={`input-field ${contactErrors.address ? "ring-2 ring-red-400" : ""}`}
+                value={address}
+                onChange={(e) => { setAddress(e.target.value); setContactErrors((prev) => ({ ...prev, address: undefined })); }}
+                placeholder="123 Main St, Haines City, FL"
+                required
+                autoComplete="street-address"
+              />
+              {contactErrors.address && <p className="mt-1 text-xs text-red-600">{contactErrors.address}</p>}
             </label>
           </div>
         )}
@@ -305,7 +376,8 @@ export default function BookingWidget() {
                 <div className="flex justify-between gap-4"><dt className="text-slate-500">Level</dt><dd className="font-medium text-slate-900">{levelLabel}</dd></div>
                 <div className="flex justify-between gap-4"><dt className="text-slate-500">Add‑ons</dt><dd className="font-medium text-slate-900">{selectedAddOns.join(", ") || "None"}</dd></div>
                 <div className="flex justify-between gap-4"><dt className="text-slate-500">When</dt><dd className="font-medium text-slate-900">{date || "Flexible"} {time && `at ${time}`}</dd></div>
-                <div className="flex justify-between gap-4"><dt className="text-slate-500">Contact</dt><dd className="text-right font-medium text-slate-900">{name || "—"}<br /><span className="text-xs font-normal text-slate-500">{email}</span></dd></div>
+                <div className="flex justify-between gap-4"><dt className="text-slate-500">Contact</dt><dd className="text-right font-medium text-slate-900">{name}<br /><span className="text-xs font-normal text-slate-500">{email}<br />{phone}</span></dd></div>
+                <div className="flex justify-between gap-4"><dt className="text-slate-500">Address</dt><dd className="text-right font-medium text-slate-900">{address}</dd></div>
               </dl>
             </div>
             <div className="rounded-xl bg-[#FFB730]/10 p-4">
@@ -338,9 +410,21 @@ export default function BookingWidget() {
           </button>
         ) : (
           <div className="flex flex-wrap justify-end gap-2">
-            <a href={mailto} className="btn-ghost px-4 py-2.5 text-xs sm:text-sm">
+            <button
+              type="button"
+              className="btn-ghost px-4 py-2.5 text-xs sm:text-sm"
+              onClick={() => {
+                const errors = validateContact(name, email, phone, address);
+                if (Object.keys(errors).length > 0) {
+                  setContactErrors(errors);
+                  setStep(3);
+                  return;
+                }
+                window.location.href = mailto;
+              }}
+            >
               Email quote
-            </a>
+            </button>
             <button type="button" className="btn-primary px-4 py-2.5 text-xs sm:text-sm" onClick={handleBook}>
               Book cleaning
             </button>
