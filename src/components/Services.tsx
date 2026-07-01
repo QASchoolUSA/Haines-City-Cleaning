@@ -47,26 +47,42 @@ const services = [
 
 export default function Services() {
   return (
-    <section id="services" className="bg-white">
-      <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
-        <div className="flex items-end justify-between">
+    <section id="services" className="bg-white py-20 sm:py-24">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
           <div>
-            <h2 className="text-3xl font-bold tracking-tight text-slate-900">Our Services</h2>
-            <p className="mt-2 text-slate-700">Specialized offerings to fit every need.</p>
+            <p className="section-eyebrow">What we offer</p>
+            <h2 className="section-title mt-2">Our Services</h2>
+            <p className="section-subtitle">Specialized offerings to fit every need.</p>
           </div>
-          <Link href="#booking" className="hidden rounded-full bg-[#FF7A00] px-5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-[#FFB730] sm:inline-block">Get a quote</Link>
+          <Link href="#booking" className="btn-primary hidden shrink-0 sm:inline-flex">Get a quote</Link>
         </div>
-        <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+
+        <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {services.map((s) => (
-            <Link key={s.key} href={s.href} className="group rounded-2xl border border-slate-200 bg-white p-6 shadow-sm transition hover:shadow-md">
-              <div className="flex items-center gap-3">
-                <div className="grid h-10 w-10 place-items-center rounded-full bg-[#FFB730]/20 text-lg">{s.icon}</div>
-                <h3 className="text-lg font-semibold text-slate-900 group-hover:text-[#FF7A00]">{s.title}</h3>
+            <Link key={s.key} href={s.href} className="card card-hover group flex flex-col p-6">
+              <div className="flex items-start justify-between gap-4">
+                <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-[#FFB730]/25 to-[#FF7A00]/10 text-xl transition group-hover:from-[#FFB730]/35 group-hover:to-[#FF7A00]/15">
+                  {s.icon}
+                </div>
+                <span className="rounded-full bg-slate-50 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wide text-slate-400 transition group-hover:bg-[#FFB730]/15 group-hover:text-[#FF7A00]">
+                  Learn more
+                </span>
               </div>
-              <p className="mt-3 text-sm text-slate-700">{s.desc}</p>
-              <span className="mt-4 inline-block text-sm font-semibold text-[#FF7A00]">Learn more →</span>
+              <h3 className="mt-5 text-lg font-semibold text-slate-900 transition group-hover:text-[#FF7A00]">{s.title}</h3>
+              <p className="mt-2 flex-1 text-sm leading-relaxed text-slate-600">{s.desc}</p>
+              <span className="mt-5 inline-flex items-center gap-1 text-sm font-semibold text-[#FF7A00]">
+                View details
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="transition group-hover:translate-x-0.5">
+                  <path d="M5 12h14" /><path d="m12 5 7 7-7 7" />
+                </svg>
+              </span>
             </Link>
           ))}
+        </div>
+
+        <div className="mt-10 text-center sm:hidden">
+          <Link href="#booking" className="btn-primary">Get a quote</Link>
         </div>
       </div>
     </section>

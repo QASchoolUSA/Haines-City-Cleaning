@@ -2,33 +2,79 @@
 
 :root {
   --background: #ffffff;
-  --foreground: #0f172a; /* slate-900 */
-  --brand: #FF7A00; /* primary orange */
-  --brand-light: #FFB730; /* secondary orange */
+  --foreground: #0f172a;
+  --brand: #FF7A00;
+  --brand-light: #FFB730;
+  --brand-muted: rgba(255, 183, 48, 0.12);
+  --surface: #f8fafc;
+  --border: #e2e8f0;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: var(--font-roboto);
 }
-
-/* Force light theme sitewide: remove dark mode overrides */
-/* We keep a consistent light UI across all pages. */
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: var(--font-geist-sans), ui-sans-serif, system-ui, -apple-system;
+  font-family: var(--font-roboto), ui-sans-serif, system-ui, -apple-system, sans-serif;
 }
 
-/* Utility tweaks */
+/* Section rhythm */
+.section-eyebrow {
+  @apply text-xs font-semibold uppercase tracking-widest text-[#FF7A00];
+}
+
 .section-title {
-  @apply text-3xl font-bold tracking-tight text-gray-900;
+  @apply text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl;
 }
 
-/* Subtle text shadow for logo wordmark */
+.section-subtitle {
+  @apply mt-3 max-w-2xl text-base leading-relaxed text-slate-600;
+}
+
+/* Buttons */
+.btn-primary {
+  @apply inline-flex items-center justify-center rounded-full bg-[#FF7A00] px-6 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-[#FFB730] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#FF7A00];
+}
+
+.btn-secondary {
+  @apply inline-flex items-center justify-center rounded-full border border-[#FF7A00] px-6 py-3 text-sm font-semibold text-[#FF7A00] transition hover:bg-[#FFB730]/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#FF7A00];
+}
+
+.btn-ghost {
+  @apply inline-flex items-center justify-center rounded-full border border-slate-200 bg-white px-5 py-2.5 text-sm font-semibold text-slate-700 transition hover:border-slate-300 hover:bg-slate-50;
+}
+
+/* Cards */
+.card {
+  @apply rounded-2xl border border-slate-200/80 bg-white shadow-sm;
+}
+
+.card-hover {
+  @apply transition duration-200 hover:-translate-y-0.5 hover:border-[#FFB730]/40 hover:shadow-md;
+}
+
+/* Form controls */
+.input-field {
+  @apply w-full rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm text-slate-900 transition placeholder:text-slate-400 focus:border-[#FF7A00] focus:outline-none focus:ring-2 focus:ring-[#FF7A00]/20;
+}
+
+.select-field {
+  @apply w-full appearance-none rounded-xl border border-slate-200 bg-white px-4 py-2.5 pr-10 text-sm text-slate-900 transition focus:border-[#FF7A00] focus:outline-none focus:ring-2 focus:ring-[#FF7A00]/20;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%2394a3b8'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+  background-size: 1.25rem;
+  background-position: right 0.75rem center;
+  background-repeat: no-repeat;
+}
+
+/* Decorative */
+.gradient-hero {
+  background: linear-gradient(135deg, rgba(255, 183, 48, 0.18) 0%, rgba(255, 255, 255, 1) 45%, rgba(255, 122, 0, 0.06) 100%);
+}
+
 .text-shadow-sm {
   text-shadow: 0 1px 1px rgba(0, 0, 0, 0.08);
 }

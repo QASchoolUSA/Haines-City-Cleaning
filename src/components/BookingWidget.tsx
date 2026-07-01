@@ -24,7 +24,23 @@ const SIZE_OPTIONS: Record<ServiceType, SizeOption[]> = {
   ],
 };
 
+const SERVICE_OPTIONS: { value: ServiceType; label: string; desc: string }[] = [
+  { value: "residential", label: "Residential", desc: "Homes & apartments" },
+  { value: "commercial", label: "Commercial", desc: "Offices & retail" },
+  { value: "post-construction", label: "Post‑Construction", desc: "Dust & debris cleanup" },
+];
+
+const ADDON_LABELS: Record<string, string> = {
+  fridge: "Inside fridge",
+  oven: "Inside oven",
+  windows: "Interior windows",
+  cabinets: "Inside cabinets",
+  baseboards: "Baseboards",
+};
+
 type LevelType = "standard" | "deep" | "move" | "post";
+
+const STEPS = ["Service", "Options", "Schedule", "Contact", "Review"] as const;
 
 export default function BookingWidget() {
   const [serviceType, setServiceType] = useState<ServiceType>("residential");
@@ -37,161 +53,308 @@ export default function BookingWidget() {
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [address, setAddress] = useState("");
-
   const [step, setStep] = useState(0);
+  const [booked, setBooked] = useState(false);
 
   const effectiveLevel: LevelType = useMemo(() => {
     if (serviceType === "post-construction") return "post";
     if (level === "post") return "standard";
     return level;
   }, [serviceType, level]);
-  const quote = useMemo(() => computeQuote({ serviceType, sizeKey, level: effectiveLevel, addOns }), [serviceType, sizeKey, effectiveLevel, addOns]);
+
+  const quote = useMemo(
+    () => computeQuote({ serviceType, sizeKey, level: effectiveLevel, addOns }),
+    [serviceType, sizeKey, effectiveLevel, addOns]
+  );
 
   const sizeOptions = SIZE_OPTIONS[serviceType];
+  const sizeLabel = sizeOptions.find((o) => o.key === sizeKey)?.label ?? sizeKey;
+  const serviceLabel = SERVICE_OPTIONS.find((o) => o.value === serviceType)?.label ?? serviceType;
+  const levelLabel =
+    effectiveLevel === "move" ? "Move‑in/out" : effectiveLevel.charAt(0).toUpperCase() + effectiveLevel.slice(1);
+  const selectedAddOns = Object.entries(addOns)
+    .filter(([, v]) => v)
+    .map(([k]) => ADDON_LABELS[k] ?? k);
 
   const mailto = useMemo(() => {
-    const subject = encodeURIComponent(`Cleaning Request: ${serviceType} • ${sizeKey} • ${date || "TBD"}`);
+    const subject = encodeURIComponent(`Cleaning Booking: ${serviceType} • ${sizeKey} • ${date || "TBD"}`);
     const body = encodeURIComponent(
-      `Service: ${serviceType}\nSize: ${sizeKey}\nLevel: ${effectiveLevel}\nAdd-ons: ${Object.entries(addOns)
-        .filter(([, v]) => v)
-        .map(([k]) => k)
-        .join(", ") || "None"}\n\nPreferred Date/Time: ${date || "TBD"} ${time || ""}\nName: ${name}\nEmail: ${email}\nPhone: ${phone}\nAddress: ${address}\n\nQuoted Price: $${quote.price} (range $${quote.range.low}–$${quote.range.high})\n\nNotes: (add any notes here)`
+      `BOOKING REQUEST (Pay upon completion)\n\n` +
+        `Service: ${serviceType}\nSize: ${sizeKey}\nLevel: ${effectiveLevel}\n` +
+        `Add-ons: ${selectedAddOns.join(", ") || "None"}\n\n` +
+        `Preferred Date/Time: ${date || "TBD"} ${time || ""}\n` +
+        `Name: ${name}\nEmail: ${email}\nPhone: ${phone}\nAddress: ${address}\n\n` +
+        `Estimated Price: $${quote.price} (range $${quote.range.low}–$${quote.range.high})\n` +
+        `Payment: Due after cleaning is complete\n\nNotes:`
     );
     return `mailto:hello@hainescitycleaning.com?subject=${subject}&body=${body}`;
-  }, [serviceType, sizeKey, effectiveLevel, addOns, date, time, name, email, phone, address, quote]);
-
-  const steps = ["Service", "Options", "Schedule", "Contact", "Review"];
+  }, [serviceType, sizeKey, effectiveLevel, selectedAddOns, date, time, name, email, phone, address, quote]);
 
   function next() {
-    setStep((s) => Math.min(s + 1, steps.length - 1));
+    setStep((s) => Math.min(s + 1, STEPS.length - 1));
   }
   function prev() {
     setStep((s) => Math.max(s - 1, 0));
   }
 
-  return (
-    <div className="mx-auto w-full max-w-md rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
-      <h2 className="text-xl font-semibold text-slate-900">Get your instant quote</h2>
-      <p className="mt-1 text-xs text-slate-600">A quick, guided booking—finish in under a minute.</p>
+  function handleBook() {
+    window.location.href = mailto;
+    setBooked(true);
+  }
 
-      <div className="mt-4 flex items-center gap-2">
-        {steps.map((label, i) => (
-          <div key={label} className="flex items-center gap-2">
-            <div className={`grid h-6 w-6 place-items-center rounded-full text-xs font-semibold ${i <= step ? "bg-[#FF7A00] text-white" : "bg-slate-200 text-slate-600"}`}>{i + 1}</div>
-            {i < steps.length - 1 && <div className={`h-px w-8 ${i < step ? "bg-[#FF7A00]" : "bg-slate-200"}`} />}
+  if (booked) {
+    return (
+      <div className="card mx-auto w-full max-w-lg overflow-hidden p-0">
+        <div className="bg-gradient-to-br from-[#FF7A00] to-[#FFB730] px-6 py-8 text-center text-white">
+          <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-white/20 backdrop-blur">
+            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M20 6 9 17l-5-5" />
+            </svg>
           </div>
-        ))}
+          <h2 className="text-xl font-bold">Booking request sent!</h2>
+          <p className="mt-2 text-sm text-white/90">We&apos;ll confirm your appointment shortly.</p>
+        </div>
+        <div className="space-y-4 p-6">
+          <div className="rounded-xl bg-[#FFB730]/10 p-4">
+            <p className="text-sm font-medium text-slate-900">Pay when we&apos;re done</p>
+            <p className="mt-1 text-sm text-slate-600">
+              No upfront payment required. Your estimated total of <strong>${quote.price}</strong> is due after your cleaning is complete and you&apos;re satisfied.
+            </p>
+          </div>
+          <p className="text-sm text-slate-600">
+            If your email app didn&apos;t open, call us at{" "}
+            <a href="tel:+18633587388" className="font-semibold text-[#FF7A00] hover:underline">(863) 358-7388</a>.
+          </p>
+          <button type="button" className="btn-ghost w-full" onClick={() => { setBooked(false); setStep(0); }}>
+            Book another cleaning
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="card mx-auto w-full max-w-lg overflow-hidden p-0 shadow-lg shadow-[#FF7A00]/5">
+      <div className="border-b border-slate-100 bg-gradient-to-r from-[#FFB730]/10 to-white px-6 py-5">
+        <div className="flex items-start justify-between gap-4">
+          <div>
+            <h2 className="text-lg font-bold text-slate-900">Book your cleaning</h2>
+            <p className="mt-0.5 text-xs text-slate-500">Instant quote · No payment now</p>
+          </div>
+          <div className="shrink-0 rounded-xl bg-white px-3 py-2 text-right shadow-sm ring-1 ring-slate-100">
+            <p className="text-[10px] font-medium uppercase tracking-wide text-slate-400">Estimate</p>
+            <p className="text-lg font-bold text-[#FF7A00]">${quote.price}</p>
+          </div>
+        </div>
       </div>
 
-      <div className="mt-6">
-        {step === 0 && (
-          <div className="grid gap-3">
-            <label className="flex flex-col gap-1">
-              <span className="text-sm font-medium text-slate-700">Service</span>
-              <select className="rounded-md border border-slate-300 px-3 py-2 text-sm" value={serviceType} onChange={(e) => setServiceType(e.target.value as ServiceType)}>
-                <option value="residential">Residential</option>
-                <option value="commercial">Commercial</option>
-                <option value="post-construction">Post‑Construction</option>
-              </select>
-            </label>
+      <div className="px-6 pt-5">
+        <div className="flex items-center justify-between gap-1">
+          {STEPS.map((label, i) => (
+            <div key={label} className="flex flex-1 items-center">
+              <div className="flex flex-col items-center gap-1">
+                <div
+                  className={`flex h-7 w-7 items-center justify-center rounded-full text-xs font-bold transition ${
+                    i <= step ? "bg-[#FF7A00] text-white" : "bg-slate-100 text-slate-400"
+                  }`}
+                >
+                  {i < step ? (
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M20 6 9 17l-5-5" />
+                    </svg>
+                  ) : (
+                    i + 1
+                  )}
+                </div>
+                <span className={`hidden text-[10px] font-medium sm:block ${i <= step ? "text-[#FF7A00]" : "text-slate-400"}`}>
+                  {label}
+                </span>
+              </div>
+              {i < STEPS.length - 1 && (
+                <div className={`mx-1 mb-4 h-0.5 flex-1 rounded-full sm:mb-5 ${i < step ? "bg-[#FF7A00]" : "bg-slate-100"}`} />
+              )}
+            </div>
+          ))}
+        </div>
+      </div>
 
-            <label className="flex flex-col gap-1">
-              <span className="text-sm font-medium text-slate-700">Size</span>
-              <select className="rounded-md border border-slate-300 px-3 py-2 text-sm" value={sizeKey} onChange={(e) => setSizeKey(e.target.value)}>
-                {sizeOptions.map((o) => (
-                  <option key={o.key} value={o.key}>{o.label}</option>
+      <div className="px-6 pb-2 pt-4">
+        {step === 0 && (
+          <div className="space-y-5">
+            <div>
+              <p className="mb-3 text-sm font-medium text-slate-700">What type of cleaning?</p>
+              <div className="grid gap-2">
+                {SERVICE_OPTIONS.map((opt) => (
+                  <button
+                    key={opt.value}
+                    type="button"
+                    onClick={() => setServiceType(opt.value)}
+                    className={`flex items-center justify-between rounded-xl border px-4 py-3 text-left transition ${
+                      serviceType === opt.value
+                        ? "border-[#FF7A00] bg-[#FFB730]/10 ring-1 ring-[#FF7A00]/30"
+                        : "border-slate-200 hover:border-[#FFB730]/50 hover:bg-slate-50"
+                    }`}
+                  >
+                    <div>
+                      <p className="text-sm font-semibold text-slate-900">{opt.label}</p>
+                      <p className="text-xs text-slate-500">{opt.desc}</p>
+                    </div>
+                    <div className={`h-4 w-4 shrink-0 rounded-full border-2 ${serviceType === opt.value ? "border-[#FF7A00] bg-[#FF7A00]" : "border-slate-300"}`} />
+                  </button>
                 ))}
-              </select>
-            </label>
+              </div>
+            </div>
+            <div>
+              <p className="mb-3 text-sm font-medium text-slate-700">Property size</p>
+              <div className="flex flex-wrap gap-2">
+                {sizeOptions.map((o) => (
+                  <button
+                    key={o.key}
+                    type="button"
+                    onClick={() => setSizeKey(o.key)}
+                    className={`rounded-full px-3.5 py-1.5 text-xs font-medium transition ${
+                      sizeKey === o.key
+                        ? "bg-[#FF7A00] text-white shadow-sm"
+                        : "bg-slate-100 text-slate-600 hover:bg-[#FFB730]/20"
+                    }`}
+                  >
+                    {o.label}
+                  </button>
+                ))}
+              </div>
+            </div>
           </div>
         )}
 
         {step === 1 && (
-          <div className="grid gap-3">
-            <label className="flex flex-col gap-1">
-              <span className="text-sm font-medium text-slate-700">Level</span>
-              <select className="rounded-md border border-slate-300 px-3 py-2 text-sm" value={effectiveLevel} onChange={(e) => setLevel(e.target.value as LevelType)} disabled={serviceType === "post-construction"}>
+          <div className="space-y-5">
+            <div>
+              <label className="mb-2 block text-sm font-medium text-slate-700">Cleaning level</label>
+              <select
+                className="select-field"
+                value={effectiveLevel}
+                onChange={(e) => setLevel(e.target.value as LevelType)}
+                disabled={serviceType === "post-construction"}
+              >
                 <option value="standard">Standard</option>
-                <option value="deep">Deep</option>
-                <option value="move">Move‑in/out</option>
+                <option value="deep">Deep clean</option>
+                <option value="move">Move‑in / move‑out</option>
               </select>
-            </label>
-            <fieldset>
-              <legend className="text-sm font-medium text-slate-700">Add‑ons</legend>
-              <div className="mt-2 grid grid-cols-2 gap-2">
+            </div>
+            <div>
+              <p className="mb-3 text-sm font-medium text-slate-700">Optional add‑ons</p>
+              <div className="flex flex-wrap gap-2">
                 {Object.entries(addOns).map(([key, val]) => (
-                  <label key={key} className="flex items-center gap-2 text-sm">
-                    <input type="checkbox" checked={val} onChange={(e) => setAddOns({ ...addOns, [key]: e.target.checked })} />
-                    <span className="capitalize">{key}</span>
-                  </label>
+                  <button
+                    key={key}
+                    type="button"
+                    onClick={() => setAddOns({ ...addOns, [key]: !val })}
+                    className={`rounded-full px-3.5 py-1.5 text-xs font-medium transition ${
+                      val ? "bg-[#FF7A00] text-white" : "bg-slate-100 text-slate-600 hover:bg-[#FFB730]/20"
+                    }`}
+                  >
+                    {ADDON_LABELS[key] ?? key}
+                  </button>
                 ))}
               </div>
-            </fieldset>
+            </div>
           </div>
         )}
 
         {step === 2 && (
-          <div className="grid gap-3">
-            <label className="flex flex-col gap-1">
-              <span className="text-sm font-medium text-slate-700">Preferred Date</span>
-              <input type="date" className="rounded-md border border-slate-300 px-3 py-2 text-sm" value={date} onChange={(e) => setDate(e.target.value)} />
+          <div className="grid gap-4 sm:grid-cols-2">
+            <label className="block">
+              <span className="mb-2 block text-sm font-medium text-slate-700">Preferred date</span>
+              <input type="date" className="input-field" value={date} onChange={(e) => setDate(e.target.value)} />
             </label>
-            <label className="flex flex-col gap-1">
-              <span className="text-sm font-medium text-slate-700">Preferred Time</span>
-              <input type="time" className="rounded-md border border-slate-300 px-3 py-2 text-sm" value={time} onChange={(e) => setTime(e.target.value)} />
+            <label className="block">
+              <span className="mb-2 block text-sm font-medium text-slate-700">Preferred time</span>
+              <input type="time" className="input-field" value={time} onChange={(e) => setTime(e.target.value)} />
             </label>
+            <p className="sm:col-span-2 text-xs text-slate-500">We&apos;ll confirm availability and send a reminder before your appointment.</p>
           </div>
         )}
 
         {step === 3 && (
-          <div className="grid gap-3">
-            <label className="flex flex-col gap-1">
-              <span className="text-sm font-medium text-slate-700">Name</span>
-              <input type="text" className="rounded-md border border-slate-300 px-3 py-2 text-sm" value={name} onChange={(e) => setName(e.target.value)} />
+          <div className="grid gap-4 sm:grid-cols-2">
+            <label className="block sm:col-span-2">
+              <span className="mb-2 block text-sm font-medium text-slate-700">Full name</span>
+              <input type="text" className="input-field" value={name} onChange={(e) => setName(e.target.value)} placeholder="Jane Smith" />
             </label>
-            <label className="flex flex-col gap-1">
-              <span className="text-sm font-medium text-slate-700">Email</span>
-              <input type="email" className="rounded-md border border-slate-300 px-3 py-2 text-sm" value={email} onChange={(e) => setEmail(e.target.value)} />
+            <label className="block">
+              <span className="mb-2 block text-sm font-medium text-slate-700">Email</span>
+              <input type="email" className="input-field" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="you@email.com" />
             </label>
-            <label className="flex flex-col gap-1">
-              <span className="text-sm font-medium text-slate-700">Phone</span>
-              <input type="tel" className="rounded-md border border-slate-300 px-3 py-2 text-sm" value={phone} onChange={(e) => setPhone(e.target.value)} />
+            <label className="block">
+              <span className="mb-2 block text-sm font-medium text-slate-700">Phone</span>
+              <input type="tel" className="input-field" value={phone} onChange={(e) => setPhone(e.target.value)} placeholder="(863) 555-0123" />
             </label>
-            <label className="flex flex-col gap-1">
-              <span className="text-sm font-medium text-slate-700">Address</span>
-              <input type="text" className="rounded-md border border-slate-300 px-3 py-2 text-sm" value={address} onChange={(e) => setAddress(e.target.value)} />
+            <label className="block sm:col-span-2">
+              <span className="mb-2 block text-sm font-medium text-slate-700">Service address</span>
+              <input type="text" className="input-field" value={address} onChange={(e) => setAddress(e.target.value)} placeholder="123 Main St, Haines City, FL" />
             </label>
           </div>
         )}
 
         {step === 4 && (
-          <div className="space-y-2 text-sm text-slate-700">
-            <p><span className="font-semibold">Service:</span> {serviceType}</p>
-            <p><span className="font-semibold">Size:</span> {sizeKey}</p>
-            <p><span className="font-semibold">Level:</span> {effectiveLevel}</p>
-            <p><span className="font-semibold">Add‑ons:</span> {Object.entries(addOns).filter(([, v]) => v).map(([k]) => k).join(", ") || "None"}</p>
-            <p><span className="font-semibold">Preferred:</span> {date || "TBD"} {time || ""}</p>
-            <p><span className="font-semibold">Name:</span> {name || "—"}</p>
-            <p><span className="font-semibold">Email:</span> {email || "—"}</p>
-            <p><span className="font-semibold">Phone:</span> {phone || "—"}</p>
-            <p><span className="font-semibold">Address:</span> {address || "—"}</p>
-            <div className="mt-4 rounded-lg bg-[#FFB730]/10 p-3">
-              <p className="text-slate-800">Estimated total: <span className="font-semibold">${quote.price}</span> <span className="text-xs">(range ${quote.range.low}–${quote.range.high})</span></p>
+          <div className="space-y-4">
+            <div className="rounded-xl border border-slate-100 bg-slate-50/80 p-4 text-sm">
+              <dl className="space-y-2.5">
+                <div className="flex justify-between gap-4"><dt className="text-slate-500">Service</dt><dd className="font-medium text-slate-900">{serviceLabel}</dd></div>
+                <div className="flex justify-between gap-4"><dt className="text-slate-500">Size</dt><dd className="font-medium text-slate-900">{sizeLabel}</dd></div>
+                <div className="flex justify-between gap-4"><dt className="text-slate-500">Level</dt><dd className="font-medium text-slate-900">{levelLabel}</dd></div>
+                <div className="flex justify-between gap-4"><dt className="text-slate-500">Add‑ons</dt><dd className="font-medium text-slate-900">{selectedAddOns.join(", ") || "None"}</dd></div>
+                <div className="flex justify-between gap-4"><dt className="text-slate-500">When</dt><dd className="font-medium text-slate-900">{date || "Flexible"} {time && `at ${time}`}</dd></div>
+                <div className="flex justify-between gap-4"><dt className="text-slate-500">Contact</dt><dd className="text-right font-medium text-slate-900">{name || "—"}<br /><span className="text-xs font-normal text-slate-500">{email}</span></dd></div>
+              </dl>
+            </div>
+            <div className="rounded-xl bg-[#FFB730]/10 p-4">
+              <div className="flex items-start gap-3">
+                <div className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#FF7A00]/10 text-[#FF7A00]">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <rect width="20" height="14" x="2" y="5" rx="2" /><path d="M2 10h20" />
+                  </svg>
+                </div>
+                <div>
+                  <p className="text-sm font-semibold text-slate-900">Estimated total: ${quote.price}</p>
+                  <p className="mt-0.5 text-xs text-slate-600">Range ${quote.range.low}–${quote.range.high} · Pay after completion</p>
+                  <p className="mt-2 text-xs leading-relaxed text-slate-600">
+                    Book now with zero upfront payment. We&apos;ll send your final invoice once the job is done and you&apos;re happy with the results.
+                  </p>
+                </div>
+              </div>
             </div>
           </div>
         )}
       </div>
 
-      <div className="mt-6 flex items-center justify-between">
-        <button className="rounded-full border border-slate-300 px-4 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-50" onClick={prev} disabled={step === 0}>Back</button>
-        {step < steps.length - 1 ? (
-          <button className="rounded-full bg-[#FF7A00] px-5 py-2 text-sm font-semibold text-white shadow-sm hover:bg-[#FFB730]" onClick={next}>Next</button>
+      <div className="mt-4 flex items-center justify-between gap-3 border-t border-slate-100 px-6 py-4">
+        <button type="button" className="btn-ghost" onClick={prev} disabled={step === 0}>
+          Back
+        </button>
+        {step < STEPS.length - 1 ? (
+          <button type="button" className="btn-primary px-5 py-2.5" onClick={next}>
+            Continue
+          </button>
         ) : (
-          <div className="flex gap-2">
-            <button className="rounded-full bg-[#FF7A00] px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-[#FFB730]" onClick={() => alert(`Estimated total: $${quote.price}`)}>Book Cleaning</button>
-            <a href={mailto} className="rounded-full border border-[#FF7A00] px-4 py-2 text-sm font-semibold text-[#FF7A00] hover:bg-[#FFB730]/10">Email me this quote</a>
+          <div className="flex flex-wrap justify-end gap-2">
+            <a href={mailto} className="btn-ghost px-4 py-2.5 text-xs sm:text-sm">
+              Email quote
+            </a>
+            <button type="button" className="btn-primary px-4 py-2.5 text-xs sm:text-sm" onClick={handleBook}>
+              Book cleaning
+            </button>
           </div>
         )}
+      </div>
+
+      <div className="border-t border-slate-100 bg-slate-50/50 px-6 py-3">
+        <p className="flex items-center justify-center gap-1.5 text-center text-[11px] text-slate-500">
+          <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+          </svg>
+          No payment required to book · Pay when your clean is complete
+        </p>
       </div>
     </div>
   );
