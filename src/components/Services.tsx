@@ -6,6 +6,7 @@ const services = [
     title: "Residential Cleaning",
     desc: "Recurring home maintenance for a consistently clean space.",
     href: "/residential-cleaning",
+    cta: "Residential cleaning in Haines City",
     icon: "🏠",
   },
   {
@@ -13,6 +14,7 @@ const services = [
     title: "House Cleaning",
     desc: "Detailed maid service for one-time deep or standard cleanings.",
     href: "/house-cleaning",
+    cta: "House cleaning & maid service",
     icon: "🧹",
   },
   {
@@ -20,6 +22,7 @@ const services = [
     title: "Move Out Cleaning",
     desc: "Vacancy cleaning to help you secure your security deposit.",
     href: "/move-out-cleaning",
+    cta: "Move-out cleaning services",
     icon: "📦",
   },
   {
@@ -27,6 +30,7 @@ const services = [
     title: "Move In Cleaning",
     desc: "New home deep cleaning for a fresh, sanitized start.",
     href: "/move-in-cleaning",
+    cta: "Move-in deep cleaning",
     icon: "🔑",
   },
   {
@@ -34,6 +38,7 @@ const services = [
     title: "Commercial Cleaning",
     desc: "Offices, retail, and shared spaces—consistent and professional.",
     href: "/commercial-cleaning",
+    cta: "Commercial & office cleaning",
     icon: "🏢",
   },
   {
@@ -41,6 +46,7 @@ const services = [
     title: "Post‑Construction",
     desc: "Dust removal, detailing, and handover‑ready finishing cleans.",
     href: "/post-construction-cleaning",
+    cta: "Post-construction cleanup",
     icon: "🛠️",
   },
 ];
@@ -72,7 +78,7 @@ export default function Services() {
               <h3 className="mt-5 text-lg font-semibold text-slate-900 transition group-hover:text-[#FF7A00]">{s.title}</h3>
               <p className="mt-2 flex-1 text-sm leading-relaxed text-slate-600">{s.desc}</p>
               <span className="mt-5 inline-flex items-center gap-1 text-sm font-semibold text-[#FF7A00]">
-                View details
+                {s.cta}
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="transition group-hover:translate-x-0.5">
                   <path d="M5 12h14" /><path d="m12 5 7 7-7 7" />
                 </svg>

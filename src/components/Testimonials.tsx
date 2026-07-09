@@ -1,17 +1,6 @@
-const testimonials = [
-  {
-    name: "Maria G.",
-    quote: "They did an incredible deep clean before our move‑in. Floors and windows looked brand new!",
-  },
-  {
-    name: "Trent P.",
-    quote: "Reliable weekly office cleaning—our team notices the difference. Highly recommend.",
-  },
-  {
-    name: "Sofia R.",
-    quote: "Post‑construction dust everywhere—gone in a day. Fast and thorough service.",
-  },
-];
+import { reviews } from "@/lib/reviews";
+import { googleBusinessUrl } from "@/lib/site";
+import Link from "next/link";
 
 function Stars() {
   return (
@@ -35,21 +24,29 @@ export default function Testimonials() {
         </div>
 
         <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {testimonials.map((t) => (
-            <figure key={t.name} className="card flex flex-col p-6">
+          {reviews.map((t) => (
+            <figure key={t.author} className="card flex flex-col p-6">
               <Stars />
               <blockquote className="mt-4 flex-1 text-sm leading-relaxed text-slate-600">
-                &ldquo;{t.quote}&rdquo;
+                &ldquo;{t.body}&rdquo;
               </blockquote>
               <figcaption className="mt-5 flex items-center gap-3 border-t border-slate-100 pt-5">
                 <div className="flex h-9 w-9 items-center justify-center rounded-full bg-gradient-to-br from-[#FF7A00] to-[#FFB730] text-xs font-bold text-white">
-                  {t.name.charAt(0)}
+                  {t.author.charAt(0)}
                 </div>
-                <span className="text-sm font-semibold text-slate-900">{t.name}</span>
+                <span className="text-sm font-semibold text-slate-900">{t.author}</span>
               </figcaption>
             </figure>
           ))}
         </div>
+
+        {googleBusinessUrl ? (
+          <p className="mt-10 text-center text-sm text-slate-600">
+            <Link href={googleBusinessUrl} className="font-semibold text-[#FF7A00] hover:underline" target="_blank" rel="noopener noreferrer">
+              See all reviews on Google →
+            </Link>
+          </p>
+        ) : null}
       </div>
     </section>
   );

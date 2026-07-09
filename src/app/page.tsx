@@ -35,7 +35,12 @@ export default function Home() {
                   <Link href="/post-construction-cleaning" className="font-medium text-[#FF7A00] hover:underline">post‑construction cleaning</Link>.
                 </p>
                 <p className="mt-4 leading-relaxed text-slate-600">
-                  Serving Haines City, Davenport, and nearby Polk County communities with reliable scheduling and vetted local cleaners.
+                  Serving Haines City,{" "}
+                  <Link href="/areas/davenport" className="font-medium text-[#FF7A00] hover:underline">Davenport</Link>,{" "}
+                  <Link href="/areas/winter-haven" className="font-medium text-[#FF7A00] hover:underline">Winter Haven</Link>,{" "}
+                  <Link href="/areas/lakeland" className="font-medium text-[#FF7A00] hover:underline">Lakeland</Link>, and nearby Polk County communities.
+                  View our <Link href="/pricing" className="font-medium text-[#FF7A00] hover:underline">pricing</Link> or read cleaning tips on our{" "}
+                  <Link href="/blog" className="font-medium text-[#FF7A00] hover:underline">blog</Link>.
                 </p>
               </div>
             </div>
