@@ -1,14 +1,17 @@
 import Icon, { type IconName } from "@/components/Icon";
 import Link from "next/link";
 import ServiceJsonLd from "@/components/ServiceJsonLd";
+import ServiceBookingSection from "@/components/ServiceBookingSection";
+import Accordion from "@/components/Accordion";
+import { breadcrumbJsonLd, faqJsonLd } from "@/lib/json-ld";
+import { createPageMetadata } from "@/lib/metadata";
 
-export const metadata = {
+export const metadata = createPageMetadata({
   title: "Move In Cleaning Haines City, FL | New Home Deep Cleaning",
   description:
     "Professional move-in cleaning in Haines City. New home deep cleaning to ensure a fresh, sanitized start. Ideal for homeowners, tenants, and realtors.",
-  alternates: {
-    canonical: "/move-in-cleaning",
-  },
+  path: "/move-in-cleaning",
+  ogImage: "/og/move-in-cleaning.jpg",
   keywords: [
     "move in cleaning haines city",
     "new home cleaning haines city",
@@ -17,7 +20,7 @@ export const metadata = {
     "vacancy cleaning",
     "rental cleaning haines city",
   ],
-};
+});
 
 const checklist: { icon: IconName; title: string; desc: string }[] = [
   { icon: "sparkles", title: "Sanitize Kitchens & Bathrooms", desc: "Disinfect counters, sinks, fixtures, and appliance fronts." },
@@ -36,50 +39,27 @@ const faqs = [
 ];
 
 export default function MoveInCleaning() {
-  const faqJsonLd = {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    "mainEntity": faqs.map((f) => ({
-      "@type": "Question",
-      "name": f.q,
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": f.a,
-      },
-    })),
-  };
-  const breadcrumbJsonLd = {
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    "itemListElement": [
-      { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://hainescitycleaning.com/" },
-      { "@type": "ListItem", "position": 2, "name": "Move In Cleaning", "item": "https://hainescitycleaning.com/move-in-cleaning" }
-    ]
-  };
-
   return (
-    <main className="relative mx-auto max-w-7xl px-4 pt-12 pb-20 sm:px-6 lg:px-8">
+    <main className="relative mx-auto max-w-7xl px-4 pt-12 pb-0 sm:px-6 lg:px-8">
       <ServiceJsonLd
         name="Move-In Cleaning Services"
         description="Professional move-in cleaning in Haines City. Deep cleaning for new homes, apartments, and rentals."
-        url="https://hainescitycleaning.com/move-in-cleaning"
-        type="Service"
+        path="/move-in-cleaning"
       />
       <section>
         <article className="rounded-2xl bg-white p-8">
           <div className="space-y-12 divide-y divide-slate-100">
             <header className="space-y-3">
-              <h1 className="text-3xl font-bold tracking-tight text-slate-900">Move In Cleaning in Haines City</h1>
-              <p className="text-slate-700">Start fresh in your new home with a thorough, hygienic clean by local professionals.</p>
+              <h1 className="text-3xl font-bold tracking-tight text-slate-900">Move-In Cleaning in Haines City, FL</h1>
+              <p className="text-slate-700">Start fresh in your new home with a thorough, hygienic clean by local professionals — distinct from our <Link href="/move-out-cleaning" className="font-medium text-[#FF7A00] hover:underline">move-out cleaning</Link> for deposit-ready vacancy cleans.</p>
               <div className="pt-4">
-                <Link href="/#booking" className="inline-flex rounded-full bg-[#FF7A00] px-6 py-3 text-sm font-semibold text-white shadow-sm hover:bg-[#FFB730]">Book move‑in clean</Link>
+                <Link href="#booking" className="inline-flex rounded-full bg-[#FF7A00] px-6 py-3 text-sm font-semibold text-white shadow-sm hover:bg-[#FFB730]">Book move‑in clean</Link>
               </div>
             </header>
 
             <div className="pt-8">
               <h2 className="text-xl font-semibold text-slate-900">Why Move‑In Cleaning Matters</h2>
               <p className="mt-3 text-slate-700">Our team delivers detailed <strong>move in cleaning in Haines City</strong> so every surface feels new. We deep clean kitchens and bathrooms, dust and detail, and handle appliance interiors for a truly fresh start.</p>
-              <p className="mt-3 text-slate-700">Serving Haines City, Davenport, Lake Hamilton, and nearby communities.</p>
             </div>
 
             <div className="pt-8 bg-[#FFB730]/10 rounded-2xl p-8">
@@ -99,12 +79,11 @@ export default function MoveInCleaning() {
 
             <div className="pt-8">
               <h2 className="text-xl font-semibold text-slate-900">FAQs</h2>
-              <div className="mt-4 space-y-4">
+              <div className="mt-4">
                 {faqs.map((f) => (
-                  <div key={f.q} className="border-b border-slate-200">
-                    <div className="py-3 font-semibold text-slate-900">{f.q}</div>
-                    <div className="pb-4 text-slate-700">{f.a}</div>
-                  </div>
+                  <Accordion key={f.q} title={f.q}>
+                    {f.a}
+                  </Accordion>
                 ))}
               </div>
             </div>
@@ -116,13 +95,14 @@ export default function MoveInCleaning() {
         <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
           <div className="flex flex-wrap items-center justify-between gap-6">
             <h3 className="text-xl font-semibold text-white">Move into a spotless home</h3>
-            <Link href="/#booking" className="rounded-full bg-white px-5 py-2.5 text-sm font-semibold text-[#FF7A00] shadow-sm hover:bg-[#FFB730]/10">Get a quote</Link>
+            <Link href="#booking" className="rounded-full bg-white px-5 py-2.5 text-sm font-semibold text-[#FF7A00] shadow-sm hover:bg-[#FFB730]/10">Get a quote</Link>
           </div>
         </div>
       </section>
 
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }} />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }} />
+      <ServiceBookingSection />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd(faqs)) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd([{ name: "Home", path: "/" }, { name: "Move In Cleaning", path: "/move-in-cleaning" }])) }} />
     </main>
   );
 }
