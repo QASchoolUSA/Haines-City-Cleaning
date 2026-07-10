@@ -84,15 +84,24 @@ export default function PricingPage() {
           <ul className="mt-4 grid gap-2 text-sm text-slate-700 sm:grid-cols-2">
             <li>Deep clean: ~40% above standard</li>
             <li>Move-in / move-out: ~20% above standard</li>
+            <li>Airbnb / turnover: quote by size + same-day SLA</li>
             <li>Inside fridge or oven: +$25 each</li>
             <li>Interior windows: +$40</li>
             <li>Inside cabinets: +$30</li>
             <li>Baseboards: +$35</li>
           </ul>
           <p className="mt-4 text-sm text-slate-600">
-            Read our guide:{" "}
+            Read our guides:{" "}
             <Link href="/blog/cost-of-house-cleaning-haines-city" className="font-medium text-[#FF7A00] hover:underline">
-              How much does house cleaning cost in Haines City?
+              house cleaning cost
+            </Link>
+            {" · "}
+            <Link href="/blog/airbnb-turnover-time-haines-city" className="font-medium text-[#FF7A00] hover:underline">
+              Airbnb turnover timing
+            </Link>
+            {" · "}
+            <Link href="/airbnb-cleaning" className="font-medium text-[#FF7A00] hover:underline">
+              Airbnb cleaning service
             </Link>
           </p>
         </div>
