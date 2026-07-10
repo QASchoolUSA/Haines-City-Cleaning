@@ -8,6 +8,15 @@ export type BlogPost = {
 
 export const blogPosts: BlogPost[] = [
   {
+    slug: "move-out-cleaning-checklist-haines-city",
+    title:
+      "Move-Out Cleaning Checklist for Haines City, FL: Protect Your Security Deposit",
+    description:
+      "Deposit-safe move-out cleaning checklist for Haines City and Polk County — the five failure zones landlords flag most, Florida-specific add-ons, and photo documentation tips.",
+    updatedAt: "2026-07-10",
+    readTime: "8 min read",
+  },
+  {
     slug: "cost-of-house-cleaning-haines-city",
     title: "How Much Does House Cleaning Cost in Haines City, FL?",
     description:
