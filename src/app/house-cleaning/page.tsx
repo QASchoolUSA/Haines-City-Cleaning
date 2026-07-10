@@ -4,6 +4,7 @@ import Accordion from "@/components/Accordion";
 import Link from "next/link";
 import ServiceJsonLd from "@/components/ServiceJsonLd";
 import ServiceBookingSection from "@/components/ServiceBookingSection";
+import ServiceHeroImage from "@/components/ServiceHeroImage";
 import { breadcrumbJsonLd, faqJsonLd } from "@/lib/json-ld";
 import { createPageMetadata } from "@/lib/metadata";
 
@@ -63,6 +64,7 @@ export default function HouseCleaning() {
                             <div className="pt-4">
                                 <Link href="#booking" className="inline-flex rounded-full bg-[#FF7A00] px-6 py-3 text-sm font-semibold text-white shadow-sm hover:bg-[#FFB730]">Get your free quote</Link>
                             </div>
+                            <ServiceHeroImage image="kitchen" caption="Detailed house cleaning for kitchens, baths, and living spaces" />
                         </header>
 
                         <div className="pt-8 bg-[#FFB730]/10 rounded-2xl p-8">

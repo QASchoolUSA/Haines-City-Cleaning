@@ -10,9 +10,10 @@ const SERVICE_ROUTES = [
   "/house-cleaning",
   "/move-out-cleaning",
   "/move-in-cleaning",
+  "/airbnb-cleaning",
 ];
 
-const LAST_CONTENT_UPDATE = new Date("2026-07-01");
+const LAST_CONTENT_UPDATE = new Date("2026-07-10");
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const staticPages: MetadataRoute.Sitemap = [
