@@ -4,6 +4,7 @@ import Accordion from "@/components/Accordion";
 import Link from "next/link";
 import ServiceJsonLd from "@/components/ServiceJsonLd";
 import ServiceBookingSection from "@/components/ServiceBookingSection";
+import ServiceHeroImage from "@/components/ServiceHeroImage";
 import { breadcrumbJsonLd, faqJsonLd } from "@/lib/json-ld";
 import { createPageMetadata } from "@/lib/metadata";
 
@@ -85,6 +86,10 @@ export default function AirbnbCleaning() {
                   See turnover timing guide
                 </Link>
               </div>
+              <ServiceHeroImage
+                image="airbnbBedroom"
+                caption="Guest-ready Airbnb turnover cleaning with fresh linens and staging"
+              />
             </header>
 
             <div className="pt-8">

@@ -2,6 +2,7 @@ import Icon, { type IconName } from "@/components/Icon";
 import Link from "next/link";
 import ServiceJsonLd from "@/components/ServiceJsonLd";
 import ServiceBookingSection from "@/components/ServiceBookingSection";
+import ServiceHeroImage from "@/components/ServiceHeroImage";
 import Accordion from "@/components/Accordion";
 import { breadcrumbJsonLd, faqJsonLd } from "@/lib/json-ld";
 import { createPageMetadata } from "@/lib/metadata";
@@ -55,6 +56,7 @@ export default function MoveInCleaning() {
               <div className="pt-4">
                 <Link href="#booking" className="inline-flex rounded-full bg-[#FF7A00] px-6 py-3 text-sm font-semibold text-white shadow-sm hover:bg-[#FFB730]">Book move‑in clean</Link>
               </div>
+              <ServiceHeroImage image="moveIn" caption="Fresh, sanitized move-in cleaning for your new home" />
             </header>
 
             <div className="pt-8">

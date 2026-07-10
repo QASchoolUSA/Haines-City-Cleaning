@@ -4,6 +4,7 @@ import Accordion from "@/components/Accordion";
 import Link from "next/link";
 import ServiceJsonLd from "@/components/ServiceJsonLd";
 import ServiceBookingSection from "@/components/ServiceBookingSection";
+import ServiceHeroImage from "@/components/ServiceHeroImage";
 import { breadcrumbJsonLd, faqJsonLd } from "@/lib/json-ld";
 import { createPageMetadata } from "@/lib/metadata";
 
@@ -55,6 +56,7 @@ export default function MoveOutCleaning() {
                             <div className="pt-4">
                                 <Link href="#booking" className="inline-flex rounded-full bg-[#FF7A00] px-6 py-3 text-sm font-semibold text-white shadow-sm hover:bg-[#FFB730]">Book move-out clean</Link>
                             </div>
+                            <ServiceHeroImage image="moveOut" caption="Deposit-ready move-out cleaning for Haines City rentals" />
                         </header>
 
                         <div className="pt-8">

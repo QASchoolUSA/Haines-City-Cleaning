@@ -1,9 +1,11 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
+import Image from "next/image";
 import { getAreaBySlug, serviceAreas } from "@/lib/areas";
 import { breadcrumbJsonLd } from "@/lib/json-ld";
 import { createPageMetadata } from "@/lib/metadata";
 import ServiceBookingSection from "@/components/ServiceBookingSection";
+import { siteImages } from "@/lib/images";
 
 const SERVICE_LINKS = [
   { href: "/house-cleaning", label: "House Cleaning" },
@@ -11,6 +13,7 @@ const SERVICE_LINKS = [
   { href: "/commercial-cleaning", label: "Commercial Cleaning" },
   { href: "/move-out-cleaning", label: "Move-Out Cleaning" },
   { href: "/move-in-cleaning", label: "Move-In Cleaning" },
+  { href: "/airbnb-cleaning", label: "Airbnb Cleaning" },
   { href: "/post-construction-cleaning", label: "Post-Construction Cleaning" },
 ];
 
@@ -51,9 +54,23 @@ export default async function AreaPage({ params }: Props) {
   return (
     <main>
       <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
-        <p className="section-eyebrow">Service area</p>
-        <h1 className="section-title mt-2">Cleaning Services in {area.name}, FL</h1>
-        <p className="section-subtitle max-w-3xl">{area.description}</p>
+        <div className="grid items-end gap-8 lg:grid-cols-2">
+          <div>
+            <p className="section-eyebrow">Service area</p>
+            <h1 className="section-title mt-2">Cleaning Services in {area.name}, FL</h1>
+            <p className="section-subtitle max-w-3xl">{area.description}</p>
+          </div>
+          <div className="relative aspect-[16/10] overflow-hidden rounded-2xl bg-slate-100 shadow-sm ring-1 ring-slate-200/80">
+            <Image
+              src={siteImages.localHome.src}
+              alt={`Professional cleaning services available in ${area.name}, FL`}
+              fill
+              priority
+              sizes="(max-width: 1024px) 100vw, 560px"
+              className="object-cover"
+            />
+          </div>
+        </div>
 
         <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {SERVICE_LINKS.map((link) => (

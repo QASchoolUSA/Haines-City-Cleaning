@@ -1,9 +1,11 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
+import Image from "next/image";
 import { getBlogPost } from "@/lib/blog";
 import { breadcrumbJsonLd, faqJsonLd } from "@/lib/json-ld";
 import { createPageMetadata } from "@/lib/metadata";
 import { absoluteUrl, siteName, siteUrl } from "@/lib/site";
+import { siteImages, type SiteImageKey } from "@/lib/images";
 import MoveOutChecklistArticle from "@/components/MoveOutChecklistArticle";
 import AirbnbTurnoverSlaArticle from "@/components/AirbnbTurnoverSlaArticle";
 
@@ -27,6 +29,12 @@ const KEYWORDS: Record<string, string[]> = {
     "house cleaning prices Polk County",
     "maid service cost Haines City FL",
   ],
+};
+
+const POST_IMAGES: Record<string, SiteImageKey> = {
+  "airbnb-turnover-time-haines-city": "airbnbBedroom",
+  "move-out-cleaning-checklist-haines-city": "moveOut",
+  "cost-of-house-cleaning-haines-city": "kitchen",
 };
 
 export async function generateStaticParams() {
@@ -269,6 +277,19 @@ export default async function BlogPostPage({ params }: Props) {
         <p className="mt-4 text-sm text-slate-500">
           {post.readTime} · Updated {post.updatedAt}
         </p>
+
+        {POST_IMAGES[slug] ? (
+          <div className="relative mt-8 aspect-[2/1] overflow-hidden rounded-2xl bg-slate-100">
+            <Image
+              src={siteImages[POST_IMAGES[slug]].src}
+              alt={siteImages[POST_IMAGES[slug]].alt}
+              fill
+              priority
+              sizes="(max-width: 768px) 100vw, 768px"
+              className="object-cover"
+            />
+          </div>
+        ) : null}
 
         <div className="prose prose-slate mt-10 max-w-none prose-headings:font-bold prose-headings:text-slate-900 prose-p:leading-relaxed prose-p:text-slate-600 prose-a:text-[#FF7A00]">
           {slug === "airbnb-turnover-time-haines-city" ? (

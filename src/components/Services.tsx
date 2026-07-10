@@ -1,13 +1,22 @@
 import Link from "next/link";
+import Image from "next/image";
+import { siteImages, type SiteImageKey } from "@/lib/images";
 
-const services = [
+const services: {
+  key: string;
+  title: string;
+  desc: string;
+  href: string;
+  cta: string;
+  image: SiteImageKey;
+}[] = [
   {
     key: "residential",
     title: "Residential Cleaning",
     desc: "Recurring home maintenance for a consistently clean space.",
     href: "/residential-cleaning",
     cta: "Residential cleaning in Haines City",
-    icon: "🏠",
+    image: "residential",
   },
   {
     key: "house",
@@ -15,7 +24,7 @@ const services = [
     desc: "Detailed maid service for one-time deep or standard cleanings.",
     href: "/house-cleaning",
     cta: "House cleaning & maid service",
-    icon: "🧹",
+    image: "kitchen",
   },
   {
     key: "move-out",
@@ -23,7 +32,7 @@ const services = [
     desc: "Vacancy cleaning to help you secure your security deposit.",
     href: "/move-out-cleaning",
     cta: "Move-out cleaning services",
-    icon: "📦",
+    image: "moveOut",
   },
   {
     key: "airbnb",
@@ -31,7 +40,7 @@ const services = [
     desc: "Same-day turnover cleans with linen reset and guest-ready QA.",
     href: "/airbnb-cleaning",
     cta: "Airbnb & vacation rental turnovers",
-    icon: "🔑",
+    image: "airbnbBedroom",
   },
   {
     key: "move-in",
@@ -39,7 +48,7 @@ const services = [
     desc: "New home deep cleaning for a fresh, sanitized start.",
     href: "/move-in-cleaning",
     cta: "Move-in deep cleaning",
-    icon: "🏡",
+    image: "moveIn",
   },
   {
     key: "commercial",
@@ -47,7 +56,7 @@ const services = [
     desc: "Offices, retail, and shared spaces—consistent and professional.",
     href: "/commercial-cleaning",
     cta: "Commercial & office cleaning",
-    icon: "🏢",
+    image: "commercial",
   },
   {
     key: "post-construction",
@@ -55,7 +64,7 @@ const services = [
     desc: "Dust removal, detailing, and handover‑ready finishing cleans.",
     href: "/post-construction-cleaning",
     cta: "Post-construction cleanup",
-    icon: "🛠️",
+    image: "postConstruction",
   },
 ];
 
@@ -69,34 +78,44 @@ export default function Services() {
             <h2 className="section-title mt-2">Our Services</h2>
             <p className="section-subtitle">Specialized offerings to fit every need.</p>
           </div>
-          <Link href="#booking" className="btn-primary hidden shrink-0 sm:inline-flex">Get a quote</Link>
+          <Link href="#booking" className="btn-primary hidden shrink-0 sm:inline-flex">
+            Get a quote
+          </Link>
         </div>
 
         <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {services.map((s) => (
-            <Link key={s.key} href={s.href} className="card card-hover group flex flex-col p-6">
-              <div className="flex items-start justify-between gap-4">
-                <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-[#FFB730]/25 to-[#FF7A00]/10 text-xl transition group-hover:from-[#FFB730]/35 group-hover:to-[#FF7A00]/15">
-                  {s.icon}
+          {services.map((s) => {
+            const img = siteImages[s.image];
+            return (
+              <Link
+                key={s.key}
+                href={s.href}
+                className="card card-hover group flex flex-col overflow-hidden"
+              >
+                <div className="relative aspect-[16/10] overflow-hidden bg-slate-100">
+                  <Image
+                    src={img.src}
+                    alt={img.alt}
+                    fill
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                    className="object-cover transition duration-300 group-hover:scale-[1.03]"
+                  />
                 </div>
-                <span className="rounded-full bg-slate-50 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wide text-slate-400 transition group-hover:bg-[#FFB730]/15 group-hover:text-[#FF7A00]">
-                  Learn more
-                </span>
-              </div>
-              <h3 className="mt-5 text-lg font-semibold text-slate-900 transition group-hover:text-[#FF7A00]">{s.title}</h3>
-              <p className="mt-2 flex-1 text-sm leading-relaxed text-slate-600">{s.desc}</p>
-              <span className="mt-5 inline-flex items-center gap-1 text-sm font-semibold text-[#FF7A00]">
-                {s.cta}
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="transition group-hover:translate-x-0.5">
-                  <path d="M5 12h14" /><path d="m12 5 7 7-7 7" />
-                </svg>
-              </span>
-            </Link>
-          ))}
-        </div>
-
-        <div className="mt-10 text-center sm:hidden">
-          <Link href="#booking" className="btn-primary">Get a quote</Link>
+                <div className="flex flex-1 flex-col p-6">
+                  <h3 className="text-lg font-semibold text-slate-900 transition group-hover:text-[#FF7A00]">
+                    {s.title}
+                  </h3>
+                  <p className="mt-2 flex-1 text-sm leading-relaxed text-slate-600">{s.desc}</p>
+                  <span className="mt-5 inline-flex items-center gap-1 text-sm font-semibold text-[#FF7A00]">
+                    {s.cta}
+                    <span aria-hidden className="transition group-hover:translate-x-0.5">
+                      →
+                    </span>
+                  </span>
+                </div>
+              </Link>
+            );
+          })}
         </div>
       </div>
     </section>
