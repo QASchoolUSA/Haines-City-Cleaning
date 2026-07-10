@@ -8,6 +8,7 @@ const SERVICE_LINKS = [
   { href: "/house-cleaning", label: "House Cleaning" },
   { href: "/move-out-cleaning", label: "Move Out Cleaning" },
   { href: "/move-in-cleaning", label: "Move In Cleaning" },
+  { href: "/airbnb-cleaning", label: "Airbnb Cleaning" },
   { href: "/commercial-cleaning", label: "Commercial Cleaning" },
   { href: "/post-construction-cleaning", label: "Post-Construction" },
 ];

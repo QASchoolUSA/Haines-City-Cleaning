@@ -151,6 +151,10 @@ export default function JsonLd() {
         },
         {
           "@type": "Offer",
+          itemOffered: { "@id": `${siteUrl}/#service-airbnb` },
+        },
+        {
+          "@type": "Offer",
           itemOffered: { "@id": `${siteUrl}/#service-commercial` },
         },
         {
@@ -223,22 +227,43 @@ export default function JsonLd() {
     {
       "@type": "ProfessionalService",
       "@id": `${siteUrl}/#service-move-out`,
-      name: "Move-Out, Move-In & Airbnb Turnover Cleaning",
+      name: "Move-Out & Move-In Cleaning in Haines City, FL",
       serviceType: "Move Out Cleaning",
       description:
-        "Deposit-focused vacancy cleans, move-in resets, and same-day Airbnb turnover cleaning for property managers and hosts in Haines City, FL.",
+        "Deposit-focused vacancy cleans and move-in resets for tenants, landlords, and property managers in Haines City, FL.",
       provider: { "@id": organizationId },
       areaServed,
       url: absoluteUrl("/move-out-cleaning"),
       about: [
         { "@type": "Service", name: "Move Out Cleaning" },
-        { "@type": "Service", name: "Airbnb Cleaning" },
-        { "@type": "Service", name: "Turnover Cleaning" },
+        { "@type": "Service", name: "Move In Cleaning" },
       ],
       mentions: [
         { "@type": "Audience", name: "Property Managers" },
-        { "@type": "Audience", name: "Airbnb Hosts" },
+        { "@type": "Audience", name: "Tenants" },
         { "@type": "Thing", name: "Security Deposit" },
+      ],
+    },
+    {
+      "@type": "ProfessionalService",
+      "@id": `${siteUrl}/#service-airbnb`,
+      name: "Airbnb & Vacation Rental Turnover Cleaning",
+      serviceType: "Airbnb Cleaning",
+      description:
+        "Same-day Airbnb and short-term rental turnover cleaning with linen reset, staging, and host QA for Haines City, Davenport, and Polk County.",
+      provider: { "@id": organizationId },
+      areaServed,
+      url: absoluteUrl("/airbnb-cleaning"),
+      about: [
+        { "@type": "Service", name: "Airbnb Cleaning" },
+        { "@type": "Service", name: "Turnover Cleaning" },
+        { "@type": "City", name: "Haines City" },
+        { "@type": "City", name: "Davenport" },
+      ],
+      mentions: [
+        { "@type": "Audience", name: "Airbnb Hosts" },
+        { "@type": "Audience", name: "Property Managers" },
+        { "@type": "Thing", name: "Same-Day Turnover SLA" },
       ],
     },
     {

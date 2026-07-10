@@ -261,6 +261,9 @@ See also article-level `TechArticle` / `BlogPosting` on the Phase 3 post.
 - [x] Blueprint document (`docs/seo-aeo-geo-blueprint.md`)
 - [x] Phase 3 AEO article live at `/blog/move-out-cleaning-checklist-haines-city`
 - [x] Organization / WebSite / ProfessionalService JSON-LD graph with `about`, `mentions`, `sameAs`
+- [x] Airbnb / turnover service page at `/airbnb-cleaning`
+- [x] Airbnb turnover SLA AEO article at `/blog/airbnb-turnover-time-haines-city`
 - [ ] Add proprietary Deposit-Risk Matrix visuals once real anonymized stats are approved
 - [ ] Fill `sameAs` env vars (`NEXT_PUBLIC_GBP_URL`, `NEXT_PUBLIC_FACEBOOK_URL`, plus Instagram/Yelp when available)
 - [ ] Expand Cluster A/C/D pillar pages with Florida-specific intent-gap sections
+- [ ] Tenant vs landlord move-out responsibility AEO article (Cluster B question #3)

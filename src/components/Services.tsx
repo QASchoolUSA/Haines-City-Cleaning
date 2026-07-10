@@ -26,12 +26,20 @@ const services = [
     icon: "📦",
   },
   {
+    key: "airbnb",
+    title: "Airbnb Cleaning",
+    desc: "Same-day turnover cleans with linen reset and guest-ready QA.",
+    href: "/airbnb-cleaning",
+    cta: "Airbnb & vacation rental turnovers",
+    icon: "🔑",
+  },
+  {
     key: "move-in",
     title: "Move In Cleaning",
     desc: "New home deep cleaning for a fresh, sanitized start.",
     href: "/move-in-cleaning",
     cta: "Move-in deep cleaning",
-    icon: "🔑",
+    icon: "🏡",
   },
   {
     key: "commercial",

@@ -156,8 +156,10 @@ export default function MoveOutChecklistArticle() {
         Ready to book a deposit-focused clean? See{" "}
         <Link href="/move-out-cleaning">move-out cleaning in Haines City</Link>, compare{" "}
         <Link href="/pricing">pricing</Link>, or{" "}
-        <Link href="/#booking">get an instant quote</Link>. Hosts needing same-day resets can
-        also ask about Airbnb turnover cleaning when booking.
+        <Link href="/#booking">get an instant quote</Link>. Hosts needing same-day resets should
+        use{" "}
+        <Link href="/airbnb-cleaning">Airbnb turnover cleaning</Link> and read the{" "}
+        <Link href="/blog/airbnb-turnover-time-haines-city">turnover timing guide</Link>.
       </p>
     </>
   );

@@ -5,8 +5,29 @@ import { breadcrumbJsonLd, faqJsonLd } from "@/lib/json-ld";
 import { createPageMetadata } from "@/lib/metadata";
 import { absoluteUrl, siteName, siteUrl } from "@/lib/site";
 import MoveOutChecklistArticle from "@/components/MoveOutChecklistArticle";
+import AirbnbTurnoverSlaArticle from "@/components/AirbnbTurnoverSlaArticle";
 
 type Props = { params: Promise<{ slug: string }> };
+
+const KEYWORDS: Record<string, string[]> = {
+  "airbnb-turnover-time-haines-city": [
+    "airbnb turnover time Haines City",
+    "how long does airbnb cleaning take",
+    "vacation rental cleaning Davenport",
+    "same day turnover cleaning Polk County",
+  ],
+  "move-out-cleaning-checklist-haines-city": [
+    "move out cleaning checklist Haines City",
+    "security deposit cleaning Polk County",
+    "move out cleaning Haines City FL",
+    "apartment turnover cleaning checklist",
+  ],
+  "cost-of-house-cleaning-haines-city": [
+    "house cleaning cost Haines City",
+    "house cleaning prices Polk County",
+    "maid service cost Haines City FL",
+  ],
+};
 
 export async function generateStaticParams() {
   const { blogPosts } = await import("@/lib/blog");
@@ -18,26 +39,12 @@ export async function generateMetadata({ params }: Props) {
   const post = getBlogPost(slug);
   if (!post) return {};
 
-  const keywords =
-    slug === "move-out-cleaning-checklist-haines-city"
-      ? [
-          "move out cleaning checklist Haines City",
-          "security deposit cleaning Polk County",
-          "move out cleaning Haines City FL",
-          "apartment turnover cleaning checklist",
-        ]
-      : [
-          "house cleaning cost Haines City",
-          "house cleaning prices Polk County",
-          "maid service cost Haines City FL",
-        ];
-
   return createPageMetadata({
     title: post.title,
     description: post.description,
     path: `/blog/${post.slug}`,
     ogImage: "/og/blog.jpg",
-    keywords,
+    keywords: KEYWORDS[slug],
   });
 }
 
@@ -108,10 +115,12 @@ function CostOfCleaningArticle() {
 function articleJsonLd(slug: string, title: string, description: string, updatedAt: string) {
   const url = absoluteUrl(`/blog/${slug}`);
   const isMoveOut = slug === "move-out-cleaning-checklist-haines-city";
+  const isAirbnb = slug === "airbnb-turnover-time-haines-city";
+  const isTech = isMoveOut || isAirbnb;
 
   return {
     "@context": "https://schema.org",
-    "@type": isMoveOut ? ["TechArticle", "BlogPosting"] : "BlogPosting",
+    "@type": isTech ? ["TechArticle", "BlogPosting"] : "BlogPosting",
     "@id": `${url}#article`,
     headline: title,
     name: title,
@@ -138,37 +147,58 @@ function articleJsonLd(slug: string, title: string, description: string, updated
     },
     image: absoluteUrl("/og/blog.jpg"),
     inLanguage: "en-US",
-    about: isMoveOut
-      ? [
-          { "@type": "Service", name: "Move Out Cleaning" },
-          { "@type": "Thing", name: "Security Deposit" },
-          { "@type": "City", name: "Haines City" },
-          { "@type": "AdministrativeArea", name: "Polk County" },
-        ]
-      : [
-          { "@type": "Service", name: "House Cleaning" },
-          { "@type": "City", name: "Haines City" },
-        ],
-    mentions: isMoveOut
+    about: isAirbnb
       ? [
           { "@type": "Service", name: "Airbnb Cleaning" },
           { "@type": "Service", name: "Turnover Cleaning" },
-          { "@type": "Service", name: "Apartment Cleaning" },
-          { "@type": "Audience", name: "Property Managers" },
-          { "@type": "Audience", name: "Tenants" },
+          { "@type": "City", name: "Haines City" },
           { "@type": "City", name: "Davenport" },
         ]
-      : [
-          { "@type": "Service", name: "Deep Cleaning" },
+      : isMoveOut
+        ? [
+            { "@type": "Service", name: "Move Out Cleaning" },
+            { "@type": "Thing", name: "Security Deposit" },
+            { "@type": "City", name: "Haines City" },
+            { "@type": "AdministrativeArea", name: "Polk County" },
+          ]
+        : [
+            { "@type": "Service", name: "House Cleaning" },
+            { "@type": "City", name: "Haines City" },
+          ],
+    mentions: isAirbnb
+      ? [
+          { "@type": "Audience", name: "Airbnb Hosts" },
+          { "@type": "Audience", name: "Property Managers" },
           { "@type": "Service", name: "Move Out Cleaning" },
           { "@type": "AdministrativeArea", name: "Polk County" },
-        ],
-    ...(isMoveOut
+        ]
+      : isMoveOut
+        ? [
+            { "@type": "Service", name: "Airbnb Cleaning" },
+            { "@type": "Service", name: "Turnover Cleaning" },
+            { "@type": "Service", name: "Apartment Cleaning" },
+            { "@type": "Audience", name: "Property Managers" },
+            { "@type": "Audience", name: "Tenants" },
+            { "@type": "City", name: "Davenport" },
+          ]
+        : [
+            { "@type": "Service", name: "Deep Cleaning" },
+            { "@type": "Service", name: "Move Out Cleaning" },
+            { "@type": "AdministrativeArea", name: "Polk County" },
+          ],
+    ...(isAirbnb
       ? {
           proficiencyLevel: "Expert",
-          dependencies: "Local lease walkthrough standards and Florida hard-water / humidity conditions",
+          dependencies:
+            "Same-day booking gaps, linen logistics, and Florida humidity conditions for short-term rentals",
         }
-      : {}),
+      : isMoveOut
+        ? {
+            proficiencyLevel: "Expert",
+            dependencies:
+              "Local lease walkthrough standards and Florida hard-water / humidity conditions",
+          }
+        : {}),
   };
 }
 
@@ -191,6 +221,25 @@ const moveOutFaqs = [
   },
 ];
 
+const airbnbFaqs = [
+  {
+    q: "How long does a same-day Airbnb turnover clean take for a 2–3 bedroom rental near Davenport / Haines City?",
+    a: "About 90–120 minutes with a two-person crew when checkout access starts on time. The SLA covers access photos, linen strip, kitchen and bath reset, bed staging, floors, and a 12-point QA walk before host notification.",
+  },
+  {
+    q: "What makes Airbnb turnover cleaning take longer?",
+    a: "Late checkouts, pet hair, leftover food, linen shortages, and humidity odor passes commonly add 15–40 minutes or more.",
+  },
+  {
+    q: "How much booking-gap buffer should hosts plan?",
+    a: "For a 2–3 bedroom near Haines City or Davenport, plan 90–120 minutes of cleaning plus at least 60 minutes of buffer for travel, lockbox issues, and laundry dry time.",
+  },
+  {
+    q: "Is Airbnb cleaning the same as move-out cleaning?",
+    a: "No. Airbnb turnover is a same-day guest-ready SLA. Move-out cleaning targets empty-unit deposit walkthrough standards.",
+  },
+];
+
 export default async function BlogPostPage({ params }: Props) {
   const { slug } = await params;
   const post = getBlogPost(slug);
@@ -204,7 +253,11 @@ export default async function BlogPostPage({ params }: Props) {
 
   const article = articleJsonLd(post.slug, post.title, post.description, post.updatedAt);
   const faqs =
-    slug === "move-out-cleaning-checklist-haines-city" ? faqJsonLd(moveOutFaqs) : null;
+    slug === "move-out-cleaning-checklist-haines-city"
+      ? faqJsonLd(moveOutFaqs)
+      : slug === "airbnb-turnover-time-haines-city"
+        ? faqJsonLd(airbnbFaqs)
+        : null;
 
   return (
     <main className="mx-auto max-w-3xl px-4 py-16 sm:px-6 lg:px-8">
@@ -218,7 +271,9 @@ export default async function BlogPostPage({ params }: Props) {
         </p>
 
         <div className="prose prose-slate mt-10 max-w-none prose-headings:font-bold prose-headings:text-slate-900 prose-p:leading-relaxed prose-p:text-slate-600 prose-a:text-[#FF7A00]">
-          {slug === "move-out-cleaning-checklist-haines-city" ? (
+          {slug === "airbnb-turnover-time-haines-city" ? (
+            <AirbnbTurnoverSlaArticle />
+          ) : slug === "move-out-cleaning-checklist-haines-city" ? (
             <MoveOutChecklistArticle />
           ) : slug === "cost-of-house-cleaning-haines-city" ? (
             <CostOfCleaningArticle />

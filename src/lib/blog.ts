@@ -8,6 +8,15 @@ export type BlogPost = {
 
 export const blogPosts: BlogPost[] = [
   {
+    slug: "airbnb-turnover-time-haines-city",
+    title:
+      "How Long Does Airbnb Turnover Cleaning Take Near Haines City & Davenport?",
+    description:
+      "Same-day Airbnb turnover timing for 2–3 bedroom rentals near Haines City and Davenport — minute-by-minute SLA, booking-gap math, and what extends the clock.",
+    updatedAt: "2026-07-10",
+    readTime: "7 min read",
+  },
+  {
     slug: "move-out-cleaning-checklist-haines-city",
     title:
       "Move-Out Cleaning Checklist for Haines City, FL: Protect Your Security Deposit",
