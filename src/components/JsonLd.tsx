@@ -118,6 +118,8 @@ export default function JsonLd() {
       "@type": "AggregateRating",
       ratingValue: aggregateRating.ratingValue,
       reviewCount: aggregateRating.reviewCount,
+      bestRating: aggregateRating.bestRating,
+      worstRating: aggregateRating.worstRating,
     },
     sameAs,
     contactPoint: {
@@ -165,7 +167,9 @@ export default function JsonLd() {
     },
   };
 
-  // Alias node so existing ReviewJsonLd `@id` references remain valid
+  // Alias node so existing ReviewJsonLd `@id` references remain valid.
+  // Include aggregateRating here too so merged #business entities stay valid
+  // if a crawler sees this graph node without the separate ReviewJsonLd script.
   const businessAlias = {
     "@type": ["LocalBusiness", "HouseCleaner"],
     "@id": businessId,
@@ -174,6 +178,13 @@ export default function JsonLd() {
     parentOrganization: { "@id": organizationId },
     telephone: businessPhone,
     address: postalAddress,
+    aggregateRating: {
+      "@type": "AggregateRating",
+      ratingValue: aggregateRating.ratingValue,
+      reviewCount: aggregateRating.reviewCount,
+      bestRating: aggregateRating.bestRating,
+      worstRating: aggregateRating.worstRating,
+    },
   };
 
   const website = {
