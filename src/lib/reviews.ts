@@ -22,7 +22,14 @@ export const reviews: Review[] = [
   },
 ];
 
+const averageRating =
+  reviews.reduce((sum, review) => sum + review.rating, 0) / reviews.length;
+
 export const aggregateRating = {
-  ratingValue: "5",
+  ratingValue: Number.isFinite(averageRating)
+    ? String(Math.round(averageRating * 10) / 10)
+    : "0",
   reviewCount: String(reviews.length),
+  bestRating: 5,
+  worstRating: 1,
 };
