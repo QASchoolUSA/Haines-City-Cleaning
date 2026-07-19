@@ -47,6 +47,13 @@ const faqs = [
   { q: "Which areas do you serve?", a: "Haines City, Davenport, Winter Haven, Lakeland, and nearby Polk County communities." },
 ];
 
+const startingPrices = [
+  { home: "Studio / 1 bedroom", from: "$99" },
+  { home: "2 bedrooms", from: "$139" },
+  { home: "3 bedrooms", from: "$169" },
+  { home: "4+ bedrooms", from: "$199" },
+];
+
 export default function Residential() {
   return (
     <main className="relative mx-auto max-w-7xl px-4 pt-12 pb-0 sm:px-6 lg:px-8">
@@ -77,6 +84,30 @@ export default function Residential() {
                     <span>{item.text}</span>
                   </div>
                 ))}
+              </div>
+            </div>
+
+            <div className="pt-8">
+              <h2 className="text-xl font-semibold text-slate-900">Starting residential rates</h2>
+              <p className="mt-2 text-sm text-slate-600">Estimates vary by condition, bathrooms, and add-ons. Use the quote tool for an exact figure.</p>
+              <div className="mt-6 overflow-x-auto">
+                <table className="w-full min-w-[20rem] border-collapse text-left text-sm text-slate-700">
+                  <caption className="sr-only">Starting residential cleaning prices by home size</caption>
+                  <thead>
+                    <tr className="border-b border-slate-200">
+                      <th scope="col" className="py-3 pr-4 font-semibold text-slate-900">Home size</th>
+                      <th scope="col" className="py-3 font-semibold text-slate-900">Starting from</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {startingPrices.map((row) => (
+                      <tr key={row.home} className="border-b border-slate-100">
+                        <th scope="row" className="py-3 pr-4 font-medium text-slate-900">{row.home}</th>
+                        <td className="py-3 font-semibold text-[#FF7A00]">{row.from}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
               </div>
             </div>
 
@@ -135,6 +166,37 @@ export default function Residential() {
       <ServiceBookingSection />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd(faqs)) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd([{ name: "Home", path: "/" }, { name: "Residential Cleaning", path: "/residential-cleaning" }])) }} />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "HowTo",
+            name: "How residential cleaning works in Haines City",
+            description: "Three steps from quote request to a professionally cleaned home.",
+            step: [
+              {
+                "@type": "HowToStep",
+                position: 1,
+                name: "Tell us about your home",
+                text: "Share your home size, preferred schedule, and any special requests.",
+              },
+              {
+                "@type": "HowToStep",
+                position: 2,
+                name: "Get matched with a trusted cleaner",
+                text: "We match you with a trusted Haines City cleaner for your recurring or one-time visit.",
+              },
+              {
+                "@type": "HowToStep",
+                position: 3,
+                name: "Relax while we clean",
+                text: "Your space is cleaned to a professional standard so you can get time back.",
+              },
+            ],
+          }),
+        }}
+      />
     </main>
   );
 }

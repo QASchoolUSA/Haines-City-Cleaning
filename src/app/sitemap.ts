@@ -18,6 +18,7 @@ const LAST_CONTENT_UPDATE = new Date("2026-07-10");
 export default function sitemap(): MetadataRoute.Sitemap {
   const staticPages: MetadataRoute.Sitemap = [
     { url: `${siteUrl}/`, lastModified: LAST_CONTENT_UPDATE, changeFrequency: "monthly", priority: 1 },
+    { url: `${siteUrl}/about`, lastModified: LAST_CONTENT_UPDATE, changeFrequency: "monthly", priority: 0.7 },
     { url: `${siteUrl}/pricing`, lastModified: LAST_CONTENT_UPDATE, changeFrequency: "monthly", priority: 0.8 },
     { url: `${siteUrl}/blog`, lastModified: LAST_CONTENT_UPDATE, changeFrequency: "weekly", priority: 0.7 },
     ...SERVICE_ROUTES.map((route) => ({

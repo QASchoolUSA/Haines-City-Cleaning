@@ -56,6 +56,11 @@ export default function Footer() {
                 </li>
               ))}
               <li>
+                <Link href="/about" className="text-slate-600 transition hover:text-[#FF7A00]">
+                  About Us
+                </Link>
+              </li>
+              <li>
                 <Link href="/pricing" className="text-slate-600 transition hover:text-[#FF7A00]">
                   Pricing
                 </Link>

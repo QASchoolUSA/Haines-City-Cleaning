@@ -48,6 +48,7 @@ export default function Header() {
             <Link href="/pricing" className="rounded-lg px-3 py-2 text-sm font-medium text-slate-700 transition hover:bg-slate-50 hover:text-[#FF7A00]">Pricing</Link>
             <Link href="/areas/davenport" className="rounded-lg px-3 py-2 text-sm font-medium text-slate-700 transition hover:bg-slate-50 hover:text-[#FF7A00]">Areas</Link>
             <Link href="/blog" className="rounded-lg px-3 py-2 text-sm font-medium text-slate-700 transition hover:bg-slate-50 hover:text-[#FF7A00]">Blog</Link>
+            <Link href="/about" className="rounded-lg px-3 py-2 text-sm font-medium text-slate-700 transition hover:bg-slate-50 hover:text-[#FF7A00]">About</Link>
             <Link href="/#benefits" className="rounded-lg px-3 py-2 text-sm font-medium text-slate-700 transition hover:bg-slate-50 hover:text-[#FF7A00]">Why Us</Link>
             <Link href="/#testimonials" className="rounded-lg px-3 py-2 text-sm font-medium text-slate-700 transition hover:bg-slate-50 hover:text-[#FF7A00]">Reviews</Link>
             <Link href="/#contact" className="rounded-lg px-3 py-2 text-sm font-medium text-slate-700 transition hover:bg-slate-50 hover:text-[#FF7A00]">Contact</Link>

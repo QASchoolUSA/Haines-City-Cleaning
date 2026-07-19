@@ -37,6 +37,8 @@ const faqs = [
   { q: "Do you clean inside the fridge and oven?", a: "Yes. Appliance interiors are part of our standard move‑in scope so your kitchen is fresh and ready to use." },
   { q: "How far in advance should I book?", a: "Book as early as possible. We can often accommodate next‑day service for Haines City and nearby areas." },
   { q: "Do you bring supplies and equipment?", a: "Yes. We provide professional supplies and equipment for a complete, move‑in ready finish." },
+  { q: "Should utilities be on before the move-in clean?", a: "Yes. Working water and electricity are needed for bathrooms, appliances, vacuuming, and floor care. Confirm access before the appointment." },
+  { q: "Can you clean a newly built home before move-in?", a: "Yes, but construction must be complete and major debris removed. Fine construction dust may require a post-construction scope rather than a standard move-in clean." },
 ];
 
 export default function MoveInCleaning() {
@@ -66,17 +68,52 @@ export default function MoveInCleaning() {
 
             <div className="pt-8 bg-[#FFB730]/10 rounded-2xl p-8">
               <h2 className="text-xl font-semibold text-slate-900">Move‑In Deep Cleaning Checklist</h2>
-              <div className="mt-6 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-                {checklist.map((item) => (
-                  <div key={item.title} className="flex flex-col gap-2">
-                    <div className="flex items-center gap-2 font-semibold text-slate-900">
-                      <Icon name={item.icon} className="h-5 w-5 text-[#FF7A00]" />
-                      {item.title}
-                    </div>
-                    <p className="text-sm text-slate-700 pl-7">{item.desc}</p>
-                  </div>
-                ))}
+              <div className="mt-6 overflow-x-auto">
+                <table className="w-full min-w-[28rem] border-collapse text-left text-sm text-slate-700">
+                  <caption className="sr-only">Move-in cleaning checklist tasks and details</caption>
+                  <thead>
+                    <tr className="border-b border-slate-200">
+                      <th scope="col" className="py-3 pr-4 font-semibold text-slate-900">Task</th>
+                      <th scope="col" className="py-3 font-semibold text-slate-900">Details</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {checklist.map((item) => (
+                      <tr key={item.title} className="border-b border-slate-100 align-top">
+                        <th scope="row" className="py-3 pr-4 font-semibold text-slate-900">
+                          <span className="inline-flex items-center gap-2">
+                            <Icon name={item.icon} className="h-4 w-4 text-[#FF7A00]" />
+                            {item.title}
+                          </span>
+                        </th>
+                        <td className="py-3">{item.desc}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
               </div>
+            </div>
+
+            <div className="pt-8">
+              <h2 className="text-xl font-semibold text-slate-900">When Should You Schedule a Move-In Clean?</h2>
+              <p className="mt-3 leading-relaxed text-slate-700">
+                The best window is after the previous occupant, seller, or contractor has removed belongings and before your movers arrive. Empty cabinets, closets, and floors give the team access to surfaces that become difficult to reach once boxes and furniture are inside.
+              </p>
+              <p className="mt-3 leading-relaxed text-slate-700">
+                Keep water and electricity active, confirm the key or gate handoff, and tell us whether the property is an apartment, established home, or new construction. Homes around Haines City, Davenport, Lake Hamilton, and Southern Dunes may have gated access or newly settled construction dust that changes the plan.
+              </p>
+            </div>
+
+            <div className="pt-8">
+              <h2 className="text-xl font-semibold text-slate-900">What to Check Before You Unpack</h2>
+              <ul className="mt-4 grid gap-3 text-slate-700 sm:grid-cols-2">
+                <li className="rounded-xl border border-slate-200 p-4">Review cabinet and drawer interiors while they are empty.</li>
+                <li className="rounded-xl border border-slate-200 p-4">Confirm appliance interiors are included in the requested scope.</li>
+                <li className="rounded-xl border border-slate-200 p-4">Identify delicate stone, wood, or specialty floor finishes.</li>
+                <li className="rounded-xl border border-slate-200 p-4">Photograph pre-existing damage separately from cleaning concerns.</li>
+                <li className="rounded-xl border border-slate-200 p-4">Check that contractors have finished sanding, cutting, and touch-ups.</li>
+                <li className="rounded-xl border border-slate-200 p-4">Plan carpet extraction, hauling, or pest work with the right specialist.</li>
+              </ul>
             </div>
 
             <div className="pt-8">
@@ -105,6 +142,23 @@ export default function MoveInCleaning() {
       <ServiceBookingSection />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd(faqs)) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd([{ name: "Home", path: "/" }, { name: "Move In Cleaning", path: "/move-in-cleaning" }])) }} />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "HowTo",
+            name: "How to prepare for move-in cleaning in Haines City",
+            description: "Follow this move-in deep cleaning checklist so your new Haines City home is ready before unpacking.",
+            step: checklist.map((item, index) => ({
+              "@type": "HowToStep",
+              position: index + 1,
+              name: item.title,
+              text: item.desc,
+            })),
+          }),
+        }}
+      />
     </main>
   );
 }

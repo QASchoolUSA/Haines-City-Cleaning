@@ -66,17 +66,40 @@ export default function MoveOutCleaning() {
 
                         <div className="pt-8 bg-[#FFB730]/10 rounded-2xl p-8">
                             <h2 className="text-xl font-semibold text-slate-900">Our Move-Out Checklist</h2>
-                            <div className="mt-6 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-                                {checklist.map((item) => (
-                                    <div key={item.title} className="flex flex-col gap-2">
-                                        <div className="flex items-center gap-2 font-semibold text-slate-900">
-                                            <Icon name={item.icon} className="h-5 w-5 text-[#FF7A00]" />
-                                            {item.title}
-                                        </div>
-                                        <p className="text-sm text-slate-700 pl-7">{item.desc}</p>
-                                    </div>
-                                ))}
+                            <div className="mt-6 overflow-x-auto">
+                                <table className="w-full min-w-[28rem] border-collapse text-left text-sm text-slate-700">
+                                    <caption className="sr-only">Move-out cleaning checklist tasks and details</caption>
+                                    <thead>
+                                        <tr className="border-b border-slate-200">
+                                            <th scope="col" className="py-3 pr-4 font-semibold text-slate-900">Task</th>
+                                            <th scope="col" className="py-3 font-semibold text-slate-900">Details</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {checklist.map((item) => (
+                                            <tr key={item.title} className="border-b border-slate-100 align-top">
+                                                <th scope="row" className="py-3 pr-4 font-semibold text-slate-900">
+                                                    <span className="inline-flex items-center gap-2">
+                                                        <Icon name={item.icon} className="h-4 w-4 text-[#FF7A00]" />
+                                                        {item.title}
+                                                    </span>
+                                                </th>
+                                                <td className="py-3">{item.desc}</td>
+                                            </tr>
+                                        ))}
+                                    </tbody>
+                                </table>
                             </div>
+                        </div>
+
+                        <div className="pt-8">
+                            <h2 className="text-xl font-semibold text-slate-900">Deposit-Focused Vacancy Standards</h2>
+                            <p className="mt-3 leading-relaxed text-slate-700">
+                                Landlords and property managers in Haines City, Davenport, and Lake Hamilton often inspect cabinets, appliance interiors, bathrooms, baseboards, and floors before releasing a deposit. Our vacancy checklist targets those high-scrutiny areas so the home reads as ready for the next showing or tenant.
+                            </p>
+                            <p className="mt-3 leading-relaxed text-slate-700">
+                                Schedule after belongings are removed and utilities remain on. Share gate codes, parking notes, and any landlord punch-list items when you book so the crew can work efficiently on the first visit.
+                            </p>
                         </div>
 
                         <div className="pt-8">
@@ -116,6 +139,23 @@ export default function MoveOutCleaning() {
             <ServiceBookingSection />
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd(faqs)) }} />
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd([{ name: "Home", path: "/" }, { name: "Move Out Cleaning", path: "/move-out-cleaning" }])) }} />
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{
+                    __html: JSON.stringify({
+                        "@context": "https://schema.org",
+                        "@type": "HowTo",
+                        name: "Move-out cleaning checklist for Haines City rentals",
+                        description: "Deposit-focused vacancy cleaning steps covering cabinets, appliances, bathrooms, and floors.",
+                        step: checklist.map((item, index) => ({
+                            "@type": "HowToStep",
+                            position: index + 1,
+                            name: item.title,
+                            text: item.desc,
+                        })),
+                    }),
+                }}
+            />
         </main>
     );
 }
