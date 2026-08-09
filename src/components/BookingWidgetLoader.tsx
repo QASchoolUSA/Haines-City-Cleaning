@@ -1,6 +1,7 @@
 "use client";
 
 import dynamic from "next/dynamic";
+import { DEFAULT_PRICING_CONFIG, type PricingConfig } from "@/lib/pricing";
 
 const BookingWidget = dynamic(() => import("./BookingWidget"), {
   loading: () => (
@@ -9,6 +10,10 @@ const BookingWidget = dynamic(() => import("./BookingWidget"), {
   ssr: false,
 });
 
-export default function BookingWidgetLoader() {
-  return <BookingWidget />;
+export default function BookingWidgetLoader({
+  config = DEFAULT_PRICING_CONFIG,
+}: {
+  config?: PricingConfig;
+}) {
+  return <BookingWidget config={config} />;
 }

@@ -7,6 +7,8 @@ import ServiceBookingSection from "@/components/ServiceBookingSection";
 import ServiceHeroImage from "@/components/ServiceHeroImage";
 import { breadcrumbJsonLd, faqJsonLd } from "@/lib/json-ld";
 import { createPageMetadata } from "@/lib/metadata";
+import { residentialPrices, type PricingConfig } from "@/lib/pricing";
+import { getPricingConfig } from "@/lib/pricing-config";
 
 export const metadata = createPageMetadata({
   title: "Residential Cleaning Services in Haines City, FL",
@@ -47,14 +49,20 @@ const faqs = [
   { q: "Which areas do you serve?", a: "Haines City, Davenport, Winter Haven, Lakeland, and nearby Polk County communities." },
 ];
 
-const startingPrices = [
-  { home: "Studio / 1 bedroom", from: "$99" },
-  { home: "2 bedrooms", from: "$139" },
-  { home: "3 bedrooms", from: "$169" },
-  { home: "4+ bedrooms", from: "$199" },
-];
+function startingPrices(config: PricingConfig) {
+  const prices = residentialPrices(config);
+  return [
+    { home: "Studio / 1 bedroom", from: `$${prices.studio}` },
+    { home: "2 bedrooms", from: `$${prices["2bed"]}` },
+    { home: "3 bedrooms", from: `$${prices["3bed"]}` },
+    { home: "4+ bedrooms", from: `$${prices["4plus"]}` },
+  ];
+}
 
-export default function Residential() {
+export default async function Residential() {
+  const config = await getPricingConfig();
+  const rows = startingPrices(config);
+
   return (
     <main className="relative mx-auto max-w-7xl px-4 pt-12 pb-0 sm:px-6 lg:px-8">
       <ServiceJsonLd
@@ -100,7 +108,7 @@ export default function Residential() {
                     </tr>
                   </thead>
                   <tbody>
-                    {startingPrices.map((row) => (
+                    {rows.map((row) => (
                       <tr key={row.home} className="border-b border-slate-100">
                         <th scope="row" className="py-3 pr-4 font-medium text-slate-900">{row.home}</th>
                         <td className="py-3 font-semibold text-[#FF7A00]">{row.from}</td>

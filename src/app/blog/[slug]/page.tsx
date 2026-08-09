@@ -8,6 +8,13 @@ import { absoluteUrl, siteName, siteUrl } from "@/lib/site";
 import { siteImages, type SiteImageKey } from "@/lib/images";
 import MoveOutChecklistArticle from "@/components/MoveOutChecklistArticle";
 import AirbnbTurnoverSlaArticle from "@/components/AirbnbTurnoverSlaArticle";
+import {
+  levelAdjustments,
+  residentialPrices,
+  type LevelKey,
+  type PricingConfig,
+} from "@/lib/pricing";
+import { getPricingConfig } from "@/lib/pricing-config";
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -56,7 +63,11 @@ export async function generateMetadata({ params }: Props) {
   });
 }
 
-function CostOfCleaningArticle() {
+function CostOfCleaningArticle({ config }: { config: PricingConfig }) {
+  const prices = residentialPrices(config);
+  const uplift = (key: LevelKey) =>
+    levelAdjustments(config).find((level) => level.key === key)?.uplift ?? 0;
+
   return (
     <>
       <p>
@@ -69,22 +80,23 @@ function CostOfCleaningArticle() {
       <p>Based on our local pricing, here&apos;s what most Haines City homeowners pay:</p>
       <ul>
         <li>
-          <strong>Studio / 1-bedroom standard clean:</strong> $99–$119
+          <strong>Studio / 1-bedroom standard clean:</strong> ${prices.studio}–$
+          {prices["1bed"]}
         </li>
         <li>
-          <strong>2-bedroom standard clean:</strong> $139
+          <strong>2-bedroom standard clean:</strong> ${prices["2bed"]}
         </li>
         <li>
-          <strong>3-bedroom standard clean:</strong> $169
+          <strong>3-bedroom standard clean:</strong> ${prices["3bed"]}
         </li>
         <li>
-          <strong>4+ bedroom standard clean:</strong> $199+
+          <strong>4+ bedroom standard clean:</strong> ${prices["4plus"]}+
         </li>
         <li>
-          <strong>Deep clean premium:</strong> ~40% above standard
+          <strong>Deep clean premium:</strong> ~{uplift("deep")}% above standard
         </li>
         <li>
-          <strong>Move-in / move-out:</strong> ~20% above standard
+          <strong>Move-in / move-out:</strong> ~{uplift("move")}% above standard
         </li>
       </ul>
 
@@ -253,6 +265,7 @@ export default async function BlogPostPage({ params }: Props) {
   const post = getBlogPost(slug);
   if (!post) notFound();
 
+  const config = await getPricingConfig();
   const breadcrumbs = breadcrumbJsonLd([
     { name: "Home", path: "/" },
     { name: "Blog", path: "/blog" },
@@ -295,9 +308,9 @@ export default async function BlogPostPage({ params }: Props) {
           {slug === "airbnb-turnover-time-haines-city" ? (
             <AirbnbTurnoverSlaArticle />
           ) : slug === "move-out-cleaning-checklist-haines-city" ? (
-            <MoveOutChecklistArticle />
+            <MoveOutChecklistArticle config={config} />
           ) : slug === "cost-of-house-cleaning-haines-city" ? (
-            <CostOfCleaningArticle />
+            <CostOfCleaningArticle config={config} />
           ) : null}
         </div>
       </article>

@@ -1,6 +1,9 @@
 import BookingWidgetLoader from "./BookingWidgetLoader";
+import { getPricingConfig } from "@/lib/pricing-config";
 
-export default function ServiceBookingSection() {
+export default async function ServiceBookingSection() {
+  const config = await getPricingConfig();
+
   return (
     <section id="booking" className="border-t border-slate-100 bg-slate-50/50 py-16 sm:py-20">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -12,7 +15,7 @@ export default function ServiceBookingSection() {
           </p>
         </div>
         <div className="mt-10">
-          <BookingWidgetLoader />
+          <BookingWidgetLoader config={config} />
         </div>
       </div>
     </section>

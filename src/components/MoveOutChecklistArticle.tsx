@@ -1,10 +1,36 @@
 import Link from "next/link";
+import {
+  DEFAULT_PRICING_CONFIG,
+  computeQuote,
+  levelAdjustments,
+  residentialPrices,
+  type PricingConfig,
+} from "@/lib/pricing";
 
 /**
  * Phase 3 AEO article — structured for LLM / AI Overview extraction.
  * AI Overview Target Block must remain the first paragraph after the H2 question.
  */
-export default function MoveOutChecklistArticle() {
+export default function MoveOutChecklistArticle({
+  config = DEFAULT_PRICING_CONFIG,
+}: {
+  config?: PricingConfig;
+}) {
+  const standardTwoBed = residentialPrices(config)["2bed"];
+  const moveUplift =
+    levelAdjustments(config).find((level) => level.key === "move")?.uplift ?? 0;
+  const moveOutQuote = computeQuote(
+    {
+      serviceType: "residential",
+      bedrooms: 2,
+      bathrooms: 1,
+      sqftBand: config.defaultSqftBand,
+      level: "move",
+      addOns: {},
+    },
+    config
+  );
+
   return (
     <>
       <p>
@@ -147,9 +173,11 @@ export default function MoveOutChecklistArticle() {
 
       <h3>Haines City Cleaning Move-Out Pricing Bands and Next Step</h3>
       <p>
-        Local move-out pricing typically runs about <strong>20% above a standard clean</strong>{" "}
-        for the same home size (for example, a 2-bedroom standard clean at $139 implies a
-        move-out band near $165–$185 before add-ons). Inside oven, fridge, windows, cabinets, and
+        Local move-out pricing typically runs about{" "}
+        <strong>{moveUplift}% above a standard clean</strong> for the same home size (for
+        example, a 2-bedroom standard clean at ${standardTwoBed} implies a move-out estimate
+        near ${moveOutQuote.price}, in a band of ${moveOutQuote.range.low}–$
+        {moveOutQuote.range.high} before add-ons). Inside oven, fridge, windows, cabinets, and
         baseboards may add line items when soil is heavy.
       </p>
       <p>

@@ -2,13 +2,14 @@
 import { useMemo, useState } from "react";
 import PropertyDetailsStep from "@/components/PropertyDetailsStep";
 import {
-  ADDON_LABELS,
-  DEFAULT_SQFT_BAND,
+  ADDON_KEYS,
+  DEFAULT_PRICING_CONFIG,
+  addOnLabels,
   computeQuote,
   propertySummary,
   selectedAddOnLines,
   sqftBandLabel,
-  type AddOnKey,
+  type PricingConfig,
   type ServiceType,
   type SqftBand,
 } from "@/lib/pricing";
@@ -43,11 +44,15 @@ function validateContact(name: string, email: string, phone: string, address: st
   return errors;
 }
 
-export default function BookingWidget() {
+export default function BookingWidget({
+  config = DEFAULT_PRICING_CONFIG,
+}: {
+  config?: PricingConfig;
+}) {
   const [serviceType, setServiceType] = useState<ServiceType>("residential");
   const [bedrooms, setBedrooms] = useState(2);
   const [bathrooms, setBathrooms] = useState(2);
-  const [sqftBand, setSqftBand] = useState<SqftBand | null>(DEFAULT_SQFT_BAND);
+  const [sqftBand, setSqftBand] = useState<SqftBand | null>(config.defaultSqftBand);
   const [level, setLevel] = useState<LevelType>("standard");
   const [addOns, setAddOns] = useState({ fridge: false, oven: false, windows: false, cabinets: false, baseboards: false });
   const [date, setDate] = useState("");
@@ -69,15 +74,20 @@ export default function BookingWidget() {
   }, [serviceType, level]);
 
   const quote = useMemo(
-    () => computeQuote({ serviceType, bedrooms, bathrooms, sqftBand, level: effectiveLevel, addOns }),
-    [serviceType, bedrooms, bathrooms, sqftBand, effectiveLevel, addOns]
+    () =>
+      computeQuote(
+        { serviceType, bedrooms, bathrooms, sqftBand, level: effectiveLevel, addOns },
+        config
+      ),
+    [serviceType, bedrooms, bathrooms, sqftBand, effectiveLevel, addOns, config]
   );
 
-  const sizeLabel = propertySummary({ serviceType, bedrooms, bathrooms, sqftBand });
+  const labels = useMemo(() => addOnLabels(config), [config]);
+  const sizeLabel = propertySummary({ serviceType, bedrooms, bathrooms, sqftBand }, config);
   const serviceLabel = SERVICE_OPTIONS.find((o) => o.value === serviceType)?.label ?? serviceType;
   const levelLabel =
     effectiveLevel === "move" ? "Move‑in/out" : effectiveLevel.charAt(0).toUpperCase() + effectiveLevel.slice(1);
-  const addOnLines = selectedAddOnLines(addOns);
+  const addOnLines = selectedAddOnLines(addOns, config);
   const selectedAddOns = addOnLines.map((a) => a.label);
 
   const mailto = useMemo(() => {
@@ -135,7 +145,7 @@ export default function BookingWidget() {
           property: {
             bedrooms: serviceType === "residential" ? bedrooms : undefined,
             bathrooms,
-            size_label: sqftBandLabel(sqftBand) ?? undefined,
+            size_label: sqftBandLabel(sqftBand, config) ?? undefined,
             home_type: serviceLabel,
           },
           quote: {
@@ -274,6 +284,7 @@ export default function BookingWidget() {
             bedrooms={bedrooms}
             bathrooms={bathrooms}
             sqftBand={sqftBand}
+            config={config}
             onBedroomsChange={setBedrooms}
             onBathroomsChange={setBathrooms}
             onSqftBandChange={setSqftBand}
@@ -298,7 +309,7 @@ export default function BookingWidget() {
             <div>
               <p className="mb-3 text-sm font-medium text-slate-700">Optional add‑ons</p>
               <div className="flex flex-wrap gap-2">
-                {(Object.keys(ADDON_LABELS) as AddOnKey[]).map((key) => (
+                {ADDON_KEYS.map((key) => (
                   <button
                     key={key}
                     type="button"
@@ -307,7 +318,7 @@ export default function BookingWidget() {
                       addOns[key] ? "bg-[#FF7A00] text-white" : "bg-slate-100 text-slate-600 hover:bg-[#FFB730]/20"
                     }`}
                   >
-                    {ADDON_LABELS[key]}
+                    {labels[key]}
                   </button>
                 ))}
               </div>

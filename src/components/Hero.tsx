@@ -2,6 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import BookingWidgetLoader from "./BookingWidgetLoader";
 import { siteImages } from "@/lib/images";
+import { getPricingConfig } from "@/lib/pricing-config";
 
 const TRUST_ITEMS = [
   "Licensed & Insured",
@@ -9,7 +10,9 @@ const TRUST_ITEMS = [
   "Local Haines City Team",
 ];
 
-export default function Hero() {
+export default async function Hero() {
+  const config = await getPricingConfig();
+
   return (
     <section className="gradient-hero relative overflow-hidden">
       <div className="pointer-events-none absolute -right-24 -top-24 h-96 w-96 rounded-full bg-[#FFB730]/20 blur-3xl" />
@@ -74,7 +77,7 @@ export default function Hero() {
           </div>
 
           <div id="booking" className="lg:sticky lg:top-24">
-            <BookingWidgetLoader />
+            <BookingWidgetLoader config={config} />
           </div>
         </div>
       </div>
