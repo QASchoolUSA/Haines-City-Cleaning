@@ -1,19 +1,30 @@
-export const baseResidential: Record<string, number> = {
-  studio: 99,
-  "1bed": 119,
-  "2bed": 139,
-  "3bed": 169,
-  "4plus": 199,
-};
+import {
+  BATH_RATE,
+  SQFT_BANDS,
+  bedroomBase,
+  bedroomLabel,
+  commercialByBand,
+  postByBand,
+} from "@/lib/pricing";
 
-export const baseCommercial: Record<string, number> = {
-  small: 149,
-  medium: 249,
-  large: 399,
-};
+export type PriceRow = { label: string; price: number };
 
-export const basePost: Record<string, number> = {
-  under1k: 299,
-  "1k-2k": 449,
-  over2k: 649,
-};
+/** Derived from the live quote engine so the page can never drift from the calculator. */
+export const residentialRows: PriceRow[] = Object.entries(bedroomBase).map(
+  ([bedrooms, price]) => ({
+    label: bedroomLabel(Number(bedrooms)),
+    price,
+  })
+);
+
+export const commercialRows: PriceRow[] = SQFT_BANDS.map((band) => ({
+  label: band.label,
+  price: commercialByBand[band.key],
+}));
+
+export const postRows: PriceRow[] = SQFT_BANDS.map((band) => ({
+  label: band.label,
+  price: postByBand[band.key],
+}));
+
+export { BATH_RATE };

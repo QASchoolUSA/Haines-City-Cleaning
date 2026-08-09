@@ -1,28 +1,17 @@
 "use client";
 import { useMemo, useState } from "react";
-import { computeQuote, type ServiceType } from "@/lib/pricing";
-
-type SizeOption = { key: string; label: string };
-
-const SIZE_OPTIONS: Record<ServiceType, SizeOption[]> = {
-  residential: [
-    { key: "studio", label: "Studio" },
-    { key: "1bed", label: "1 Bedroom" },
-    { key: "2bed", label: "2 Bedroom" },
-    { key: "3bed", label: "3 Bedroom" },
-    { key: "4plus", label: "4+ Bedroom" },
-  ],
-  commercial: [
-    { key: "small", label: "Small (≤1000 sqft)" },
-    { key: "medium", label: "Medium (1000–3000 sqft)" },
-    { key: "large", label: "Large (3000+ sqft)" },
-  ],
-  "post-construction": [
-    { key: "under1k", label: "Under 1000 sqft" },
-    { key: "1k-2k", label: "1000–2000 sqft" },
-    { key: "over2k", label: "2000+ sqft" },
-  ],
-};
+import PropertyDetailsStep from "@/components/PropertyDetailsStep";
+import {
+  ADDON_LABELS,
+  DEFAULT_SQFT_BAND,
+  computeQuote,
+  propertySummary,
+  selectedAddOnLines,
+  sqftBandLabel,
+  type AddOnKey,
+  type ServiceType,
+  type SqftBand,
+} from "@/lib/pricing";
 
 const SERVICE_OPTIONS: { value: ServiceType; label: string; desc: string }[] = [
   { value: "residential", label: "Residential", desc: "Homes & apartments" },
@@ -30,17 +19,10 @@ const SERVICE_OPTIONS: { value: ServiceType; label: string; desc: string }[] = [
   { value: "post-construction", label: "Post‑Construction", desc: "Dust & debris cleanup" },
 ];
 
-const ADDON_LABELS: Record<string, string> = {
-  fridge: "Inside fridge",
-  oven: "Inside oven",
-  windows: "Interior windows",
-  cabinets: "Inside cabinets",
-  baseboards: "Baseboards",
-};
-
 type LevelType = "standard" | "deep" | "move" | "post";
 
-const STEPS = ["Service", "Options", "Schedule", "Contact", "Review"] as const;
+const STEPS = ["Service", "Home", "Options", "Schedule", "Contact", "Review"] as const;
+const CONTACT_STEP = 4;
 
 type ContactErrors = Partial<Record<"name" | "email" | "phone" | "address", string>>;
 
@@ -63,7 +45,9 @@ function validateContact(name: string, email: string, phone: string, address: st
 
 export default function BookingWidget() {
   const [serviceType, setServiceType] = useState<ServiceType>("residential");
-  const [sizeKey, setSizeKey] = useState<string>("2bed");
+  const [bedrooms, setBedrooms] = useState(2);
+  const [bathrooms, setBathrooms] = useState(2);
+  const [sqftBand, setSqftBand] = useState<SqftBand | null>(DEFAULT_SQFT_BAND);
   const [level, setLevel] = useState<LevelType>("standard");
   const [addOns, setAddOns] = useState({ fridge: false, oven: false, windows: false, cabinets: false, baseboards: false });
   const [date, setDate] = useState("");
@@ -85,24 +69,22 @@ export default function BookingWidget() {
   }, [serviceType, level]);
 
   const quote = useMemo(
-    () => computeQuote({ serviceType, sizeKey, level: effectiveLevel, addOns }),
-    [serviceType, sizeKey, effectiveLevel, addOns]
+    () => computeQuote({ serviceType, bedrooms, bathrooms, sqftBand, level: effectiveLevel, addOns }),
+    [serviceType, bedrooms, bathrooms, sqftBand, effectiveLevel, addOns]
   );
 
-  const sizeOptions = SIZE_OPTIONS[serviceType];
-  const sizeLabel = sizeOptions.find((o) => o.key === sizeKey)?.label ?? sizeKey;
+  const sizeLabel = propertySummary({ serviceType, bedrooms, bathrooms, sqftBand });
   const serviceLabel = SERVICE_OPTIONS.find((o) => o.value === serviceType)?.label ?? serviceType;
   const levelLabel =
     effectiveLevel === "move" ? "Move‑in/out" : effectiveLevel.charAt(0).toUpperCase() + effectiveLevel.slice(1);
-  const selectedAddOns = Object.entries(addOns)
-    .filter(([, v]) => v)
-    .map(([k]) => ADDON_LABELS[k] ?? k);
+  const addOnLines = selectedAddOnLines(addOns);
+  const selectedAddOns = addOnLines.map((a) => a.label);
 
   const mailto = useMemo(() => {
-    const subject = encodeURIComponent(`Cleaning Booking: ${serviceType} • ${sizeKey} • ${date || "TBD"}`);
+    const subject = encodeURIComponent(`Cleaning Booking: ${serviceType} • ${sizeLabel} • ${date || "TBD"}`);
     const body = encodeURIComponent(
       `BOOKING REQUEST (Pay upon completion)\n\n` +
-        `Service: ${serviceType}\nSize: ${sizeKey}\nLevel: ${effectiveLevel}\n` +
+        `Service: ${serviceType}\nSize: ${sizeLabel}\nLevel: ${effectiveLevel}\n` +
         `Add-ons: ${selectedAddOns.join(", ") || "None"}\n\n` +
         `Preferred Date/Time: ${date || "TBD"} ${time || ""}\n` +
         `Name: ${name}\nEmail: ${email}\nPhone: ${phone}\nAddress: ${address}\n\n` +
@@ -110,10 +92,10 @@ export default function BookingWidget() {
         `Payment: Due after cleaning is complete\n\nNotes:`
     );
     return `mailto:hello@hainescitycleaning.com?subject=${subject}&body=${body}`;
-  }, [serviceType, sizeKey, effectiveLevel, selectedAddOns, date, time, name, email, phone, address, quote]);
+  }, [serviceType, sizeLabel, effectiveLevel, selectedAddOns, date, time, name, email, phone, address, quote]);
 
   function next() {
-    if (step === 3) {
+    if (step === CONTACT_STEP) {
       const errors = validateContact(name, email, phone, address);
       if (Object.keys(errors).length > 0) {
         setContactErrors(errors);
@@ -131,7 +113,7 @@ export default function BookingWidget() {
     const errors = validateContact(name, email, phone, address);
     if (Object.keys(errors).length > 0) {
       setContactErrors(errors);
-      setStep(3);
+      setStep(CONTACT_STEP);
       return;
     }
 
@@ -147,16 +129,24 @@ export default function BookingWidget() {
           email,
           phone,
           address,
-          service_type: `${serviceLabel} — ${levelLabel} (${sizeLabel})`,
+          service_type: `${serviceLabel} — ${levelLabel}`,
           preferred_date: date || undefined,
           preferred_time: time || undefined,
-          notes: [
-            `Size: ${sizeLabel}`,
-            `Level: ${levelLabel}`,
-            `Add-ons: ${selectedAddOns.join(", ") || "None"}`,
-            `Estimated price: $${quote.price} (range $${quote.range.low}–$${quote.range.high})`,
-            "Payment: Due after cleaning is complete",
-          ].join("\n"),
+          property: {
+            bedrooms: serviceType === "residential" ? bedrooms : undefined,
+            bathrooms,
+            size_label: sqftBandLabel(sqftBand) ?? undefined,
+            home_type: serviceLabel,
+          },
+          quote: {
+            estimate: quote.price,
+            estimate_low: quote.range.low,
+            estimate_high: quote.range.high,
+            currency: "USD",
+            service_level: levelLabel,
+            add_ons: addOnLines,
+            payment_terms: "Due after cleaning is complete",
+          },
         }),
       });
 
@@ -275,29 +265,22 @@ export default function BookingWidget() {
                 ))}
               </div>
             </div>
-            <div>
-              <p className="mb-3 text-sm font-medium text-slate-700">Property size</p>
-              <div className="flex flex-wrap gap-2">
-                {sizeOptions.map((o) => (
-                  <button
-                    key={o.key}
-                    type="button"
-                    onClick={() => setSizeKey(o.key)}
-                    className={`rounded-full px-3.5 py-1.5 text-xs font-medium transition ${
-                      sizeKey === o.key
-                        ? "bg-[#FF7A00] text-white shadow-sm"
-                        : "bg-slate-100 text-slate-600 hover:bg-[#FFB730]/20"
-                    }`}
-                  >
-                    {o.label}
-                  </button>
-                ))}
-              </div>
-            </div>
           </div>
         )}
 
         {step === 1 && (
+          <PropertyDetailsStep
+            serviceType={serviceType}
+            bedrooms={bedrooms}
+            bathrooms={bathrooms}
+            sqftBand={sqftBand}
+            onBedroomsChange={setBedrooms}
+            onBathroomsChange={setBathrooms}
+            onSqftBandChange={setSqftBand}
+          />
+        )}
+
+        {step === 2 && (
           <div className="space-y-5">
             <div>
               <label className="mb-2 block text-sm font-medium text-slate-700">Cleaning level</label>
@@ -315,16 +298,16 @@ export default function BookingWidget() {
             <div>
               <p className="mb-3 text-sm font-medium text-slate-700">Optional add‑ons</p>
               <div className="flex flex-wrap gap-2">
-                {Object.entries(addOns).map(([key, val]) => (
+                {(Object.keys(ADDON_LABELS) as AddOnKey[]).map((key) => (
                   <button
                     key={key}
                     type="button"
-                    onClick={() => setAddOns({ ...addOns, [key]: !val })}
+                    onClick={() => setAddOns({ ...addOns, [key]: !addOns[key] })}
                     className={`rounded-full px-3.5 py-1.5 text-xs font-medium transition ${
-                      val ? "bg-[#FF7A00] text-white" : "bg-slate-100 text-slate-600 hover:bg-[#FFB730]/20"
+                      addOns[key] ? "bg-[#FF7A00] text-white" : "bg-slate-100 text-slate-600 hover:bg-[#FFB730]/20"
                     }`}
                   >
-                    {ADDON_LABELS[key] ?? key}
+                    {ADDON_LABELS[key]}
                   </button>
                 ))}
               </div>
@@ -332,7 +315,7 @@ export default function BookingWidget() {
           </div>
         )}
 
-        {step === 2 && (
+        {step === 3 && (
           <div className="grid gap-4 sm:grid-cols-2">
             <label className="block">
               <span className="mb-2 block text-sm font-medium text-slate-700">Preferred date</span>
@@ -346,7 +329,7 @@ export default function BookingWidget() {
           </div>
         )}
 
-        {step === 3 && (
+        {step === CONTACT_STEP && (
           <div className="grid gap-4 sm:grid-cols-2">
             <p className="sm:col-span-2 text-xs text-slate-500">Fields marked with <span className="text-[#FF7A00]">*</span> are required to send your quote or book a cleaning.</p>
             <label className="block sm:col-span-2">
@@ -404,12 +387,12 @@ export default function BookingWidget() {
           </div>
         )}
 
-        {step === 4 && (
+        {step === 5 && (
           <div className="space-y-4">
             <div className="rounded-xl border border-slate-100 bg-slate-50/80 p-4 text-sm">
               <dl className="space-y-2.5">
                 <div className="flex justify-between gap-4"><dt className="text-slate-500">Service</dt><dd className="font-medium text-slate-900">{serviceLabel}</dd></div>
-                <div className="flex justify-between gap-4"><dt className="text-slate-500">Size</dt><dd className="font-medium text-slate-900">{sizeLabel}</dd></div>
+                <div className="flex justify-between gap-4"><dt className="text-slate-500">Home</dt><dd className="text-right font-medium text-slate-900">{sizeLabel}</dd></div>
                 <div className="flex justify-between gap-4"><dt className="text-slate-500">Level</dt><dd className="font-medium text-slate-900">{levelLabel}</dd></div>
                 <div className="flex justify-between gap-4"><dt className="text-slate-500">Add‑ons</dt><dd className="font-medium text-slate-900">{selectedAddOns.join(", ") || "None"}</dd></div>
                 <div className="flex justify-between gap-4"><dt className="text-slate-500">When</dt><dd className="font-medium text-slate-900">{date || "Flexible"} {time && `at ${time}`}</dd></div>
@@ -458,7 +441,7 @@ export default function BookingWidget() {
                 const errors = validateContact(name, email, phone, address);
                 if (Object.keys(errors).length > 0) {
                   setContactErrors(errors);
-                  setStep(3);
+                  setStep(CONTACT_STEP);
                   return;
                 }
                 window.location.href = mailto;
