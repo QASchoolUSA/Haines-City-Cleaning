@@ -2,6 +2,7 @@
   "name": "haines-city-cleaning",
   "version": "0.1.0",
   "private": true,
+  "packageManager": "pnpm@11.5.0",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -10,7 +11,7 @@
     "test:booking": "node scripts/test-booking.mjs",
     "icons": "node scripts/generate-icons.mjs",
     "og": "node scripts/generate-og.mjs",
-    "assets": "npm run icons && npm run og"
+    "assets": "pnpm run icons && pnpm run og"
   },
   "dependencies": {
     "react": "19.2.1",
