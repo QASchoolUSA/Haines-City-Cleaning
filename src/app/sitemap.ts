@@ -1,6 +1,7 @@
 import type { MetadataRoute } from "next";
 import { serviceAreas } from "@/lib/areas";
 import { blogPosts } from "@/lib/blog";
+import { communities } from "@/lib/communities";
 import { siteUrl } from "@/lib/site";
 
 const SERVICE_ROUTES = [
@@ -14,6 +15,7 @@ const SERVICE_ROUTES = [
 ];
 
 const LAST_CONTENT_UPDATE = new Date("2026-07-10");
+const COMMUNITIES_UPDATE = new Date("2026-08-09");
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const staticPages: MetadataRoute.Sitemap = [
@@ -21,6 +23,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${siteUrl}/about`, lastModified: LAST_CONTENT_UPDATE, changeFrequency: "monthly", priority: 0.7 },
     { url: `${siteUrl}/pricing`, lastModified: LAST_CONTENT_UPDATE, changeFrequency: "monthly", priority: 0.8 },
     { url: `${siteUrl}/blog`, lastModified: LAST_CONTENT_UPDATE, changeFrequency: "weekly", priority: 0.7 },
+    {
+      url: `${siteUrl}/communities`,
+      lastModified: COMMUNITIES_UPDATE,
+      changeFrequency: "monthly",
+      priority: 0.75,
+    },
     ...SERVICE_ROUTES.map((route) => ({
       url: `${siteUrl}${route}`,
       lastModified: LAST_CONTENT_UPDATE,
@@ -30,6 +38,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...serviceAreas.map((area) => ({
       url: `${siteUrl}/areas/${area.slug}`,
       lastModified: LAST_CONTENT_UPDATE,
+      changeFrequency: "monthly" as const,
+      priority: 0.75,
+    })),
+    ...communities.map((community) => ({
+      url: `${siteUrl}/communities/${community.slug}`,
+      lastModified: COMMUNITIES_UPDATE,
       changeFrequency: "monthly" as const,
       priority: 0.75,
     })),

@@ -81,6 +81,10 @@ export default function Home() {
                 </p>
                 <p className="mt-4 leading-relaxed text-slate-600">
                   Serving Haines City,{" "}
+                  <Link href="/communities" className="font-medium text-[#FF7A00] hover:underline">
+                    local communities
+                  </Link>
+                  ,{" "}
                   <Link href="/areas/davenport" className="font-medium text-[#FF7A00] hover:underline">
                     Davenport
                   </Link>

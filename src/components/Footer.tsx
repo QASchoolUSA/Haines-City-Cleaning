@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { serviceAreas } from "@/lib/areas";
+import { communities } from "@/lib/communities";
 import { businessEmail, businessPhone, businessPhoneDisplay } from "@/lib/site";
 
 const SERVICE_LINKS = [
@@ -80,6 +81,21 @@ export default function Footer() {
                 <li key={area.slug}>
                   <Link href={`/areas/${area.slug}`} className="text-slate-600 transition hover:text-[#FF7A00]">
                     {area.name}, FL
+                  </Link>
+                </li>
+              ))}
+              <li>
+                <Link href="/communities" className="text-slate-600 transition hover:text-[#FF7A00]">
+                  Haines City Communities
+                </Link>
+              </li>
+              {communities.map((community) => (
+                <li key={community.slug}>
+                  <Link
+                    href={`/communities/${community.slug}`}
+                    className="text-slate-600 transition hover:text-[#FF7A00]"
+                  >
+                    {community.name}
                   </Link>
                 </li>
               ))}
