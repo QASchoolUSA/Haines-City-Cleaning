@@ -1,36 +1,77 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Haines City Cleaning
+
+Next.js 16 marketing + booking site for **Haines City Cleaning** (`hainescitycleaning.com`), deployed to Cloudflare Workers via OpenNext.
 
 ## Getting Started
 
-First, run the development server:
-
 ```bash
+pnpm install
+cp .env.example .env.local
 pnpm dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Scripts
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+| Script | Purpose |
+|--------|---------|
+| `pnpm dev` | Local Next.js dev server |
+| `pnpm build` | OpenNext Cloudflare Workers bundle |
+| `pnpm build:next` | Plain Next.js build (local check) |
+| `pnpm preview` | Build + Wrangler local preview |
+| `pnpm deploy` | Build + deploy to Cloudflare (`--keep-vars`) |
+| `pnpm upload` | Non-production OpenNext upload |
+| `pnpm test:booking` | Booking API smoke test |
 
-## Learn More
+## Deploy to Cloudflare Workers
 
-To learn more about Next.js, take a look at the following resources:
+This project uses [@opennextjs/cloudflare](https://opennext.js.org/cloudflare) to run Next.js (including `/api/book`) on Cloudflare Workers.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+**Cloudflare Workers build settings:**
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+| Setting | Value |
+|---------|-------|
+| Production branch | `main` |
+| Install command | `pnpm install` |
+| Build command | `pnpm build` **or** `pnpm exec opennextjs-cloudflare build` |
+| Deploy command | `pnpm exec opennextjs-cloudflare deploy` (preferred) **or** `pnpm exec wrangler deploy` |
+| Non-production deploy | `pnpm exec opennextjs-cloudflare upload` |
 
-## Deploy on Vercel
+`pnpm build` runs the full OpenNext Workers bundle (via `buildCommand: "next build"` in `open-next.config.ts`). Prefer `pnpm exec opennextjs-cloudflare deploy` over bare `wrangler deploy` so the OpenNext deploy step always runs after a successful build.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+**Note:** Next.js must be `>=16.2.6` for `@opennextjs/cloudflare` compatibility.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### First-time setup
+
+1. Create the booking outbox KV namespace and paste ids into `wrangler.jsonc`:
+
+```bash
+pnpm exec wrangler kv namespace create BOOKING_OUTBOX
+pnpm exec wrangler kv namespace create BOOKING_OUTBOX --preview
+```
+
+2. Set runtime secrets (do **not** commit these):
+
+```bash
+pnpm exec wrangler secret put BOOKING_BROOM_API_KEY
+pnpm exec wrangler secret put TELEGRAM_BOT_TOKEN   # optional fallback
+pnpm exec wrangler secret put TELEGRAM_CHAT_ID
+```
+
+3. Deploy:
+
+```bash
+pnpm deploy
+```
+
+4. Attach custom domain `hainescitycleaning.com` to the Worker in the Cloudflare dashboard.
+
+**Runtime vars** (`wrangler.jsonc` `vars`, non-secret):
+- `BOOKING_BROOM_URL`
+- `BOOKING_BROOM_SITE_SLUG` (`haines-city`)
+
+**Build variables** (if using Workers Builds):
+- `NEXT_PUBLIC_SITE_URL` (`https://hainescitycleaning.com`)
+
+After changing env vars, redeploy (Retry deployment or push to `main`).
