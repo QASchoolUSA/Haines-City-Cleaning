@@ -6,6 +6,8 @@
 	"compatibility_flags": [
 		"nodejs_compat"
 	],
+	"workers_dev": false,
+	"preview_urls": false,
 	"assets": {
 		"directory": ".open-next/assets",
 		"binding": "ASSETS"
@@ -27,14 +29,9 @@
 			"*/5 * * * *"
 		]
 	},
-	"kv_namespaces": [
-		{
-			"binding": "BOOKING_OUTBOX",
-			"id": "9a7146989b73445a833e90667b16810f"
-		}
-	],
 	"vars": {
 		"BOOKING_BROOM_URL": "https://bookings.kedrik.com",
-		"BOOKING_BROOM_SITE_SLUG": "haines-city"
+		"BOOKING_BROOM_SITE_SLUG": "haines-city",
+		"NEXT_PUBLIC_SITE_URL": "https://hainescitycleaning.com"
 	}
 }

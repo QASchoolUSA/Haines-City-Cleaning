@@ -44,12 +44,20 @@ This project uses [@opennextjs/cloudflare](https://opennext.js.org/cloudflare) t
 
 ### First-time setup
 
-1. Create the booking outbox KV namespace and paste ids into `wrangler.jsonc`:
+1. **Booking outbox KV (optional soft-fallback)** — create the namespace in the **same Cloudflare account as the Worker** (Workers Builds account `26463a33…`), not a personal/other OAuth account. Then add to `wrangler.jsonc`:
 
-```bash
-pnpm exec wrangler kv namespace create BOOKING_OUTBOX
-pnpm exec wrangler kv namespace create BOOKING_OUTBOX --preview
+```jsonc
+"kv_namespaces": [
+  {
+    "binding": "BOOKING_OUTBOX",
+    "id": "<id-from-dashboard-or-wrangler>"
+  }
+]
 ```
+
+In the dashboard: Workers & Pages → KV → Create namespace → bind as `BOOKING_OUTBOX` on `haines-city-cleaning`, **or** run `wrangler kv namespace create BOOKING_OUTBOX` while authenticated to that account.
+
+Without KV, `/api/book` still works when Booking Broom is up; failed-forward queueing is skipped.
 
 2. Set runtime secrets (do **not** commit these):
 
@@ -70,6 +78,7 @@ pnpm deploy
 **Runtime vars** (`wrangler.jsonc` `vars`, non-secret):
 - `BOOKING_BROOM_URL`
 - `BOOKING_BROOM_SITE_SLUG` (`haines-city`)
+- `NEXT_PUBLIC_SITE_URL` (`https://hainescitycleaning.com`)
 
 **Build variables** (if using Workers Builds):
 - `NEXT_PUBLIC_SITE_URL` (`https://hainescitycleaning.com`)

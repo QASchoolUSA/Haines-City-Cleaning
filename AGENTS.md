@@ -42,5 +42,5 @@ Bookings/quotes forward via `POST /api/book` → Booking Broom `/api/bookings`. 
 
 - `pnpm lint` may report pre-existing warnings; do not treat as setup failure unless introduced by your change.
 - `pnpm build` uses OpenNext for Cloudflare; `pnpm build:next` is plain Next.js build for local verification.
-- Before first deploy: create KV namespaces, replace placeholder ids in `wrangler.jsonc`, set `BOOKING_BROOM_API_KEY` as a Worker secret.
+- Before enabling outbox soft-fallback: create a KV namespace named for this Worker **in the same Cloudflare account as Workers Builds**, bind it as `BOOKING_OUTBOX` in `wrangler.jsonc`, and set `BOOKING_BROOM_API_KEY` as a Worker secret.
 - `worker.ts` imports outbox from `./src/lib/booking-outbox` (this repo uses a `src/` layout).
