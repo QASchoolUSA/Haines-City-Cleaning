@@ -37,7 +37,6 @@
 		}
 	],
 	"vars": {
-		"BOOKING_BROOM_SITE_SLUG": "haines-city",
 		"NEXT_PUBLIC_SITE_URL": "https://hainescitycleaning.com"
 	}
 }

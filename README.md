@@ -74,7 +74,7 @@ pnpm deploy
 
 **Runtime vars** (`wrangler.jsonc` `vars`, non-secret):
 - `BOOKING_BROOM_URL`
-- `BOOKING_BROOM_SITE_SLUG` (`haines-city`)
+- Site slug hardcoded to `haines-city`
 - `NEXT_PUBLIC_SITE_URL` (`https://hainescitycleaning.com`)
 
 **Build variables** (if using Workers Builds):

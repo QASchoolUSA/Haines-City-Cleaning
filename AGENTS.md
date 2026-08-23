@@ -32,7 +32,7 @@ Copy `.env.example` to `.env.local` and set:
 |---|---|
 | `BOOKING_BROOM_URL` | Optional; defaults to `https://app.bookingbroom.com` (set only for local BB) |
 | `BOOKING_BROOM_API_KEY` | Per-site API key for slug `haines-city` |
-| `BOOKING_BROOM_SITE_SLUG` | Optional; defaults to `haines-city` |
+| `BOOKING_BROOM_SITE_SLUG` | Not needed; hardcoded to `haines-city` |
 | `NEXT_PUBLIC_SITE_URL` | Production: `https://hainescitycleaning.com` |
 | `TELEGRAM_BOT_TOKEN` / `TELEGRAM_CHAT_ID` | Optional outbox escalate (Worker secrets in prod) |
 

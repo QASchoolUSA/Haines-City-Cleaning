@@ -4,7 +4,7 @@ import { captureFailedBookingForward } from "@/lib/booking-outbox";
 export async function POST(request: Request) {
   const bookingBroomUrl = (process.env.BOOKING_BROOM_URL || "https://app.bookingbroom.com").replace(/\/$/, "");
   const apiKey = process.env.BOOKING_BROOM_API_KEY;
-  const siteSlug = process.env.BOOKING_BROOM_SITE_SLUG || "haines-city";
+  const siteSlug = "haines-city";
 
   let form: Record<string, unknown>;
   try {
