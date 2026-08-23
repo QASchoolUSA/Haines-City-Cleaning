@@ -30,13 +30,7 @@
 	"kv_namespaces": [
 		{
 			"binding": "BOOKING_OUTBOX",
-			"id": "REPLACE_WITH_BOOKING_OUTBOX_KV_ID",
-			"preview_id": "REPLACE_WITH_BOOKING_OUTBOX_KV_PREVIEW_ID"
-		},
-		{
-			"binding": "BOOKING_OUTBOX_HAINES_CITY",
-			"id": "9a7146989b73445a833e90667b16810f",
-			"remote": true
+			"id": "9a7146989b73445a833e90667b16810f"
 		}
 	],
 	"vars": {
