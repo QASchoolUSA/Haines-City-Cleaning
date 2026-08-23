@@ -29,6 +29,13 @@
 			"*/5 * * * *"
 		]
 	},
+	"kv_namespaces": [
+		{
+			// CF namespace title: BOOKING_OUTBOX_HAINES_CITY
+			"binding": "BOOKING_OUTBOX",
+			"id": "d222dea6af504b3c8dffadddde4b32a9"
+		}
+	],
 	"vars": {
 		"BOOKING_BROOM_URL": "https://bookings.kedrik.com",
 		"BOOKING_BROOM_SITE_SLUG": "haines-city",

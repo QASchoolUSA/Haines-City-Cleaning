@@ -35,6 +35,7 @@ export type BookingOutboxRecord = {
 };
 
 export type OutboxEnv = {
+  /** Bound in wrangler as BOOKING_OUTBOX → CF namespace title BOOKING_OUTBOX_HAINES_CITY. */
   BOOKING_OUTBOX?: KvBinding;
   BOOKING_BROOM_URL?: string;
   BOOKING_BROOM_API_KEY?: string;
