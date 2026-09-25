@@ -77,6 +77,13 @@ export default function Home() {
                   >
                     post‑construction cleaning
                   </Link>
+                  . Planning a vacancy clean? Use our{" "}
+                  <Link
+                    href="/blog/move-out-cleaning-checklist-haines-city"
+                    className="font-medium text-[#FF7A00] hover:underline"
+                  >
+                    move-out cleaning checklist
+                  </Link>
                   .
                 </p>
                 <p className="mt-4 leading-relaxed text-slate-600">
@@ -84,7 +91,15 @@ export default function Home() {
                   <Link href="/communities" className="font-medium text-[#FF7A00] hover:underline">
                     local communities
                   </Link>
-                  ,{" "}
+                  {" "}
+                  (including{" "}
+                  <Link
+                    href="/communities/covered-bridge"
+                    className="font-medium text-[#FF7A00] hover:underline"
+                  >
+                    Covered Bridge
+                  </Link>
+                  ),{" "}
                   <Link href="/areas/davenport" className="font-medium text-[#FF7A00] hover:underline">
                     Davenport
                   </Link>

@@ -53,8 +53,19 @@ export default function MoveOutCleaning() {
                         <header className="space-y-3">
                             <h1 className="text-3xl font-bold tracking-tight text-slate-900">Move-Out Cleaning in Haines City, FL</h1>
                             <p className="text-slate-700">Moving is stressful enough. Let our professionals handle the <strong>move-out cleaning</strong> so you can focus on your new home. Perfect for tenants, landlords, and property managers.</p>
-                            <div className="pt-4">
-                                <Link href="#booking" className="inline-flex rounded-full bg-[#FF7A00] px-6 py-3 text-sm font-semibold text-white shadow-sm hover:bg-[#FFB730]">Book move-out clean</Link>
+                            <div className="flex flex-wrap gap-3 pt-4">
+                                <Link
+                                    href="#booking"
+                                    className="inline-flex rounded-full bg-[#FF7A00] px-6 py-3 text-sm font-semibold text-white shadow-sm hover:bg-[#FFB730]"
+                                >
+                                    Book move-out clean
+                                </Link>
+                                <Link
+                                    href="/blog/move-out-cleaning-checklist-haines-city"
+                                    className="inline-flex rounded-full border border-slate-200 bg-white px-6 py-3 text-sm font-semibold text-slate-700 hover:border-[#FF7A00] hover:text-[#FF7A00]"
+                                >
+                                    See move-out checklist guide
+                                </Link>
                             </div>
                             <ServiceHeroImage image="moveOut" caption="Deposit-ready move-out cleaning for Haines City rentals" />
                         </header>
