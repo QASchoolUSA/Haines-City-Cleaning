@@ -9,9 +9,8 @@ import { siteImages, type SiteImageKey } from "@/lib/images";
 import MoveOutChecklistArticle from "@/components/MoveOutChecklistArticle";
 import AirbnbTurnoverSlaArticle from "@/components/AirbnbTurnoverSlaArticle";
 import {
-  levelAdjustments,
+  minimumBase,
   residentialPrices,
-  type LevelKey,
   type PricingConfig,
 } from "@/lib/pricing";
 import { getPricingConfig } from "@/lib/pricing-config";
@@ -65,8 +64,7 @@ export async function generateMetadata({ params }: Props) {
 
 function CostOfCleaningArticle({ config }: { config: PricingConfig }) {
   const prices = residentialPrices(config);
-  const uplift = (key: LevelKey) =>
-    levelAdjustments(config).find((level) => level.key === key)?.uplift ?? 0;
+  const floors = minimumBase(config);
 
   return (
     <>
@@ -80,23 +78,26 @@ function CostOfCleaningArticle({ config }: { config: PricingConfig }) {
       <p>Based on our local pricing, here&apos;s what most Haines City homeowners pay:</p>
       <ul>
         <li>
-          <strong>Studio / 1-bedroom standard clean:</strong> ${prices.studio}–$
+          <strong>House cleaning floor:</strong> from ${floors.house}
+        </li>
+        <li>
+          <strong>Studio / 1-bedroom starting estimates:</strong> ${prices.studio}–$
           {prices["1bed"]}
         </li>
         <li>
-          <strong>2-bedroom standard clean:</strong> ${prices["2bed"]}
+          <strong>2-bedroom starting estimate:</strong> ${prices["2bed"]}
         </li>
         <li>
-          <strong>3-bedroom standard clean:</strong> ${prices["3bed"]}
+          <strong>3-bedroom starting estimate:</strong> ${prices["3bed"]}
         </li>
         <li>
-          <strong>4+ bedroom standard clean:</strong> ${prices["4plus"]}+
+          <strong>4+ bedroom starting estimate:</strong> ${prices["4plus"]}+
         </li>
         <li>
-          <strong>Deep clean premium:</strong> ~{uplift("deep")}% above standard
+          <strong>Deep clean:</strong> from ${floors.deep}
         </li>
         <li>
-          <strong>Move-in / move-out:</strong> ~{uplift("move")}% above standard
+          <strong>Move-in / move-out:</strong> from ${floors.move}
         </li>
       </ul>
 
@@ -104,16 +105,16 @@ function CostOfCleaningArticle({ config }: { config: PricingConfig }) {
       <p>Several factors influence your final price:</p>
       <ul>
         <li>
-          <strong>Home size</strong> — bedrooms and square footage
+          <strong>Home size</strong> — square footage, bedrooms, and bathrooms
         </li>
         <li>
-          <strong>Cleaning level</strong> — standard, deep, or move-in/out
+          <strong>Service type</strong> — house, deep, move-in/out, Airbnb, and more
         </li>
         <li>
-          <strong>Add-ons</strong> — inside fridge, oven, windows, cabinets, baseboards
+          <strong>Add-ons</strong> — fridge, oven, windows, cabinets, and detail work
         </li>
         <li>
-          <strong>Frequency</strong> — recurring clients often get better per-visit value
+          <strong>Frequency</strong> — weekly, bi-weekly, and monthly plans save up to 15%
         </li>
       </ul>
 

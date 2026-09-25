@@ -1,9 +1,8 @@
 import Link from "next/link";
 import {
   DEFAULT_PRICING_CONFIG,
-  computeQuote,
-  levelAdjustments,
-  residentialPrices,
+  calculatePrice,
+  minimumBase,
   type PricingConfig,
 } from "@/lib/pricing";
 
@@ -16,17 +15,26 @@ export default function MoveOutChecklistArticle({
 }: {
   config?: PricingConfig;
 }) {
-  const standardTwoBed = residentialPrices(config)["2bed"];
-  const moveUplift =
-    levelAdjustments(config).find((level) => level.key === "move")?.uplift ?? 0;
-  const moveOutQuote = computeQuote(
+  const floors = minimumBase(config);
+  const standardTwoBed = calculatePrice(
     {
-      serviceType: "residential",
+      serviceType: "house",
       bedrooms: 2,
       bathrooms: 1,
-      sqftBand: config.defaultSqftBand,
-      level: "move",
-      addOns: {},
+      sqft: 1000,
+      frequency: "one-time",
+      addons: [],
+    },
+    config
+  ).total;
+  const moveOutQuote = calculatePrice(
+    {
+      serviceType: "move",
+      bedrooms: 2,
+      bathrooms: 1,
+      sqft: 1000,
+      frequency: "one-time",
+      addons: [],
     },
     config
   );
@@ -173,12 +181,10 @@ export default function MoveOutChecklistArticle({
 
       <h3>Haines City Cleaning Move-Out Pricing Bands and Next Step</h3>
       <p>
-        Local move-out pricing typically runs about{" "}
-        <strong>{moveUplift}% above a standard clean</strong> for the same home size (for
-        example, a 2-bedroom standard clean at ${standardTwoBed} implies a move-out estimate
-        near ${moveOutQuote.price}, in a band of ${moveOutQuote.range.low}–$
-        {moveOutQuote.range.high} before add-ons). Inside oven, fridge, windows, cabinets, and
-        baseboards may add line items when soil is heavy.
+        Move-out cleaning starts from <strong>${floors.move}</strong>. A sample 2-bedroom /
+        1-bath / ~1,000 sq ft house clean is about ${standardTwoBed}; the same home as a
+        move-out job is about <strong>${moveOutQuote.total}</strong> before add-ons. Inside
+        oven, fridge, windows, and cabinets may add line items when soil is heavy.
       </p>
       <p>
         Ready to book a deposit-focused clean? See{" "}

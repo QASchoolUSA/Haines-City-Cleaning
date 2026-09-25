@@ -5,27 +5,32 @@ import PropertyDetailsStep from "@/components/PropertyDetailsStep";
 import {
   ADDON_KEYS,
   DEFAULT_PRICING_CONFIG,
+  SERVICE_LABELS,
   addOnLabels,
   computeQuote,
+  frequencyDiscountLabels,
+  frequencyLabels,
   propertySummary,
   selectedAddOnLines,
-  sqftBandLabel,
+  sqftPresetLabel,
+  type AddonId,
+  type FrequencyId,
   type PricingConfig,
-  type ServiceType,
-  type SqftBand,
+  type ServiceTypeId,
 } from "@/lib/pricing";
 
-const SERVICE_OPTIONS: { value: ServiceType; label: string; desc: string }[] = [
-  { value: "residential", label: "Residential", desc: "Homes & apartments" },
-  { value: "commercial", label: "Commercial", desc: "Offices & retail" },
+const SERVICE_OPTIONS: { value: ServiceTypeId; label: string; desc: string }[] = [
+  { value: "house", label: "House Cleaning", desc: "Homes & townhouses" },
+  { value: "apartment", label: "Apartment", desc: "Condos & rentals" },
+  { value: "maintenance", label: "Maintenance", desc: "Recurring upkeep" },
+  { value: "deep", label: "Deep Clean", desc: "Thorough reset" },
+  { value: "move", label: "Move-in / out", desc: "Empty-home cleans" },
+  { value: "airbnb", label: "Airbnb", desc: "Short-term turnovers" },
   { value: "post-construction", label: "Post‑Construction", desc: "Dust & debris cleanup" },
 ];
 
-type LevelType = "standard" | "deep" | "move" | "post";
-
 const STEPS = ["Service", "Home", "Options", "Schedule", "Contact", "Review"] as const;
 const CONTACT_STEP = 4;
-
 type ContactErrors = Partial<Record<"name" | "email" | "phone" | "address", string>>;
 
 function validateContact(name: string, email: string, phone: string, address: string): ContactErrors {
@@ -54,12 +59,12 @@ export default function BookingWidget({
   if (!softLead.current) {
     softLead.current = createSoftLeadTracker();
   }
-  const [serviceType, setServiceType] = useState<ServiceType>("residential");
+  const [serviceType, setServiceType] = useState<ServiceTypeId>("house");
   const [bedrooms, setBedrooms] = useState(2);
   const [bathrooms, setBathrooms] = useState(2);
-  const [sqftBand, setSqftBand] = useState<SqftBand | null>(config.defaultSqftBand);
-  const [level, setLevel] = useState<LevelType>("standard");
-  const [addOns, setAddOns] = useState({ fridge: false, oven: false, windows: false, cabinets: false, baseboards: false });
+  const [sqft, setSqft] = useState(config.sqftPresets[1]?.value ?? 1000);
+  const [frequency, setFrequency] = useState<FrequencyId>("one-time");
+  const [addons, setAddons] = useState<AddonId[]>([]);
   const [date, setDate] = useState("");
   const [time, setTime] = useState("");
   const [name, setName] = useState("");
@@ -72,28 +77,31 @@ export default function BookingWidget({
   const [submitError, setSubmitError] = useState<string | null>(null);
   const [contactErrors, setContactErrors] = useState<ContactErrors>({});
 
-  const effectiveLevel: LevelType = useMemo(() => {
-    if (serviceType === "post-construction") return "post";
-    if (level === "post") return "standard";
-    return level;
-  }, [serviceType, level]);
-
   const quote = useMemo(
     () =>
       computeQuote(
-        { serviceType, bedrooms, bathrooms, sqftBand, level: effectiveLevel, addOns },
+        { serviceType, bedrooms, bathrooms, sqft, frequency, addons },
         config
       ),
-    [serviceType, bedrooms, bathrooms, sqftBand, effectiveLevel, addOns, config]
+    [serviceType, bedrooms, bathrooms, sqft, frequency, addons, config]
   );
 
   const labels = useMemo(() => addOnLabels(config), [config]);
-  const sizeLabel = propertySummary({ serviceType, bedrooms, bathrooms, sqftBand }, config);
-  const serviceLabel = SERVICE_OPTIONS.find((o) => o.value === serviceType)?.label ?? serviceType;
-  const levelLabel =
-    effectiveLevel === "move" ? "Move‑in/out" : effectiveLevel.charAt(0).toUpperCase() + effectiveLevel.slice(1);
-  const addOnLines = selectedAddOnLines(addOns, config);
+  const freqLabels = useMemo(() => frequencyLabels(config), [config]);
+  const freqDiscounts = useMemo(() => frequencyDiscountLabels(config), [config]);
+  const sizeLabel = propertySummary({ bedrooms, bathrooms, sqft }, config);
+  const serviceLabel =
+    SERVICE_OPTIONS.find((o) => o.value === serviceType)?.label ??
+    SERVICE_LABELS[serviceType];
+  const frequencyLabel = freqLabels[frequency];
+  const addOnLines = selectedAddOnLines(addons, config);
   const selectedAddOns = addOnLines.map((a) => a.label);
+
+  function toggleAddon(key: AddonId) {
+    setAddons((prev) =>
+      prev.includes(key) ? prev.filter((id) => id !== key) : [...prev, key]
+    );
+  }
 
   function buildPayload(intent: "quote" | "book") {
     return {
@@ -101,15 +109,15 @@ export default function BookingWidget({
       email,
       phone,
       address,
-      service_type: `${serviceLabel} — ${levelLabel}`,
+      service_type: `${serviceLabel} — ${frequencyLabel}`,
       preferred_date: date || undefined,
       preferred_time: time || undefined,
       intent,
       session_key: softLead.current?.sessionKey,
       property: {
-        bedrooms: serviceType === "residential" ? bedrooms : undefined,
+        bedrooms,
         bathrooms,
-        size_label: sqftBandLabel(sqftBand, config) ?? undefined,
+        size_label: sqftPresetLabel(sqft, config),
         home_type: serviceLabel,
       },
       quote: {
@@ -117,13 +125,12 @@ export default function BookingWidget({
         estimate_low: quote.range.low,
         estimate_high: quote.range.high,
         currency: "USD",
-        service_level: levelLabel,
+        frequency: frequencyLabel,
         add_ons: addOnLines,
         payment_terms: "Due after cleaning is complete",
       },
     };
   }
-
 
   useEffect(() => {
     const tracker = softLead.current;
@@ -150,12 +157,10 @@ export default function BookingWidget({
     serviceType,
     bedrooms,
     bathrooms,
-    sqftBand,
-    effectiveLevel,
-    addOns,
+    sqft,
+    frequency,
+    addons,
     quote.price,
-    quote.range.low,
-    quote.range.high,
   ]);
 
   async function submitPayload(intent: "quote" | "book") {
@@ -186,7 +191,7 @@ export default function BookingWidget({
       setSubmitError(
         err instanceof Error
           ? err.message
-          : "Something went wrong. Please try again or call us.",
+          : "Something went wrong. Please try again or call us."
       );
     } finally {
       setSubmitting(false);
@@ -212,6 +217,7 @@ export default function BookingWidget({
     }
     setStep((s) => Math.min(s + 1, STEPS.length - 1));
   }
+
   function prev() {
     setStep((s) => Math.max(s - 1, 0));
   }
@@ -219,25 +225,25 @@ export default function BookingWidget({
   if (booked) {
     return (
       <div className="card mx-auto w-full max-w-lg overflow-hidden p-0">
-        <div className="bg-gradient-to-br from-[#FF7A00] to-[#FFB730] px-6 py-8 text-center text-white">
+        <div className="bg-gradient-to-br from-[#FF7A00] to-[#cc6200] px-6 py-8 text-center text-white">
           <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-white/20 backdrop-blur">
             <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
               <path d="M20 6 9 17l-5-5" />
             </svg>
           </div>
           <h2 className="text-xl font-bold">Booking request sent!</h2>
-          <p className="mt-2 text-sm text-white/90">We&apos;ll confirm your appointment shortly.</p>
+          <p className="mt-2 text-sm text-white/90">We&apos;ll confirm your appointment shortly. Check your email for confirmation.</p>
         </div>
         <div className="space-y-4 p-6">
-          <div className="rounded-xl bg-[#FFB730]/10 p-4">
+          <div className="rounded-lg bg-[#FFB730]/10 p-4">
             <p className="text-sm font-medium text-slate-900">Pay when we&apos;re done</p>
             <p className="mt-1 text-sm text-slate-600">
-              No upfront payment required. Your estimated total of <strong>${quote.price}</strong> is due after your cleaning is complete and you&apos;re satisfied.
+              No upfront payment required. Your estimated total of <strong>${quote.price}</strong> is due after your cleaning is complete.
             </p>
           </div>
           <p className="text-sm text-slate-600">
-            Questions? Call us at{" "}
-            <a href="tel:+18633587388" className="font-semibold text-[#FF7A00] hover:underline">(863) 358-7388</a>.
+            Questions? Email{" "}
+            <a href="mailto:hello@hainescitycleaning.com" className="font-semibold text-[#FF7A00] hover:underline">hello@hainescitycleaning.com</a>.
           </p>
           <button type="button" className="btn-ghost w-full" onClick={() => { setBooked(false); setStep(0); setSubmitError(null); }}>
             Book another cleaning
@@ -249,13 +255,13 @@ export default function BookingWidget({
 
   return (
     <div className="card mx-auto w-full max-w-lg overflow-hidden p-0 shadow-lg shadow-[#FF7A00]/5">
-      <div className="border-b border-slate-100 bg-gradient-to-r from-[#FFB730]/10 to-white px-6 py-5">
+      <div className="border-b border-slate-100 bg-gradient-to-r from-[#FF7A00]/10 to-white px-6 py-5">
         <div className="flex items-start justify-between gap-4">
           <div>
             <h2 className="text-lg font-bold text-slate-900">Book your cleaning</h2>
             <p className="mt-0.5 text-xs text-slate-500">Instant quote · No payment now</p>
           </div>
-          <div className="shrink-0 rounded-xl bg-white px-3 py-2 text-right shadow-sm ring-1 ring-slate-100">
+          <div className="shrink-0 rounded-lg bg-white px-3 py-2 text-right shadow-sm ring-1 ring-slate-100">
             <p className="text-[10px] font-medium uppercase tracking-wide text-slate-400">Estimate</p>
             <p className="text-lg font-bold text-[#FF7A00]">${quote.price}</p>
           </div>
@@ -267,26 +273,14 @@ export default function BookingWidget({
           {STEPS.map((label, i) => (
             <div key={label} className="flex flex-1 items-center">
               <div className="flex flex-col items-center gap-1">
-                <div
-                  className={`flex h-7 w-7 items-center justify-center rounded-full text-xs font-bold transition ${
-                    i <= step ? "bg-[#FF7A00] text-white" : "bg-slate-100 text-slate-400"
-                  }`}
-                >
+                <div className={`flex h-7 w-7 items-center justify-center rounded-full text-xs font-bold transition ${i <= step ? "bg-[#FF7A00] text-white" : "bg-slate-100 text-slate-400"}`}>
                   {i < step ? (
-                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
-                      <path d="M20 6 9 17l-5-5" />
-                    </svg>
-                  ) : (
-                    i + 1
-                  )}
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><path d="M20 6 9 17l-5-5" /></svg>
+                  ) : i + 1}
                 </div>
-                <span className={`hidden text-[10px] font-medium sm:block ${i <= step ? "text-[#FF7A00]" : "text-slate-400"}`}>
-                  {label}
-                </span>
+                <span className={`hidden text-[10px] font-medium sm:block ${i <= step ? "text-[#FF7A00]" : "text-slate-400"}`}>{label}</span>
               </div>
-              {i < STEPS.length - 1 && (
-                <div className={`mx-1 mb-4 h-0.5 flex-1 rounded-full sm:mb-5 ${i < step ? "bg-[#FF7A00]" : "bg-slate-100"}`} />
-              )}
+              {i < STEPS.length - 1 && <div className={`mx-1 mb-4 h-0.5 flex-1 rounded-full sm:mb-5 ${i < step ? "bg-[#FF7A00]" : "bg-slate-100"}`} />}
             </div>
           ))}
         </div>
@@ -297,17 +291,13 @@ export default function BookingWidget({
           <div className="space-y-5">
             <div>
               <p className="mb-3 text-sm font-medium text-slate-700">What type of cleaning?</p>
-              <div className="grid gap-2">
+              <div className="grid gap-2 sm:grid-cols-2">
                 {SERVICE_OPTIONS.map((opt) => (
                   <button
                     key={opt.value}
                     type="button"
                     onClick={() => setServiceType(opt.value)}
-                    className={`flex items-center justify-between rounded-xl border px-4 py-3 text-left transition ${
-                      serviceType === opt.value
-                        ? "border-[#FF7A00] bg-[#FFB730]/10 ring-1 ring-[#FF7A00]/30"
-                        : "border-slate-200 hover:border-[#FFB730]/50 hover:bg-slate-50"
-                    }`}
+                    className={`flex items-center justify-between rounded-lg border px-4 py-3 text-left transition ${serviceType === opt.value ? "border-[#FF7A00] bg-[#FFB730]/10 ring-1 ring-[#FF7A00]/30" : "border-slate-200 hover:border-[#FFB730]/50 hover:bg-slate-50"}`}
                   >
                     <div>
                       <p className="text-sm font-semibold text-slate-900">{opt.label}</p>
@@ -323,30 +313,33 @@ export default function BookingWidget({
 
         {step === 1 && (
           <PropertyDetailsStep
-            serviceType={serviceType}
+            config={config}
             bedrooms={bedrooms}
             bathrooms={bathrooms}
-            sqftBand={sqftBand}
-            config={config}
+            sqft={sqft}
             onBedroomsChange={setBedrooms}
             onBathroomsChange={setBathrooms}
-            onSqftBandChange={setSqftBand}
+            onSqftChange={setSqft}
           />
         )}
 
         {step === 2 && (
           <div className="space-y-5">
             <div>
-              <label className="mb-2 block text-sm font-medium text-slate-700">Cleaning level</label>
+              <label className="mb-2 block text-sm font-medium text-slate-700">How often?</label>
               <select
                 className="select-field"
-                value={effectiveLevel}
-                onChange={(e) => setLevel(e.target.value as LevelType)}
-                disabled={serviceType === "post-construction"}
+                value={frequency}
+                onChange={(e) => setFrequency(e.target.value as FrequencyId)}
               >
-                <option value="standard">Standard</option>
-                <option value="deep">Deep clean</option>
-                <option value="move">Move‑in / move‑out</option>
+                {config.frequencyMultipliers.map((freq) => (
+                  <option key={freq.key} value={freq.key}>
+                    {freq.label}
+                    {freqDiscounts[freq.key as FrequencyId]
+                      ? ` (${freqDiscounts[freq.key as FrequencyId]})`
+                      : ""}
+                  </option>
+                ))}
               </select>
             </div>
             <div>
@@ -356,10 +349,8 @@ export default function BookingWidget({
                   <button
                     key={key}
                     type="button"
-                    onClick={() => setAddOns({ ...addOns, [key]: !addOns[key] })}
-                    className={`rounded-full px-3.5 py-1.5 text-xs font-medium transition ${
-                      addOns[key] ? "bg-[#FF7A00] text-white" : "bg-slate-100 text-slate-600 hover:bg-[#FFB730]/20"
-                    }`}
+                    onClick={() => toggleAddon(key)}
+                    className={`rounded-full px-3.5 py-1.5 text-xs font-medium transition ${addons.includes(key) ? "bg-[#FF7A00] text-white" : "bg-slate-100 text-slate-600 hover:bg-[#FFB730]/20"}`}
                   >
                     {labels[key]}
                   </button>
@@ -385,31 +376,15 @@ export default function BookingWidget({
 
         {step === CONTACT_STEP && (
           <div className="grid gap-4 sm:grid-cols-2">
-            <p className="sm:col-span-2 text-xs text-slate-500">Fields marked with <span className="text-[#FF7A00]">*</span> are required to send your quote or book a cleaning.</p>
+            <p className="sm:col-span-2 text-xs text-slate-500">Fields marked with <span className="text-[#FF7A00]">*</span> are required.</p>
             <label className="block sm:col-span-2">
               <span className="mb-2 block text-sm font-medium text-slate-700">Full name <span className="text-[#FF7A00]">*</span></span>
-              <input
-                type="text"
-                className={`input-field ${contactErrors.name ? "ring-2 ring-red-400" : ""}`}
-                value={name}
-                onChange={(e) => { setName(e.target.value); setContactErrors((prev) => ({ ...prev, name: undefined })); }}
-                placeholder="Jane Smith"
-                required
-                autoComplete="name"
-              />
+              <input type="text" className={`input-field ${contactErrors.name ? "ring-2 ring-red-400" : ""}`} value={name} onChange={(e) => { setName(e.target.value); setContactErrors((p) => ({ ...p, name: undefined })); }} placeholder="Jane Smith" required autoComplete="name" />
               {contactErrors.name && <p className="mt-1 text-xs text-red-600">{contactErrors.name}</p>}
             </label>
             <label className="block">
               <span className="mb-2 block text-sm font-medium text-slate-700">Email <span className="text-[#FF7A00]">*</span></span>
-              <input
-                type="email"
-                className={`input-field ${contactErrors.email ? "ring-2 ring-red-400" : ""}`}
-                value={email}
-                onChange={(e) => { setEmail(e.target.value); setContactErrors((prev) => ({ ...prev, email: undefined })); }}
-                placeholder="you@email.com"
-                required
-                autoComplete="email"
-              />
+              <input type="email" className={`input-field ${contactErrors.email ? "ring-2 ring-red-400" : ""}`} value={email} onChange={(e) => { setEmail(e.target.value); setContactErrors((p) => ({ ...p, email: undefined })); }} placeholder="you@email.com" required autoComplete="email" />
               {contactErrors.email && <p className="mt-1 text-xs text-red-600">{contactErrors.email}</p>}
             </label>
             <label className="block">
@@ -418,7 +393,10 @@ export default function BookingWidget({
                 type="tel"
                 className={`input-field ${contactErrors.phone ? "ring-2 ring-red-400" : ""}`}
                 value={phone}
-                onChange={(e) => { setPhone(e.target.value); setContactErrors((prev) => ({ ...prev, phone: undefined })); }}
+                onChange={(e) => {
+                  setPhone(e.target.value);
+                  setContactErrors((p) => ({ ...p, phone: undefined }));
+                }}
                 placeholder="(863) 555-0123"
                 required
                 autoComplete="tel"
@@ -427,15 +405,7 @@ export default function BookingWidget({
             </label>
             <label className="block sm:col-span-2">
               <span className="mb-2 block text-sm font-medium text-slate-700">Service address <span className="text-[#FF7A00]">*</span></span>
-              <input
-                type="text"
-                className={`input-field ${contactErrors.address ? "ring-2 ring-red-400" : ""}`}
-                value={address}
-                onChange={(e) => { setAddress(e.target.value); setContactErrors((prev) => ({ ...prev, address: undefined })); }}
-                placeholder="123 Main St, Haines City, FL"
-                required
-                autoComplete="street-address"
-              />
+              <input type="text" className={`input-field ${contactErrors.address ? "ring-2 ring-red-400" : ""}`} value={address} onChange={(e) => { setAddress(e.target.value); setContactErrors((p) => ({ ...p, address: undefined })); }} placeholder="123 Main St, Haines City, FL" required autoComplete="street-address" />
               {contactErrors.address && <p className="mt-1 text-xs text-red-600">{contactErrors.address}</p>}
             </label>
           </div>
@@ -443,75 +413,41 @@ export default function BookingWidget({
 
         {step === 5 && (
           <div className="space-y-4">
-            <div className="rounded-xl border border-slate-100 bg-slate-50/80 p-4 text-sm">
+            <div className="rounded-lg border border-slate-100 bg-slate-50/80 p-4 text-sm">
               <dl className="space-y-2.5">
                 <div className="flex justify-between gap-4"><dt className="text-slate-500">Service</dt><dd className="font-medium text-slate-900">{serviceLabel}</dd></div>
                 <div className="flex justify-between gap-4"><dt className="text-slate-500">Home</dt><dd className="text-right font-medium text-slate-900">{sizeLabel}</dd></div>
-                <div className="flex justify-between gap-4"><dt className="text-slate-500">Level</dt><dd className="font-medium text-slate-900">{levelLabel}</dd></div>
+                <div className="flex justify-between gap-4"><dt className="text-slate-500">Frequency</dt><dd className="font-medium text-slate-900">{frequencyLabel}</dd></div>
                 <div className="flex justify-between gap-4"><dt className="text-slate-500">Add‑ons</dt><dd className="font-medium text-slate-900">{selectedAddOns.join(", ") || "None"}</dd></div>
                 <div className="flex justify-between gap-4"><dt className="text-slate-500">When</dt><dd className="font-medium text-slate-900">{date || "Flexible"} {time && `at ${time}`}</dd></div>
                 <div className="flex justify-between gap-4"><dt className="text-slate-500">Contact</dt><dd className="text-right font-medium text-slate-900">{name}<br /><span className="text-xs font-normal text-slate-500">{email}<br />{phone}</span></dd></div>
                 <div className="flex justify-between gap-4"><dt className="text-slate-500">Address</dt><dd className="text-right font-medium text-slate-900">{address}</dd></div>
               </dl>
             </div>
-            <div className="rounded-xl bg-[#FFB730]/10 p-4">
-              <div className="flex items-start gap-3">
-                <div className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#FF7A00]/10 text-[#FF7A00]">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <rect width="20" height="14" x="2" y="5" rx="2" /><path d="M2 10h20" />
-                  </svg>
-                </div>
-                <div>
-                  <p className="text-sm font-semibold text-slate-900">Estimated total: ${quote.price}</p>
-                  <p className="mt-0.5 text-xs text-slate-600">Range ${quote.range.low}–${quote.range.high} · Pay after completion</p>
-                  <p className="mt-2 text-xs leading-relaxed text-slate-600">
-                    Book now with zero upfront payment. We&apos;ll send your final invoice once the job is done and you&apos;re happy with the results.
-                  </p>
-                </div>
-              </div>
+            <div className="rounded-lg bg-[#FFB730]/10 p-4">
+              <p className="text-sm font-semibold text-slate-900">Estimated total: ${quote.price}</p>
+              <p className="mt-0.5 text-xs text-slate-600">Pay after completion · No upfront charge</p>
             </div>
           </div>
         )}
       </div>
 
       <div className="mt-4 flex items-center justify-between gap-3 border-t border-slate-100 px-6 py-4">
-        <button type="button" className="btn-ghost" onClick={prev} disabled={step === 0}>
-          Back
-        </button>
-        {submitError && (
-          <p className="mb-3 rounded-lg bg-red-50 px-3 py-2 text-xs text-red-700">{submitError}</p>
-        )}
+        <button type="button" className="btn-ghost" onClick={prev} disabled={step === 0}>Back</button>
+        {submitError && <p className="absolute left-6 right-6 bottom-20 rounded-lg bg-red-50 px-3 py-2 text-xs text-red-700">{submitError}</p>}
         {step < STEPS.length - 1 ? (
-          <button type="button" className="btn-primary px-5 py-2.5" onClick={next}>
-            Continue
-          </button>
+          <button type="button" className="btn-primary px-5 py-2.5" data-testid="booking-continue" onClick={next}>Continue</button>
         ) : (
           <div className="flex flex-wrap justify-end gap-2">
-            <button
-              type="button"
-              className="btn-primary px-4 py-2.5 text-xs sm:text-sm disabled:opacity-60"
-              disabled={submitting}
-              onClick={handleQuoteRequest}
-            >
-              {submitting ? "Sending…" : "Request quote"}
-            </button>
-            <button
-              type="button"
-              className="btn-ghost px-4 py-2.5 text-xs sm:text-sm disabled:opacity-60"
-              onClick={handleBook}
-              disabled={submitting}
-            >
-              {submitting ? "Sending…" : "Book cleaning"}
-            </button>
+            <button type="button" className="btn-primary px-4 py-2.5 text-xs sm:text-sm disabled:opacity-60" disabled={submitting} onClick={handleQuoteRequest}>{submitting ? "Sending…" : "Request quote"}</button>
+            <button type="button" className="btn-ghost px-4 py-2.5 text-xs sm:text-sm disabled:opacity-60" data-testid="booking-submit" onClick={handleBook} disabled={submitting}>{submitting ? "Sending…" : "Book cleaning"}</button>
           </div>
         )}
       </div>
 
       <div className="border-t border-slate-100 bg-slate-50/50 px-6 py-3">
         <p className="flex items-center justify-center gap-1.5 text-center text-[11px] text-slate-500">
-          <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
-          </svg>
+          <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" /></svg>
           No payment required to book · Pay when your clean is complete
         </p>
       </div>
