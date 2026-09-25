@@ -7,7 +7,7 @@ import {
   postRows,
   residentialRows,
 } from "@/lib/pricing-display";
-import { levelAdjustments } from "@/lib/pricing";
+import { frequencyDiscountLabels, minimumBase } from "@/lib/pricing";
 import { getPricingConfig } from "@/lib/pricing-config";
 import ServiceBookingSection from "@/components/ServiceBookingSection";
 import { siteImages } from "@/lib/images";
@@ -15,7 +15,7 @@ import { siteImages } from "@/lib/images";
 export const metadata = createPageMetadata({
   title: "Cleaning Service Prices in Haines City, FL",
   description:
-    "Transparent cleaning prices for Haines City homes and businesses. Residential, commercial, and post-construction rates with instant online quotes.",
+    "Transparent cleaning prices for Haines City homes and businesses. House cleaning from $97, deep from $149, post-construction from $187 — instant online quotes.",
   path: "/pricing",
   ogImage: "/og/pricing.jpg",
   keywords: [
@@ -29,10 +29,8 @@ export const metadata = createPageMetadata({
 export default async function PricingPage() {
   const config = await getPricingConfig();
   const extraBath = bathRate(config);
-  /** Post-construction is priced from its own table, so it is not an uplift row. */
-  const upliftRows = levelAdjustments(config).filter(
-    (level) => level.key !== "post"
-  );
+  const floors = minimumBase(config);
+  const freqDiscounts = frequencyDiscountLabels(config);
 
   return (
     <main>
@@ -42,8 +40,8 @@ export default async function PricingPage() {
             <p className="section-eyebrow">Transparent pricing</p>
             <h1 className="section-title mt-2">Cleaning Service Prices in Haines City, FL</h1>
             <p className="section-subtitle">
-              Starting rates for common jobs. Your final quote depends on size, level, and add-ons — get an
-              instant estimate online.
+              Starting rates for common jobs. Your final quote depends on square footage, bedrooms,
+              bathrooms, frequency, and add-ons — get an instant estimate online.
             </p>
           </div>
           <div className="relative aspect-[16/10] overflow-hidden rounded-2xl bg-slate-100 shadow-sm ring-1 ring-slate-200/80">
@@ -62,7 +60,7 @@ export default async function PricingPage() {
           <section className="card p-6">
             <h2 className="text-xl font-bold text-slate-900">Residential</h2>
             <p className="mt-2 text-sm text-slate-600">
-              Standard home cleaning, one bathroom included.
+              House cleaning floor plus bedroom rate (bathrooms and square footage still change the live quote).
             </p>
             <ul className="mt-6 space-y-3 text-sm text-slate-700">
               {residentialRows(config).map((row) => (
@@ -73,7 +71,7 @@ export default async function PricingPage() {
               ))}
             </ul>
             <p className="mt-4 text-xs text-slate-500">
-              Add ${extraBath} per extra bathroom. Homes over 1,500 sq ft are adjusted for size.
+              Add ${extraBath} per bathroom. Quotes also scale with square footage.
             </p>
             <Link
               href="/residential-cleaning"
@@ -125,13 +123,18 @@ export default async function PricingPage() {
         <div className="mt-10 rounded-2xl bg-[#FFB730]/10 p-8">
           <h2 className="text-lg font-semibold text-slate-900">Premiums &amp; add-ons</h2>
           <ul className="mt-4 grid gap-2 text-sm text-slate-700 sm:grid-cols-2">
-            <li>Extra bathrooms: +${extraBath} each</li>
-            {upliftRows.map((row) => (
-              <li key={row.label}>
-                {row.label}: ~{row.uplift}% above standard
-              </li>
-            ))}
-            <li>Airbnb / turnover: quote by size + same-day SLA</li>
+            <li>Bedrooms: +${config.bedroomRate} each</li>
+            <li>Bathrooms: +${extraBath} each</li>
+            <li>Deep clean: from ${floors.deep}</li>
+            <li>Move-in / move-out: from ${floors.move}</li>
+            {config.frequencyMultipliers
+              .filter((f) => f.multiplier < 1)
+              .map((freq) => (
+                <li key={freq.key}>
+                  {freq.label}: {freqDiscounts[freq.key as keyof typeof freqDiscounts]}
+                </li>
+              ))}
+            <li>Airbnb / turnover: from ${floors.airbnb}</li>
             {config.addOns.map((addOn) => (
               <li key={addOn.key}>
                 {addOn.label}: +${addOn.price}
